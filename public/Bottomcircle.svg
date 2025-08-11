@@ -1,0 +1,36 @@
+<svg width="561" height="693" viewBox="0 0 561 693" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g opacity="0.8" filter="url(#filter0_fn_74_212)">
+<ellipse cx="86.0001" cy="475" rx="342.6" ry="342.6" transform="rotate(60 86.0001 475)" stroke="url(#paint0_linear_74_212)" stroke-width="113.102"/>
+</g>
+<g opacity="0.8" filter="url(#filter1_f_74_212)">
+<circle cx="86.2067" cy="475.479" r="304.57" transform="rotate(60 86.2067 475.479)" stroke="white" stroke-width="7.54012"/>
+</g>
+<defs>
+<filter id="filter0_fn_74_212" x="-388.619" y="0.381729" width="949.237" height="949.237" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="37.7006" result="effect1_foregroundBlur_74_212"/>
+<feTurbulence type="fractalNoise" baseFrequency="0.66311919689178467 0.66311919689178467" stitchTiles="stitch" numOctaves="3" result="noise" seed="5130" />
+<feColorMatrix in="noise" type="luminanceToAlpha" result="alphaNoise" />
+<feComponentTransfer in="alphaNoise" result="coloredNoise1">
+<feFuncA type="discrete" tableValues="1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 "/>
+</feComponentTransfer>
+<feComposite operator="in" in2="effect1_foregroundBlur_74_212" in="coloredNoise1" result="noise1Clipped" />
+<feFlood flood-color="rgba(58, 141, 255, 0.25)" result="color1Flood" />
+<feComposite operator="in" in2="noise1Clipped" in="color1Flood" result="color1" />
+<feMerge result="effect2_noise_74_212">
+<feMergeNode in="effect1_foregroundBlur_74_212" />
+<feMergeNode in="color1" />
+</feMerge>
+</filter>
+<filter id="filter1_f_74_212" x="-267.425" y="121.847" width="707.264" height="707.264" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="22.6204" result="effect1_foregroundBlur_74_212"/>
+</filter>
+<linearGradient id="paint0_linear_74_212" x1="-255.986" y1="267.938" x2="413.782" y2="654.628" gradientUnits="userSpaceOnUse">
+<stop stop-color="#3A8DFF"/>
+<stop offset="1" stop-color="#3A8DFF" stop-opacity="0.3"/>
+</linearGradient>
+</defs>
+</svg>
