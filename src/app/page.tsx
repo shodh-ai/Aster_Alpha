@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, { JSX } from "react";
 import { Badge } from "../components/badge";
 import { Button } from "../components/button";
 import { Card, CardContent } from "../components/card";
@@ -8,6 +9,7 @@ import {
   SelectItem,
   SelectTrigger,
 } from "../components/select";
+import { PushToTalkButton } from "../components/PushToTalkButton"; // <--- 1. IMPORT THE NEW COMPONENT
 
 export const AestrAlpha = (): JSX.Element => {
   // ===========================================
@@ -270,13 +272,9 @@ export const AestrAlpha = (): JSX.Element => {
                 </div>
               </div>
 
-              {/* Hero Image */}
+              {/* ==> 2. REPLACE THE STATIC IMAGE WITH THE INTERACTIVE COMPONENT <== */}
               <div className="w-full max-w-[500px] flex-shrink-0 relative z-10">
-                <img
-                  className="w-full h-auto"
-                  alt="Group"
-                  src="/main.svg"
-                />
+                <PushToTalkButton />
               </div>
             </div>
           </section>
