@@ -170,7 +170,7 @@ export const AestrAlpha = (): JSX.Element => {
   // ===========================================
 
   return (
-    <div className="bg-black w-full min-h-screen">
+    <div className="bg-black w-full min-h-screen font-['Plus_Jakarta_Sans',Helvetica]">
       <div className="bg-black overflow-hidden relative w-full min-h-screen">
         
         {/* ===========================================
@@ -184,7 +184,7 @@ export const AestrAlpha = (): JSX.Element => {
               {navItems.map((item, index) => (
                 <button
                   key={index}
-                  className="font-alpha-secondary-1 font-[number:var(--alpha-secondary-1-font-weight)] text-white text-[length:var(--alpha-secondary-1-font-size)] tracking-[var(--alpha-secondary-1-letter-spacing)] leading-[var(--alpha-secondary-1-line-height)] whitespace-nowrap [font-style:var(--alpha-secondary-1-font-style)]"
+                  className="font-['Plus_Jakarta_Sans',Helvetica] font-medium text-white text-base whitespace-nowrap"
                 >
                   {item}
                 </button>
@@ -294,7 +294,7 @@ export const AestrAlpha = (): JSX.Element => {
               <Card className={`relative w-full h-[431px] ${glassCardStyle}`}>
                 <CardContent className="p-0 h-full">
                   <div className="absolute w-[530px] h-[407px] top-3 left-3 bg-[url(/demo1.svg)] bg-[100%_100%]">
-                    <Badge className="absolute top-5 left-5 bg-[#ffffff4c] rounded-sm font-bold text-white text-xs tracking-[1.20px] leading-5">
+                    <Badge className="absolute top-5 left-5 bg-[#484848] rounded-sm font-bold text-white text-xs tracking-[1.20px] leading-5">
                       MOST POPULAR
                     </Badge>
                   </div>
@@ -342,13 +342,13 @@ export const AestrAlpha = (): JSX.Element => {
                   <div className="flex w-[646px] items-center gap-4 absolute top-[338px] left-[601px]">
                     <Button
                       variant="outline"
-                      className="flex h-16 items-center justify-between pl-7 pr-6 py-2.5 relative flex-1 grow rounded-md border border-solid border-[#ffffffcc] bg-transparent"
+                      className="flex h-16 items-center justify-between pl-7 pr-6 py-2.5 relative flex-1 grow rounded-md border border-solid border-[#484848] bg-transparent"
                     >
                       <span className="relative w-fit [font-family:'Plus_Jakarta_Sans',Helvetica] font-extrabold text-[#ffffffcc] text-sm tracking-[1.40px] leading-5 whitespace-nowrap">
                         BROCHURE
                       </span>
                       <img
-                        className="relative w-6 h-6"
+                        className="relative w-[18px] h-[18px]"
                         alt="Frame"
                         src="/download.svg"
                       />
@@ -359,7 +359,7 @@ export const AestrAlpha = (): JSX.Element => {
                         APPLY NOW
                       </span>
                       <img
-                        className="relative w-6 h-6"
+                        className="relative w-[18px] h-[18px]"
                         alt="Frame"
                         src="/arrow.svg"
                       />
@@ -374,7 +374,7 @@ export const AestrAlpha = (): JSX.Element => {
               >
                 <CardContent className="p-0 h-full">
                   <div className="absolute w-[280px] h-[312px] top-3 left-3 bg-[url(/demo2.svg)] bg-[100%_100%]">
-                    <Badge className="absolute top-4 left-4 bg-[#ffffff4c] rounded-sm font-bold text-white text-xs tracking-[1.20px] leading-5">
+                    <Badge className="absolute top-4 left-4 bg-[#484848] rounded-sm font-bold text-white text-xs tracking-[1.20px] leading-5">
                       LATEST
                     </Badge>
                   </div>
@@ -407,7 +407,7 @@ export const AestrAlpha = (): JSX.Element => {
                     ROBOTIC & ROS ENGINEERING
                   </h3>
 
-                  <p className="absolute w-[387px] top-[127px] left-[327px] opacity-60 font-alpha-secondary-1 font-[number:var(--alpha-secondary-1-font-weight)] text-white text-[length:var(--alpha-secondary-1-font-size)] tracking-[var(--alpha-secondary-1-letter-spacing)] leading-[var(--alpha-secondary-1-line-height)] [font-style:var(--alpha-secondary-1-font-style)]">
+                  <p className="absolute w-[387px] top-[127px] left-[327px] opacity-60 [font-family:'Plus_Jakarta_Sans',Helvetica] font-medium text-white text-sm tracking-[1.40px] leading-5">
                     GIVE MACHINES INTELLIGENCE. DESIGN, SIMULATE, AND DEPLOY THE
                     SOFTWARE THAT MAKES ROBOTS SEE, NAVIGATE, AND ACT IN THE REAL
                     WORLD.
@@ -416,13 +416,13 @@ export const AestrAlpha = (): JSX.Element => {
                   <div className="flex w-[442px] items-center gap-4 absolute top-[251px] left-[327px]">
                     <Button
                       variant="outline"
-                      className="flex h-16 items-center justify-between pl-7 pr-6 py-2.5 relative flex-1 grow rounded-md border border-solid border-[#ffffffcc] bg-transparent"
+                      className="flex h-16 items-center justify-between pl-7 pr-6 py-2.5 relative flex-1 grow rounded-md border border-solid border-[#484848] bg-transparent"
                     >
                       <span className="relative w-fit [font-family:'Plus_Jakarta_Sans',Helvetica] font-extrabold text-[#ffffffcc] text-sm tracking-[1.40px] leading-5 whitespace-nowrap">
                         BROCHURE
                       </span>
                       <img
-                        className="relative w-6 h-6"
+                        className="relative w-[18px] h-[18px]"
                         alt="Frame"
                         src="/download.svg"
                       />
@@ -433,7 +433,7 @@ export const AestrAlpha = (): JSX.Element => {
                         APPLY NOW
                       </span>
                       <img
-                        className="relative w-6 h-6"
+                        className="relative w-[18px] h-[18px]"
                         alt="Frame"
                         src="/arrow.svg"
                       />
@@ -457,20 +457,20 @@ export const AestrAlpha = (): JSX.Element => {
                     FINTECH ENGINEERING
                   </h3>
 
-                  <p className="absolute top-[209px] left-[19px] opacity-60 font-alpha-secondary-1 font-[number:var(--alpha-secondary-1-font-weight)] text-white text-[length:var(--alpha-secondary-1-font-size)] tracking-[var(--alpha-secondary-1-letter-spacing)] leading-[var(--alpha-secondary-1-line-height)] whitespace-nowrap [font-style:var(--alpha-secondary-1-font-style)]">
+                  <p className="absolute top-[209px] left-[19px] opacity-60 [font-family:'Plus_Jakarta_Sans',Helvetica] font-medium text-white text-sm tracking-[1.40px] leading-5 whitespace-nowrap">
                     BUILD THE FUTURE OF MONEY.
                   </p>
 
                   <div className="flex w-[422px] items-center gap-4 absolute top-[251px] left-[19px]">
                     <Button
                       variant="outline"
-                      className="flex h-16 items-center justify-between pl-7 pr-6 py-2.5 relative flex-1 grow rounded-md border border-solid border-[#ffffffcc] bg-transparent"
+                      className="flex h-16 items-center justify-between pl-7 pr-6 py-2.5 relative flex-1 grow rounded-md border border-solid border-[#484848] bg-transparent"
                     >
                       <span className="relative w-fit [font-family:'Plus_Jakarta_Sans',Helvetica] font-extrabold text-[#ffffffcc] text-sm tracking-[1.40px] leading-5 whitespace-nowrap">
                         BROCHURE
                       </span>
                       <img
-                        className="relative w-6 h-6"
+                        className="relative w-[18px] h-[18px]"
                         alt="Frame"
                         src="/download.svg"
                       />
@@ -481,7 +481,7 @@ export const AestrAlpha = (): JSX.Element => {
                         APPLY NOW
                       </span>
                       <img
-                        className="relative w-6 h-6"
+                        className="relative w-[18px] h-[18px]"
                         alt="Frame"
                         src="/arrow.svg"
                       />
@@ -500,7 +500,7 @@ export const AestrAlpha = (): JSX.Element => {
                   </h3>
                   <div className="absolute w-[30px] h-[30px] top-6 left-[404px] bg-[#3a8dff] rounded-[15px]">
                     <img
-                      className="absolute w-3.5 h-3.5 top-2 left-2"
+                      className="absolute w-[14px] h-[14px] top-2 left-2"
                       alt="Frame"
                       src="/arrow.svg"
                     />
@@ -517,7 +517,7 @@ export const AestrAlpha = (): JSX.Element => {
                   </h3>
                   <div className="absolute w-[30px] h-[30px] top-6 left-[732px] bg-[#3a8dff] rounded-[15px]">
                     <img
-                      className="absolute w-3.5 h-3.5 top-2 left-2"
+                      className="absolute w-[14px] h-[14px] top-2 left-2"
                       alt="Frame"
                       src="/arrow.svg"
                     />
@@ -567,8 +567,8 @@ export const AestrAlpha = (): JSX.Element => {
                             focus:ring-0 focus:ring-offset-0"
                         >
                           <div className="inline-flex items-center gap-3 relative">
-                            <img className="w-6 h-6" alt="Icon" src={option.icon} />
-                            <div className="opacity-60 font-alpha-secondary-1 font-[number:var(--alpha-secondary-1-font-weight)] text-white text-[length:var(--alpha-secondary-1-font-size)] tracking-[var(--alpha-secondary-1-letter-spacing)] leading-[var(--alpha-secondary-1-line-height)] whitespace-nowrap [font-style:var(--alpha-secondary-1-font-style)]">
+                            <img className="w-[18px] h-[18px]" alt="Icon" src={option.icon} />
+                            <div className="opacity-60 [font-family:'Plus_Jakarta_Sans',Helvetica] font-medium text-white text-sm tracking-wide whitespace-nowrap">
                               {option.label}
                             </div>
                           </div>

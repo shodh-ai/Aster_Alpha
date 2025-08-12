@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+@theme {
+  --font-family-sans: "Plus Jakarta Sans", sans-serif;
+}
+
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -22,5 +27,5 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: Plus-jakarta-sans, sans-serif;
 }
