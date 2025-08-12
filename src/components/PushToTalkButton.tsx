@@ -2,6 +2,7 @@
 
 import {
   LiveKitRoom,
+  RoomAudioRenderer,
   useLocalParticipant
 } from "@livekit/components-react";
 import React, { useEffect, useState } from "react";
@@ -71,9 +72,10 @@ export const PushToTalkButton = () => {
       token={token}
       serverUrl={serverUrl}
       connect={true}
-      // Start with audio off. We will enable it with the first button press.
-      audio={false}
+      // Enable audio to hear agent responses
+      audio={true}
     >
+      <RoomAudioRenderer />
       <PushToTalkControl />
     </LiveKitRoom>
   );
