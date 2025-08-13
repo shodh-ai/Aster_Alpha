@@ -1,5 +1,5 @@
 "use client";
-import React, { JSX } from "react";
+import React, { JSX, useState } from "react"; // NEW: Import useState
 import { Badge } from "../components/badge";
 import { Button } from "../components/button";
 import { Card, CardContent } from "../components/card";
@@ -8,10 +8,14 @@ import {
   SelectContent,
   SelectItem,
   SelectTrigger,
+  SelectValue, // NEW: Import SelectValue
 } from "../components/select";
-import { PushToTalkButton } from "../components/PushToTalkButton"; // <--- 1. IMPORT THE NEW COMPONENT
+import { PushToTalkButton } from "../components/PushToTalkButton";
 
 export const AestrAlpha = (): JSX.Element => {
+  // NEW: Add state to manage the selected agent mode
+  const [agentMode, setAgentMode] = useState("overall");
+
   // ===========================================
   // DATA SECTION - All component data centralized
   // ===========================================
@@ -174,13 +178,8 @@ export const AestrAlpha = (): JSX.Element => {
   return (
     <div className="bg-black w-full min-h-screen font-['Plus_Jakarta_Sans',Helvetica]">
       <div className="bg-black overflow-hidden relative w-full min-h-screen">
-        
-        {/* ===========================================
-            HEADER/NAVIGATION SECTION
-            =========================================== */}
         <header className="relative z-10 pt-9 px-[86px] flex items-center justify-between w-full">
           <img className="w-[219px] h-7" alt="Logo" src="/logo.svg" />
-
           <div className="flex items-center gap-9">
             <nav className="flex items-center gap-9">
               {navItems.map((item, index) => (
@@ -192,7 +191,6 @@ export const AestrAlpha = (): JSX.Element => {
                 </button>
               ))}
             </nav>
-
             <div className="flex items-center gap-3">
               <Button
                 variant="outline"
@@ -202,7 +200,6 @@ export const AestrAlpha = (): JSX.Element => {
                   LOGIN
                 </span>
               </Button>
-
               <Button className="px-6 py-5 rounded-md bg-[#3a8dff]">
                 <span className="font-['Plus_Jakarta_Sans',Helvetica] font-bold text-white text-sm tracking-[1.40px]">
                   GET IN TOUCH
@@ -212,58 +209,45 @@ export const AestrAlpha = (): JSX.Element => {
           </div>
         </header>
 
-        {/* ===========================================
-            MAIN CONTENT AREA
-            =========================================== */}
         <main>
-          
-          {/* ===========================================
-              HERO/TIMELINE SECTION
-              =========================================== */}
           <section className="relative w-full mt-[180px]">
             <img
               className="absolute w-[599px] h-[1350px] top-[47px] left-0 pointer-events-none"
               alt="Left Circle"
               src="/Leftcircle.svg"
             />
-            {/* Flex container for content and image */}
             <div className="relative w-full max-w-[1269px] mx-auto flex items-center justify-between gap-12 px-8 md:px-12">
-              {/* Hero Content */}
               <div className="flex flex-col w-full max-w-[656px] items-start gap-[60px] relative z-10">
                 <div className="flex flex-col items-start gap-12 w-full">
                   <div className="flex flex-col items-start gap-8">
                     <div className="inline-flex items-center justify-center gap-2.5 px-4 py-3 bg-[#0c1c33] rounded-[100px]">
-                      <span className="bg-[linear-gradient(90deg,rgba(153,196,255,1)_0%,rgba(255,255,255,1)_100%)] [-webkit-background-clip:text] bg-clip-text [-webkit-text-fill-color:transparent] [text-fill-color:transparent] [font-family:'Plus_Jakarta_Sans',Helvetica] font-bold text-transparent text-sm tracking-[1.40px] leading-5 whitespace-nowrap">
+                      <span className="bg-[linear-gradient(90deg,rgba(153,196,255,1)_0%,rgba(255,255,255,1)_100%)] [-webkit-background-clip:text] bg-clip-text [-webkit-text-fill-color:transparent] [text-fill-color:transparent] font-bold text-transparent text-sm tracking-[1.40px] leading-5 whitespace-nowrap">
                         UPGRADE YOUR SKILLS. LAND HIGH-IMPACT ROLES
                       </span>
                     </div>
-
-                    <h2 className="[font-family:'Plus_Jakarta_Sans',Helvetica] font-semibold text-white text-[64px] tracking-[1.28px] leading-[76.8px]">
+                    <h2 className="font-semibold text-white text-[64px] tracking-[1.28px] leading-[76.8px]">
                       Have The Degree, But Not The Career?
                     </h2>
                   </div>
-
-                  <p className="opacity-80 [font-family:'Plus_Jakarta_Sans',Helvetica] font-medium text-white text-lg tracking-[0.36px] leading-6 max-w-[636px]">
+                  <p className="opacity-80 font-medium text-white text-lg tracking-[0.36px] leading-6 max-w-[636px]">
                     Aestr Alpha Turns Your Degree Into A 10–15 Lpa Career With 9–9
                     Hands-on Training, Real Industry Projects, And Monthly Placement
                     Drives Into High-impact Companies.
                   </p>
                 </div>
-
                 <Button className="w-[200px] px-6 py-5 bg-[#3a8dff] rounded-md hover:bg-[#3a8dff]/90">
-                  <span className="[font-family:'Plus_Jakarta_Sans',Helvetica] font-bold text-white text-sm tracking-[1.40px] leading-[normal] whitespace-nowrap">
+                  <span className="font-bold text-white text-sm tracking-[1.40px] leading-[normal] whitespace-nowrap">
                     GET IN TOUCH
                   </span>
                 </Button>
-
                 <div className="flex items-start gap-12">
                   {stats.map((stat, index) => (
                     <Card key={index} className="bg-transparent border-none">
                       <CardContent className="flex flex-col items-start gap-[18px] p-0">
-                        <span className="[font-family:'Plus_Jakarta_Sans',Helvetica] font-semibold text-[#3a8dff] text-4xl tracking-[0.72px] leading-[39.6px] whitespace-nowrap">
+                        <span className="font-semibold text-[#3a8dff] text-4xl tracking-[0.72px] leading-[39.6px] whitespace-nowrap">
                           {stat.value}
                         </span>
-                        <span className="opacity-60 [font-family:'Plus_Jakarta_Sans',Helvetica] font-medium text-white text-sm tracking-[1.40px] leading-5 whitespace-nowrap">
+                        <span className="opacity-60 font-medium text-white text-sm tracking-[1.40px] leading-5 whitespace-nowrap">
                           {stat.label}
                         </span>
                       </CardContent>
@@ -271,24 +255,37 @@ export const AestrAlpha = (): JSX.Element => {
                   ))}
                 </div>
               </div>
-
-              {/* ==> 2. REPLACE THE STATIC IMAGE WITH THE INTERACTIVE COMPONENT <== */}
-              <div className="w-full max-w-[500px] flex-shrink-0 relative z-10">
-                <PushToTalkButton />
+              
+              {/* NEW: Container for Mode Selector and the Visualizer Button */}
+              <div className="w-full max-w-[500px] flex-shrink-0 relative z-10 flex flex-col items-center gap-6">
+                <div className="w-full max-w-[300px]">
+                  <label className="block text-center text-sm text-white/70 mb-2">
+                    CHOOSE AN AI ASSISTANT
+                  </label>
+                  <Select value={agentMode} onValueChange={setAgentMode}>
+                    <SelectTrigger className="w-full bg-white/5 border-white/20 text-white">
+                      <SelectValue placeholder="Select a mode" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-black border-white/30 text-white">
+                      <SelectItem value="overall">Overall Assistant</SelectItem>
+                      <SelectItem value="counsellor">Career Counsellor</SelectItem>
+                      <SelectItem value="administration">Administration</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                {/* This container ensures the visualizer has a square space to render in */}
+                <div className="w-full relative aspect-square">
+                  <PushToTalkButton mode={agentMode} />
+                </div>
               </div>
             </div>
           </section>
 
-          {/* ===========================================
-              POPULAR COURSES SECTION
-              =========================================== */}
           <section className="flex flex-col w-full max-w-[1268px] items-center gap-[60px] mx-auto mt-[200px]">
             <h2 className="relative [font-family:'Plus_Jakarta_Sans',Helvetica] font-semibold text-white text-5xl text-center tracking-[0.96px] leading-[52.8px]">
               OUR POPULAR COURSES
             </h2>
-
             <div className="relative w-full h-[880px]">
-              {/* Large featured course card */}
               <Card className={`relative w-full h-[431px] ${glassCardStyle}`}>
                 <CardContent className="p-0 h-full">
                   <div className="absolute w-[530px] h-[407px] top-3 left-3 bg-[url(/demo1.svg)] bg-[100%_100%]">
@@ -296,7 +293,6 @@ export const AestrAlpha = (): JSX.Element => {
                       MOST POPULAR
                     </Badge>
                   </div>
-
                   <div className="flex flex-col w-[606px] items-start gap-8 absolute top-[47px] left-[601px]">
                     <div className="inline-flex items-center gap-9 relative flex-[0_0_auto]">
                       <div className="inline-flex items-center gap-2 relative flex-[0_0_auto]">
@@ -309,7 +305,6 @@ export const AestrAlpha = (): JSX.Element => {
                           6-MONTH INTENSIVE TRACK
                         </span>
                       </div>
-
                       <div className="inline-flex items-center gap-2 relative flex-[0_0_auto]">
                         <img
                           className="relative w-5 h-5"
@@ -321,12 +316,10 @@ export const AestrAlpha = (): JSX.Element => {
                         </span>
                       </div>
                     </div>
-
                     <div className="flex flex-col items-start gap-8 relative self-stretch w-full flex-[0_0_auto]">
                       <h3 className="relative self-stretch mt-[-1.00px] [font-family:'Plus_Jakarta_Sans',Helvetica] font-semibold text-white text-[28px] tracking-[0] leading-[30.8px]">
                         DEEP CLOUD & MULTI-CLOUD ENGINEERING
                       </h3>
-
                       <p className="relative w-[582px] opacity-60 [font-family:'Plus_Jakarta_Sans',Helvetica] font-medium text-white text-sm tracking-[1.40px] leading-5">
                         IN THIS PROGRAM, YOU WILL BUILD A SCALABLE, MULTI-REGION WEB
                         APPLICATION WITH AUTOMATED FAILOVER, A CI/CD PIPELINE USING
@@ -336,7 +329,6 @@ export const AestrAlpha = (): JSX.Element => {
                       </p>
                     </div>
                   </div>
-
                   <div className="flex w-[646px] items-center gap-4 absolute top-[338px] left-[601px]">
                     <Button
                       variant="outline"
@@ -351,7 +343,6 @@ export const AestrAlpha = (): JSX.Element => {
                         src="/download.svg"
                       />
                     </Button>
-
                     <Button className="flex h-16 items-center justify-between pl-7 pr-5 py-2.5 relative flex-1 grow bg-[#3a8dff] rounded-md">
                       <span className="relative w-fit [font-family:'Plus_Jakarta_Sans',Helvetica] font-extrabold text-white text-sm tracking-[1.40px] leading-5 whitespace-nowrap">
                         APPLY NOW
@@ -365,8 +356,6 @@ export const AestrAlpha = (): JSX.Element => {
                   </div>
                 </CardContent>
               </Card>
-
-              {/* Medium robotics course card */}
               <Card
                 className={`absolute w-[790px] h-[336px] top-[447px] left-0 ${glassCardStyle}`}
               >
@@ -376,7 +365,6 @@ export const AestrAlpha = (): JSX.Element => {
                       LATEST
                     </Badge>
                   </div>
-
                   <div className="inline-flex items-center gap-9 absolute top-[41px] left-[327px]">
                     <div className="inline-flex items-center gap-2 relative flex-[0_0_auto]">
                       <img
@@ -388,7 +376,6 @@ export const AestrAlpha = (): JSX.Element => {
                         4-MONTH
                       </span>
                     </div>
-
                     <div className="inline-flex items-center gap-2 relative flex-[0_0_auto]">
                       <img
                         className="relative w-5 h-5"
@@ -400,17 +387,14 @@ export const AestrAlpha = (): JSX.Element => {
                       </span>
                     </div>
                   </div>
-
                   <h3 className="absolute top-[85px] left-[327px] [font-family:'Plus_Jakarta_Sans',Helvetica] font-semibold text-white text-2xl tracking-[0] leading-[26.4px] whitespace-nowrap">
                     ROBOTIC & ROS ENGINEERING
                   </h3>
-
                   <p className="absolute w-[387px] top-[127px] left-[327px] opacity-60 [font-family:'Plus_Jakarta_Sans',Helvetica] font-medium text-white text-sm tracking-[1.40px] leading-5">
                     GIVE MACHINES INTELLIGENCE. DESIGN, SIMULATE, AND DEPLOY THE
                     SOFTWARE THAT MAKES ROBOTS SEE, NAVIGATE, AND ACT IN THE REAL
                     WORLD.
                   </p>
-
                   <div className="flex w-[442px] items-center gap-4 absolute top-[251px] left-[327px]">
                     <Button
                       variant="outline"
@@ -425,7 +409,6 @@ export const AestrAlpha = (): JSX.Element => {
                         src="/download.svg"
                       />
                     </Button>
-
                     <Button className="flex h-16 items-center justify-between pl-7 pr-5 py-2.5 relative flex-1 grow bg-[#3a8dff] rounded-md">
                       <span className="relative w-fit [font-family:'Plus_Jakarta_Sans',Helvetica] font-extrabold text-white text-sm tracking-[1.40px] leading-5 whitespace-nowrap">
                         APPLY NOW
@@ -439,8 +422,6 @@ export const AestrAlpha = (): JSX.Element => {
                   </div>
                 </CardContent>
               </Card>
-
-              {/* Small fintech course card */}
               <Card
                 className={`absolute w-[462px] h-[336px] top-[447px] left-[806px] ${glassCardStyle}`}
               >
@@ -450,15 +431,12 @@ export const AestrAlpha = (): JSX.Element => {
                     alt="Cpu"
                     src="/Cpu.svg"
                   />
-
                   <h3 className="absolute top-[167px] left-[19px] [font-family:'Plus_Jakarta_Sans',Helvetica] font-semibold text-white text-2xl tracking-[0] leading-[26.4px] whitespace-nowrap">
                     FINTECH ENGINEERING
                   </h3>
-
                   <p className="absolute top-[209px] left-[19px] opacity-60 [font-family:'Plus_Jakarta_Sans',Helvetica] font-medium text-white text-sm tracking-[1.40px] leading-5 whitespace-nowrap">
                     BUILD THE FUTURE OF MONEY.
                   </p>
-
                   <div className="flex w-[422px] items-center gap-4 absolute top-[251px] left-[19px]">
                     <Button
                       variant="outline"
@@ -473,7 +451,6 @@ export const AestrAlpha = (): JSX.Element => {
                         src="/download.svg"
                       />
                     </Button>
-
                     <Button className="flex h-16 items-center justify-between pl-7 pr-5 py-2.5 relative flex-1 grow bg-[#3a8dff] rounded-md">
                       <span className="relative w-fit [font-family:'Plus_Jakarta_Sans',Helvetica] font-extrabold text-white text-sm tracking-[1.40px] leading-5 whitespace-nowrap">
                         APPLY NOW
@@ -487,8 +464,6 @@ export const AestrAlpha = (): JSX.Element => {
                   </div>
                 </CardContent>
               </Card>
-
-              {/* Mini course cards */}
               <Card
                 className={`absolute w-[462px] h-[78px] top-[799px] left-0 ${glassCardStyle}`}
               >
@@ -505,7 +480,6 @@ export const AestrAlpha = (): JSX.Element => {
                   </div>
                 </CardContent>
               </Card>
-
               <Card
                 className={`absolute w-[790px] h-[78px] top-[799px] left-[478px] ${glassCardStyle}`}
               >
@@ -525,27 +499,17 @@ export const AestrAlpha = (): JSX.Element => {
             </div>
           </section>
 
-          {/* ===========================================
-              COURSE LEARNING TIMELINE SECTION (REFACTORED)
-              =========================================== */}
           <section className="relative w-full mt-32 mb-32">
             <div className="relative w-full ">
-              {/* Background elements */}
               <div className="absolute w-[824px] h-[824px] top-0 right-1/2 translate-x-1/2 rotate-90 opacity-70">
                 <div className="relative w-[867px] h-[805px] top-[41px] left-[-22px]">
-                  
                   <div className="absolute w-[543px] h-[543px] top-[99px] left-[162px] rounded-[271.44px] border-[7.54px] border-solid border-white rotate-[-120deg] blur-[22.62px] opacity-80" />
                 </div>
               </div>
-
-              {/* Main content container with glass effect */}
               <div className={`relative mx-auto w-full max-w-[1269px] p-8 md:p-12 ${glassCardStyle}`}>
-                {/* Timeline heading */}
                 <h2 className="text-center mb-8 font-['Plus_Jakarta_Sans',Helvetica] font-semibold text-white text-4xl md:text-5xl tracking-[0.96px] leading-[1.2]">
                   COURSE LEARNINGS TIMELINE
                 </h2>
-
-                {/* Dropdowns */}
                 <div className="flex flex-col md:flex-row w-full items-center gap-5 relative px-4 md:px-[60px] my-8">
                   {selectOptions.map((option) => (
                     <div
@@ -580,21 +544,15 @@ export const AestrAlpha = (): JSX.Element => {
                   ))}
                 </div>
                 
-                {/* Timeline visualization */}
                 <div className="relative w-full px-4 md:px-12 py-16">
-                    {/* Background Line */}
                     <div className="absolute top-1/2 left-0 -translate-y-1/2 w-full h-0.5 bg-white/20"></div>
-                    {/* Active Progress Line */}
                     <div className="absolute top-1/2 left-0 -translate-y-1/2 w-2/3 h-0.5 bg-[#3a8dff]"></div>
-
-                    {/* Phase Markers */}
                     <div className="relative flex justify-between items-center">
                         {timelinePhases.map((phase, index) => (
                         <div
                             key={index}
                             className={`flex flex-col items-center text-center w-1/4 ${phase.active ? "" : "opacity-40"}`}
                         >
-                            {/* Phase Text */}
                             <div className="flex flex-col items-center gap-1 mb-3">
                                 <div className="font-['Plus_Jakarta_Sans',Helvetica] font-extrabold text-white text-xs md:text-sm tracking-widest">
                                     {phase.phase}
@@ -603,8 +561,6 @@ export const AestrAlpha = (): JSX.Element => {
                                     {phase.duration}
                                 </div>
                             </div>
-
-                            {/* Marker Dot */}
                             {phase.isHighlighted ? (
                             <div className="relative w-8 h-8 bg-[#3a8dff] rounded-2xl flex items-center justify-center">
                                 <div className="absolute w-full h-full bg-[#ffffff4c] rounded-2xl blur-[5px] opacity-40" />
@@ -617,8 +573,6 @@ export const AestrAlpha = (): JSX.Element => {
                                 </div>
                             </div>
                             )}
-
-                             {/* Title Text */}
                             <div className="mt-3 font-['Plus_Jakarta_Sans',Helvetica] font-extrabold text-white text-xs md:text-sm text-center tracking-widest">
                                 {phase.title}
                             </div>
@@ -627,9 +581,6 @@ export const AestrAlpha = (): JSX.Element => {
                     </div>
                 </div>
 
-                {/* ===========================================
-                    MAIN CONTENT SECTION (Phase Details)
-                    =========================================== */}
                 <section className="flex flex-col items-start gap-8 w-full mt-8 px-4 md:px-7">
                     <div className="flex flex-col items-start gap-6 w-full">
                     <div className="flex flex-wrap items-start gap-4">
@@ -645,11 +596,9 @@ export const AestrAlpha = (): JSX.Element => {
                         </div>
                         ))}
                     </div>
-
                     <h2 className="w-fit [font-family:'Plus_Jakarta_Sans',Helvetica] font-semibold text-white text-2xl tracking-[0] leading-6 whitespace-nowrap">
                         CORE INFRASTRUCTURE & AUTOMATION
                     </h2>
-
                     <p className="w-full opacity-60 [font-family:'Plus_Jakarta_Sans',Helvetica] font-medium text-white text-sm tracking-[1.40px] leading-5">
                         THIS FOUNDATIONAL PHASE IS AN INTENSIVE, HANDS-ON IMMERSION INTO
                         BUILDING AND AUTOMATING SECURE, SCALABLE CLOUD INFRASTRUCTURE. YOU
@@ -658,7 +607,6 @@ export const AestrAlpha = (): JSX.Element => {
                         COMPONENT IS REPRODUCIBLE, VERSION-CONTROLLED, AND AUTOMATED.
                     </p>
                     </div>
-
                     <div className="flex flex-wrap w-full items-start gap-[12px]">
                     {topicBadges.map((topic, index) => (
                         <Badge
@@ -677,9 +625,6 @@ export const AestrAlpha = (): JSX.Element => {
             </div>
           </section>
 
-          {/* ===========================================
-              BOTTOM DECORATIVE ELEMENT
-              =========================================== */}
           <div className="relative w-full h-0">
             <div className="absolute w-[936px] h-[936px] left-[-382px] -rotate-180">
               <div className="relative w-[896px] h-[949px] top-[-7px] left-[-7px]">
@@ -710,7 +655,6 @@ export const AestrAlpha = (): JSX.Element => {
                   </div>
                 </div>
               </div>
-
               <div className="flex flex-col items-start gap-4 text-left max-w-xl">
                 <p className="font-normal text-xs leading-5 tracking-wider">
                   AESTR ALPHA TURNS YOUR DEGREE INTO A 10-15 LPA CAREER WITH HANDS-ON TRAINING, REAL PROJECTS, AND MONTHLY PLACEMENTS.
@@ -726,7 +670,6 @@ export const AestrAlpha = (): JSX.Element => {
                 </Button>
               </div>
             </div>
-
             <div className="flex justify-between items-center pt-6 text-xs font-normal">
               <p>2025 AESTR ALPHA</p>
               <div className="flex gap-8">
