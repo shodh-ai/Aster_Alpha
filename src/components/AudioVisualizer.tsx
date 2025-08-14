@@ -1,7 +1,28 @@
+// src/components/AudioVisualizer.tsx
+
 "use client";
 import { LocalAudioTrack } from "livekit-client";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useMemo, useRef } from "react";
 import * as THREE from "three";
+
+// Define the type for AgentMode
+type AgentMode = 'overall' | 'counsellor' | 'administration';
+
+// Create a configuration object for our visual styles
+const AGENT_VISUAL_STYLES = {
+  overall: {
+    glowColor: new THREE.Color(0x2a65b6), // Blue
+    breathingSpeed: 0.5,
+  },
+  counsellor: {
+    glowColor: new THREE.Color(0xEAEAEA), // White
+    breathingSpeed: 0.3,
+  },
+  administration: {
+    glowColor: new THREE.Color(0xFFD466), // Yellow
+    breathingSpeed: 0.7,
+  },
+};
 
 interface AudioVisualizerProps {
   track?: LocalAudioTrack;
@@ -10,7 +31,7 @@ interface AudioVisualizerProps {
   className?: string;
   minScale?: number;
   maxScale?: number;
-  breathingSpeed?: number;
+  mode: AgentMode;
 }
 
 export const AudioVisualizer: React.FC<AudioVisualizerProps> = ({
@@ -20,17 +41,25 @@ export const AudioVisualizer: React.FC<AudioVisualizerProps> = ({
   className,
   minScale = 1.0,
   maxScale = 1.5,
-  breathingSpeed = 0.5,
+  mode,
 }) => {
   const mountRef = useRef<HTMLDivElement>(null);
   const listenerRef = useRef<THREE.AudioListener | null>(null);
   const analyserRef = useRef<THREE.AudioAnalyser | null>(null);
+  // NEW: Add a ref to hold the scene object for access in the resize handler
+  const sceneRef = useRef<THREE.Scene | null>(null);
+
+  const currentStyle = useMemo(() => {
+    return AGENT_VISUAL_STYLES[mode] || AGENT_VISUAL_STYLES.overall;
+  }, [mode]);
 
   useEffect(() => {
     const currentMount = mountRef.current;
     if (!currentMount) return;
 
+    // --- Scene Setup ---
     const scene = new THREE.Scene();
+    sceneRef.current = scene; // Store scene in the ref
     const camera = new THREE.PerspectiveCamera(
       75,
       currentMount.clientWidth / currentMount.clientHeight,
@@ -44,23 +73,22 @@ export const AudioVisualizer: React.FC<AudioVisualizerProps> = ({
     renderer.setPixelRatio(window.devicePixelRatio);
     currentMount.appendChild(renderer.domElement);
 
+    // --- Rings Creation ---
     const rings: THREE.Mesh[] = [];
     const ringThickness = 0.55;
     const outerRingCenterRadius = 2.4;
     const innerRingCenterRadius = outerRingCenterRadius / 2;
-
     const ringRadii = [innerRingCenterRadius, outerRingCenterRadius];
 
     for (const centerRadius of ringRadii) {
       const innerRadius = centerRadius - ringThickness / 2;
       const outerRadius = centerRadius + ringThickness / 2;
       const geometry = new THREE.RingGeometry(innerRadius, outerRadius, 128);
-
       const material = new THREE.ShaderMaterial({
         uniforms: {
           time: { value: 0 },
-          glowColor: { value: new THREE.Color(0.3, 0.6, 1.0) },
-          breathingSpeed: { value: breathingSpeed },
+          glowColor: { value: currentStyle.glowColor },
+          breathingSpeed: { value: currentStyle.breathingSpeed },
         },
         vertexShader: `
           varying vec2 vUv;
@@ -97,7 +125,8 @@ export const AudioVisualizer: React.FC<AudioVisualizerProps> = ({
       scene.add(ring);
       rings.push(ring);
     }
-
+    
+    // --- Audio Analysis Setup ---
     const audioListener = new THREE.AudioListener();
     camera.add(audioListener);
     listenerRef.current = audioListener;
@@ -111,11 +140,12 @@ export const AudioVisualizer: React.FC<AudioVisualizerProps> = ({
       analyserRef.current = new THREE.AudioAnalyser(audio, 32);
     }
 
+    // --- Animation Loop ---
     let animationFrameId: number;
     const animate = () => {
       animationFrameId = requestAnimationFrame(animate);
       const time = Date.now() * 0.001;
-
+      
       let overallLoudness = 0;
       if (analyserRef.current && isMicrophoneEnabled) {
         const data = analyserRef.current.getAverageFrequency();
@@ -123,17 +153,20 @@ export const AudioVisualizer: React.FC<AudioVisualizerProps> = ({
       }
 
       rings.forEach((ring, index) => {
-        (ring.material as THREE.ShaderMaterial).uniforms.time.value = time;
-        
+        const material = ring.material as THREE.ShaderMaterial;
+        material.uniforms.time.value = time;
+        material.uniforms.glowColor.value = currentStyle.glowColor;
+        material.uniforms.breathingSpeed.value = currentStyle.breathingSpeed;
+
+        // The scaling here is for audio reactivity, not for layout responsiveness.
+        // The overall scene scale will handle layout responsiveness.
         if (isMicrophoneEnabled) {
-          // Combine breathing effect with microphone input visualization
-          const breathingEffect = (Math.sin(time * breathingSpeed + index * Math.PI) * 0.5 + 0.5) * 0.25;
-          const loudnessEffect = overallLoudness * (maxScale - minScale);
-          const scale = minScale + breathingEffect + loudnessEffect;
-          ring.scale.setScalar(Math.max(minScale, scale));
+            const breathingEffect = (Math.sin(time * currentStyle.breathingSpeed + index * Math.PI) * 0.5 + 0.5) * 0.25;
+            const loudnessEffect = overallLoudness * (maxScale - minScale);
+            const scale = minScale + breathingEffect + loudnessEffect;
+            ring.scale.setScalar(Math.max(minScale, scale));
         } else {
-          // When microphone is off, set to a static, non-breathing scale
-          ring.scale.setScalar(minScale);
+            ring.scale.setScalar(minScale);
         }
       });
 
@@ -141,31 +174,60 @@ export const AudioVisualizer: React.FC<AudioVisualizerProps> = ({
     };
     animate();
 
+    // --- Event Listeners & Responsive Scaling ---
+    // Define a base width that the original design was intended for.
+    const referenceWidth = 500; 
+
     const handleResize = () => {
-      camera.aspect = currentMount.clientWidth / currentMount.clientHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(currentMount.clientWidth, currentMount.clientHeight);
+      const currentMount = mountRef.current;
+      const currentScene = sceneRef.current; // Access scene via ref
+
+      if (currentMount && renderer && camera && currentScene) {
+        const { clientWidth, clientHeight } = currentMount;
+
+        // 1. Update renderer and camera aspect ratio (prevents distortion)
+        camera.aspect = clientWidth / clientHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(clientWidth, clientHeight);
+
+        // 2. NEW: Scale the entire scene to make it responsive
+        // This makes the visualizer's elements larger or smaller depending on container size.
+        const scale = clientWidth / referenceWidth;
+        currentScene.scale.set(scale, scale, scale);
+      }
     };
+    
     window.addEventListener("resize", handleResize);
 
+    // Call handler once on setup to set initial size and scale correctly
+    handleResize();
+
+    // --- Cleanup Function ---
     return () => {
       window.removeEventListener("resize", handleResize);
       cancelAnimationFrame(animationFrameId);
-      if (renderer.domElement && currentMount.contains(renderer.domElement)) {
-        currentMount.removeChild(renderer.domElement);
-      }
-      scene.children.forEach((obj) => {
-        if (obj instanceof THREE.Mesh) {
-          obj.geometry.dispose();
-          if (Array.isArray(obj.material)) {
-            obj.material.forEach(material => material.dispose());
+
+      scene.traverse((object) => {
+        if (object instanceof THREE.Mesh) {
+          object.geometry.dispose();
+          if (Array.isArray(object.material)) {
+            object.material.forEach(material => material.dispose());
           } else {
-            (obj.material as THREE.Material).dispose();
+            object.material.dispose();
           }
         }
       });
+      
+      renderer.dispose();
+      
+      if (currentMount && renderer.domElement) {
+        // Check if the domElement is still a child before removing
+        if (currentMount.contains(renderer.domElement)) {
+          currentMount.removeChild(renderer.domElement);
+        }
+      }
     };
-  }, [track, isMicrophoneEnabled, minScale, maxScale, breathingSpeed]);
+  }, [track, isMicrophoneEnabled, minScale, maxScale, currentStyle]);
 
   const handleVisualizerClick = () => {
     if (
@@ -183,7 +245,7 @@ export const AudioVisualizer: React.FC<AudioVisualizerProps> = ({
       ref={mountRef}
       onClick={handleVisualizerClick}
       className={className}
-      style={{ cursor: "pointer" }}
+      style={{ cursor: "pointer", width: "100%", height: "100%" }} // Ensure the container fills its parent
     />
   );
 };

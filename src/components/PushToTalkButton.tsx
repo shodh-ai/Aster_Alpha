@@ -9,17 +9,17 @@ import {
 } from "@livekit/components-react";
 import React, { useEffect, useState } from "react";
 import { AudioVisualizer } from "./AudioVisualizer";
-import { LocalParticipant } from "livekit-client";
 
-// NEW: Define PushToTalkControl outside the main component.
-// This prevents it from being redefined on every render.
-const PushToTalkControl = () => {
+// NEW: Define the type for the mode for better type safety
+type AgentMode = 'overall' | 'counsellor' | 'administration';
+
+// UPDATED: PushToTalkControl now accepts the 'mode' prop
+const PushToTalkControl = ({ mode }: { mode: AgentMode }) => {
   const { localParticipant } = useLocalParticipant();
   const [isMicrophoneEnabled, setIsMicrophoneEnabled] = useState(false);
 
   useEffect(() => {
     if (localParticipant) {
-      // Sync state with the actual participant state
       setIsMicrophoneEnabled(localParticipant.isMicrophoneEnabled);
     }
   }, [localParticipant]);
@@ -38,6 +38,8 @@ const PushToTalkControl = () => {
         onClick={handleToggleMicrophone}
         isMicrophoneEnabled={isMicrophoneEnabled}
         track={localParticipant.audioTrack}
+        // NEW: Pass the mode down to the visualizer
+        mode={mode}
         className={`
             w-full h-full rounded-full transition-all duration-300
             focus:outline-none focus:ring-4 focus:ring-blue-500/50
@@ -48,6 +50,7 @@ const PushToTalkControl = () => {
   );
 };
 
+// UPDATED: Ensure the mode prop type matches our defined type
 export const PushToTalkButton = ({ mode }: { mode: string }) => {
   const [token, setToken] = useState<string>("");
   const serverUrl = process.env.NEXT_PUBLIC_LIVEKIT_URL!;
@@ -80,7 +83,8 @@ export const PushToTalkButton = ({ mode }: { mode: string }) => {
   return (
     <LiveKitRoom token={token} serverUrl={serverUrl} connect={true} audio={true}>
       <RoomAudioRenderer />
-      <PushToTalkControl />
+      {/* UPDATED: Pass the mode to PushToTalkControl */}
+      <PushToTalkControl mode={mode as AgentMode} />
     </LiveKitRoom>
   );
 };
