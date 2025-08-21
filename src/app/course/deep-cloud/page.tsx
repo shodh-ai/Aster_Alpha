@@ -527,10 +527,10 @@ const SurveySection = (): JSX.Element => {
 
 const MentorSection = (): JSX.Element => {
     const testimonials = [
-        { image: "https://c.animaapp.com/meid0islaUbQOI/img/rectangle-2713.png", quote: "THE INNOVATIVE STRATEGIES THEY IMPLEMENTED INCREASED OUR ONLINE VISIBILITY AND SALES SIGNIFICANTLY.", name: "AISHA KHAN", title: "GREENTECH'S CEO" },
-        { image: "https://c.animaapp.com/meid0islaUbQOI/img/rectangle-3987.svg", quote: "THEIR TAILORED APPROACH TO SOCIAL MEDIA MANAGEMENT DROVE ENGAGEMENT AND BUILT A LOYAL COMMUNITY AROUND OUR BRAND.", name: "RAHUL GUPTA", title: "TRENDYWEAR'S FOUNDER" },
-        { image: "https://c.animaapp.com/meid0islaUbQOI/img/rectangle-2713.png", quote: "THE INNOVATIVE STRATEGIES THEY IMPLEMENTED INCREASED OUR ONLINE VISIBILITY AND SALES SIGNIFICANTLY.", name: "AISHA KHAN", title: "GREENTECH SOLUTIONS'S FOUNDER" },
-        { image: "https://c.animaapp.com/meid0islaUbQOI/img/rectangle-3987.svg", quote: "THEIR TAILORED APPROACH TO SOCIAL MEDIA MANAGEMENT DROVE ENGAGEMENT AND BUILT A LOYAL COMMUNITY AROUND OUR BRAND.", name: "RAHUL GUPTA", title: "TRENDYWEAR'S CEO" },
+        { image: "/aarav.svg", quote: "THE INNOVATIVE STRATEGIES THEY IMPLEMENTED INCREASED OUR ONLINE VISIBILITY AND SALES SIGNIFICANTLY.", name: "AISHA KHAN", title: "GREENTECH'S CEO" },
+        { image: "/sanket.svg", quote: "THEIR TAILORED APPROACH TO SOCIAL MEDIA MANAGEMENT DROVE ENGAGEMENT AND BUILT A LOYAL COMMUNITY AROUND OUR BRAND.", name: "RAHUL GUPTA", title: "TRENDYWEAR'S FOUNDER" },
+        { image: "/aarav.svg", quote: "THE INNOVATIVE STRATEGIES THEY IMPLEMENTED INCREASED OUR ONLINE VISIBILITY AND SALES SIGNIFICANTLY.", name: "AISHA KHAN", title: "GREENTECH SOLUTIONS'S FOUNDER" },
+        { image: "/sanket.svg", quote: "THEIR TAILORED APPROACH TO SOCIAL MEDIA MANAGEMENT DROVE ENGAGEMENT AND BUILT A LOYAL COMMUNITY AROUND OUR BRAND.", name: "RAHUL GUPTA", title: "TRENDYWEAR'S CEO" },
     ];
 
     const responsive = {
@@ -626,7 +626,7 @@ export default function DeepCloudCoursePage(): JSX.Element {
         <div className="bg-black w-full min-h-screen font-sans overflow-x-hidden">
             <div className="fixed inset-0 overflow-hidden pointer-events-none z-0 opacity-30 sm:opacity-50">
                 {/* FIXED: Replaced <img> with Image */}
-                <Image width={800} height={800} src="/Rightcircle.svg" alt="" className="absolute top-[-20%] right-[-35%] sm:right-[-15%] w-[80%] sm:w-1/2" />
+                {/* <Image width={800} height={800} src="/Rightcircle.svg" alt="" className="absolute top-[-20%] right-[-35%] sm:right-[-15%] w-[80%] sm:w-1/2" /> */}
                 <Image width={800} height={800} src="/Bottomcircle.svg" alt="" className="absolute bottom-[-20%] left-[-35%] sm:left-[-15%] w-[80%] sm:w-1/2" />
             </div>
 
