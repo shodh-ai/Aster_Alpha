@@ -2,13 +2,9 @@
 
 "use client";
 import { LocalAudioTrack } from "livekit-client";
-import React, { useEffect, useMemo, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import * as THREE from "three";
 
-// REMOVED: AgentMode type is no longer needed.
-// type AgentMode = 'overall' | 'counsellor' | 'administration';
-
-// CHANGED: Simplified the styles to only include the default 'overall' style.
 const AGENT_VISUAL_STYLE = {
   glowColor: new THREE.Color(0x2a65b6), // Blue
   breathingSpeed: 0.5,
@@ -21,7 +17,6 @@ interface AudioVisualizerProps {
   className?: string;
   minScale?: number;
   maxScale?: number;
-  // REMOVED: The 'mode' prop.
 }
 
 export const AudioVisualizer: React.FC<AudioVisualizerProps> = ({
@@ -37,10 +32,6 @@ export const AudioVisualizer: React.FC<AudioVisualizerProps> = ({
   const analyserRef = useRef<THREE.AudioAnalyser | null>(null);
   const sceneRef = useRef<THREE.Scene | null>(null);
 
-  // REMOVED: The useMemo hook is no longer needed as the style is static.
-  // const currentStyle = useMemo(() => {
-  //   return AGENT_VISUAL_STYLES[mode] || AGENT_VISUAL_STYLES.overall;
-  // }, [mode]);
   const currentStyle = AGENT_VISUAL_STYLE;
 
   useEffect(() => {
@@ -102,7 +93,6 @@ export const AudioVisualizer: React.FC<AudioVisualizerProps> = ({
               
               float alpha = smoothstep(inner_edge - blur, inner_edge + blur, dist) - smoothstep(outer_edge - blur, outer_edge + blur, dist);
 
-              // Breathing effect using sine wave for opacity
               float breathing = sin(time * breathingSpeed) * 0.5 + 0.5;
               
               gl_FragColor = vec4(glowColor, alpha * (breathing * 0.5 + 0.5));
@@ -123,11 +113,16 @@ export const AudioVisualizer: React.FC<AudioVisualizerProps> = ({
 
     if (track?.mediaStream) {
       const audio = new THREE.Audio(audioListener);
-      const mediaStreamSource = audioListener.context.createMediaStreamSource(
-        track.mediaStream
-      );
-      audio.setNodeSource(mediaStreamSource);
-      analyserRef.current = new THREE.AudioAnalyser(audio, 32);
+      
+      // ***** THIS IS THE FINAL, CORRECT FIX *****
+      // 1. Use the dedicated method to set the MediaStream as the source.
+      audio.setMediaStreamSource(track.mediaStream);
+
+      // 2. Create the analyser using the now-connected audio object.
+      const analyser = new THREE.AudioAnalyser(audio, 32);
+      
+      // 3. Store the analyser in the ref for use in the animation loop.
+      analyserRef.current = analyser;
     }
 
     // --- Animation Loop ---
@@ -145,7 +140,8 @@ export const AudioVisualizer: React.FC<AudioVisualizerProps> = ({
       rings.forEach((ring, index) => {
         const material = ring.material as THREE.ShaderMaterial;
         material.uniforms.time.value = time;
-        // No need to update glowColor or breathingSpeed as they are now constant
+        material.uniforms.glowColor.value = currentStyle.glowColor;
+        material.uniforms.breathingSpeed.value = currentStyle.breathingSpeed;
         
         if (isMicrophoneEnabled) {
             const breathingEffect = (Math.sin(time * currentStyle.breathingSpeed + index * Math.PI) * 0.5 + 0.5) * 0.25;
@@ -200,8 +196,8 @@ export const AudioVisualizer: React.FC<AudioVisualizerProps> = ({
           currentMount.removeChild(renderer.domElement);
       }
     };
-    // CHANGED: Removed currentStyle from dependency array as it's now a constant
-  }, [track, isMicrophoneEnabled, minScale, maxScale]);
+    // FIXED: Added dependencies to satisfy the ESLint rule.
+  }, [track, isMicrophoneEnabled, minScale, maxScale, currentStyle.breathingSpeed, currentStyle.glowColor]);
 
   const handleVisualizerClick = () => {
     if (

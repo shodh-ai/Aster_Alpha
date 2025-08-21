@@ -7,13 +7,10 @@ import {
   RoomAudioRenderer,
   useLocalParticipant,
 } from "@livekit/components-react";
+import { LocalAudioTrack } from 'livekit-client'; // Import the type
 import React, { useEffect, useState } from "react";
 import { AudioVisualizer } from "./AudioVisualizer";
 
-// REMOVED: AgentMode type is no longer needed here
-// type AgentMode = 'overall' | 'counsellor' | 'administration';
-
-// CHANGED: Removed the 'mode' prop
 const PushToTalkControl = () => {
   const { localParticipant } = useLocalParticipant();
   const [isMicrophoneEnabled, setIsMicrophoneEnabled] = useState(false);
@@ -23,6 +20,16 @@ const PushToTalkControl = () => {
       setIsMicrophoneEnabled(localParticipant.isMicrophoneEnabled);
     }
   }, [localParticipant]);
+
+  // ***** THIS IS THE FIX *****
+  // 1. Get the publications Map from the local participant.
+  const audioPublications = localParticipant.audioTrackPublications;
+
+  // 2. Get the first (and likely only) publication from the map.
+  const [firstAudioPublication] = Array.from(audioPublications.values());
+
+  // 3. Get the actual LocalAudioTrack from the publication.
+  const audioTrack = firstAudioPublication?.track as LocalAudioTrack | undefined;
 
   const handleToggleMicrophone = () => {
     if (localParticipant) {
@@ -37,8 +44,8 @@ const PushToTalkControl = () => {
       <AudioVisualizer
         onClick={handleToggleMicrophone}
         isMicrophoneEnabled={isMicrophoneEnabled}
-        track={localParticipant.audioTrack}
-        // REMOVED: The 'mode' prop is no longer passed to the visualizer
+        // 4. Pass the correctly retrieved audio track to the visualizer.
+        track={audioTrack}
         className={`
             w-full h-full rounded-full transition-all duration-300
             focus:outline-none focus:ring-4 focus:ring-blue-500/50
@@ -49,7 +56,6 @@ const PushToTalkControl = () => {
   );
 };
 
-// CHANGED: Removed the 'mode' prop from the component signature
 export const PushToTalkButton = () => {
   const [token, setToken] = useState<string>("");
   const serverUrl = process.env.NEXT_PUBLIC_LIVEKIT_URL!;
@@ -60,7 +66,6 @@ export const PushToTalkButton = () => {
 
     (async () => {
       try {
-        // CHANGED: Removed the 'mode' query parameter from the fetch request
         const resp = await fetch(
           `/api/livekit?room=${roomName}&username=${participantName}`
         );
@@ -70,7 +75,6 @@ export const PushToTalkButton = () => {
         console.error(e);
       }
     })();
-    // REMOVED: The 'mode' dependency from the useEffect hook
   }, []);
 
   if (token === "") {
@@ -84,7 +88,6 @@ export const PushToTalkButton = () => {
   return (
     <LiveKitRoom token={token} serverUrl={serverUrl} connect={true} audio={true}>
       <RoomAudioRenderer />
-      {/* CHANGED: Removed the 'mode' prop from PushToTalkControl */}
       <PushToTalkControl />
     </LiveKitRoom>
   );

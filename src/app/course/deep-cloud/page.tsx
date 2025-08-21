@@ -1,7 +1,11 @@
+// src/app/course/deep-cloud/page.tsx
+
 "use client";
 
 import { ArrowRightIcon, DownloadIcon, MenuIcon, XIcon } from "lucide-react";
 import React, { JSX, useEffect, useLayoutEffect, useRef, useState } from "react";
+import Link from "next/link"; // ADDED: Import Link
+import Image from "next/image"; // ADDED: Import Image
 import { Badge } from "../../../components/badge";
 import { Button } from "../../../components/button";
 import { Card, CardContent } from "../../../components/card";
@@ -14,28 +18,27 @@ import "react-multi-carousel/lib/styles.css";
 
 //==============================================================================
 // IDENTICAL HEADER & FOOTER
-// To ensure an identical look and feel, these are copied from your main page.tsx
 //==============================================================================
 
 const navItems = ["ALUMNI", "PROGRAMS", "RESOURCES", "FAQS"];
 
 const ContentContainer = ({ children, className = '' }: { children: React.ReactNode, className?: string }) => (
-    // MODIFICATION: Adjusted max-width for better responsiveness on mobile.
     <div className={`w-full max-w-[88%] sm:max-w-[88%] lg:max-w-[88%] mx-auto px-4 ${className}`}>
         {children}
     </div>
 );
 
 const PageHeader = () => {
-    // STATE for mobile menu
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     return (
         <header className="relative z-20 pt-9 w-full">
             <ContentContainer className="flex items-center justify-between gap-8">
-                <a href="/" aria-label="Go to homepage">
-                    <img className="w-[180px] sm:w-[219px] h-auto" alt="Aestr Alpha Logo" src="/logo.svg" />
-                </a>
+                {/* FIXED: Replaced <a> with <Link> */}
+                <Link href="/" aria-label="Go to homepage">
+                    {/* FIXED: Replaced <img> with Image */}
+                    <Image width={219} height={40} className="w-[180px] sm:w-[219px] h-auto" alt="Aestr Alpha Logo" src="/logo.svg" />
+                </Link>
 
                 {/* Desktop Navigation */}
                 <div className="hidden lg:flex flex-col lg:flex-row items-center gap-9">
@@ -136,9 +139,6 @@ const PageFooter = () => (
                     <h2 className="text-xl sm:text-2xl font-bold leading-tight">
                         CONFUSED ABOUT YOUR PATH? TALK TO AN OUR AI ENGINEER, NOT A COUNSELLOR.
                     </h2>
-                    
-
-
                 </div>
             </div>
             <div className="flex flex-col sm:flex-row justify-between items-center text-center sm:text-left pt-6 text-xs font-normal gap-4">
@@ -188,12 +188,14 @@ const HeroSection = (): JSX.Element => {
                         </Badge>
                     ))}
                 </div>
-                {/* MODIFICATION: Responsive font size */}
                 <h1 className="font-semibold text-white text-4xl sm:text-5xl tracking-wide leading-tight">
                     DEEP CLOUD &amp; MULTI-CLOUD ENGINEERING
                 </h1>
             </div>
-            <img
+            {/* FIXED: Replaced <img> with Image */}
+            <Image
+                width={1200}
+                height={420}
                 className="w-full h-auto max-h-[250px] sm:max-h-[420px] object-cover rounded-xl"
                 alt="Aircraft in a futuristic hangar, symbolizing cloud infrastructure"
                 src="/deep.svg"
@@ -201,7 +203,6 @@ const HeroSection = (): JSX.Element => {
             <p className="text-white/60 font-medium text-base tracking-widest leading-relaxed">
                 THE TECH LANDSCAPE IS EVOLVING, AND THE DEMAND IS SHIFTING FROM MERE CERTIFICATIONS TO VISIONARY ARCHITECTS WHO CAN DESIGN THE FUTURE. OUR PROGRAM OFFERS A RIGOROUS, FULL-DAY IMMERSION FROM 9 AM TO 9 PM, WHERE YOU WILL DIVE DEEP INTO THE INTRICACIES OF DESIGNING, CONSTRUCTING, AND AUTOMATING ROBUST, SCALABLE INFRASTRUCTURE THAT SUPPORTS LEADING TECH ENTERPRISES. COLLABORATE WITH INDUSTRY EXPERTS AT OUR PARTNER ORGANIZATION, SHODH AI, AND GAIN HANDS-ON EXPERIENCE THROUGH REAL-WORLD PROJECTS. BY THE END OF THIS PROGRAM, YOU WILL HAVE A COMPREHENSIVE PORTFOLIO SHOWCASING YOUR PRODUCTION-READY WORK, READY TO IMPRESS POTENTIAL EMPLOYERS.
             </p>
-            {/* MODIFICATION: Card height and internal layout adjusted for mobile */}
             <Card className="w-full h-auto rounded-xl border border-[#484848] bg-[#1a1a1a80] backdrop-blur-100 flex items-center">
                 <CardContent className="p-6 sm:p-8 w-full">
                     <div className="flex flex-col md:flex-row items-center justify-between gap-8 w-full">
@@ -217,9 +218,7 @@ const HeroSection = (): JSX.Element => {
                                 </div>
                                 {index < programDetails.length - 1 && (
                                    <>
-                                    {/* Show vertical separator on desktop */}
                                     <Separator orientation="vertical" className="hidden md:block h-12 bg-gray-700" />
-                                    {/* Show horizontal separator on mobile */}
                                     <Separator orientation="horizontal" className="block md:hidden w-full bg-gray-700" />
                                    </>
                                 )}
@@ -233,9 +232,6 @@ const HeroSection = (): JSX.Element => {
 };
 
 
-//==============================================================================
-// Why Choose This Program Section
-//==============================================================================
 const WhyChooseProgramSection = (): JSX.Element => {
     const features = [
         { icon: "/project1.svg", title: "REAL-WORLD PROJECTS", description: "GAIN HANDS-ON EXPERIENCE DESIGNING AND AUTOMATING PRODUCTION-GRADE INFRASTRUCTURE WITH INDUSTRY PARTNERS." },
@@ -245,16 +241,15 @@ const WhyChooseProgramSection = (): JSX.Element => {
 
     return (
         <section className="flex flex-col w-full items-center gap-12 sm:gap-16 relative">
-            {/* MODIFICATION: Responsive font size */}
             <h2 className="w-full text-3xl sm:text-5xl text-center tracking-[0.96px] leading-tight font-semibold text-white">WHY CHOOSE THIS PROGRAM</h2>
             <Card className="w-full bg-[#3a8dff] rounded-xl border-0">
                 <CardContent className="p-0 relative">
-                    {/* MODIFICATION: Stacks on mobile, grid on desktop */}
                     <div className="flex flex-col md:grid md:grid-cols-3">
                         {features.map((feature, index) => (
                             <React.Fragment key={index}>
                                 <div className="flex flex-col items-center justify-start text-center p-8 sm:p-12 gap-10">
-                                    <img className="w-20 h-20 sm:w-24 sm:h-24" alt="" src={feature.icon} />
+                                    {/* FIXED: Replaced <img> with Image */}
+                                    <Image width={96} height={96} className="w-20 h-20 sm:w-24 sm:h-24" alt="" src={feature.icon} />
                                     <div className="flex flex-col items-center gap-6">
                                         <h3 className="text-xl sm:text-2xl font-semibold text-white tracking-[0] leading-6">{feature.title}</h3>
                                         <p className="font-medium text-white text-sm tracking-[1.40px] leading-5">{feature.description}</p>
@@ -276,9 +271,6 @@ const WhyChooseProgramSection = (): JSX.Element => {
 };
 
 
-//==============================================================================
-// Alumni Lead Section
-//==============================================================================
 const AlumniLeadSection = (): JSX.Element => {
     const logos = [
         { src: "/citoh.svg", alt: "C.ITOH Logo" },
@@ -296,7 +288,6 @@ const AlumniLeadSection = (): JSX.Element => {
     const [emblaRef] = useEmblaCarousel({
         loop: true,
         align: 'start',
-        // MODIFICATION: Show fewer items on mobile
         slidesToScroll: 1,
     }, [Autoplay({ delay: 2000, stopOnInteraction: false, stopOnMouseEnter: true })]);
 
@@ -311,9 +302,9 @@ const AlumniLeadSection = (): JSX.Element => {
                         <div className="overflow-hidden w-full" ref={emblaRef}>
                             <div className="flex">
                                 {logos.map((logo, index) => (
-                                    // MODIFICATION: Responsive slide width
                                     <div key={index} className="flex-[0_0_50%] sm:flex-[0_0_33.33%] md:flex-[0_0_20%] min-w-0 px-4 flex items-center justify-center">
-                                        <img className="h-5 sm:h-6 md:h-8" alt={logo.alt} src={logo.src} />
+                                        {/* FIXED: Replaced <img> with Image */}
+                                        <Image width={100} height={32} className="h-5 sm:h-6 md:h-8 w-auto" alt={logo.alt} src={logo.src} />
                                     </div>
                                 ))}
                             </div>
@@ -326,9 +317,6 @@ const AlumniLeadSection = (): JSX.Element => {
 };
 
 
-//==============================================================================
-// Curriculum Timeline Section
-//==============================================================================
 const CurriculumTimelineSection = (): JSX.Element => {
     const phases = [
         { id: 1, badge: "PHASE 1 (WEEKS 1-8)", title: "THE EVOLUTIONARY INVENTION", description: "This foundational phase is a hands-on immersion into building and automating secure, scalable cloud infrastructure. You will move beyond the console and learn to command the cloud through code.", details: "ADVANCED VPC & NETWORK DESIGN\nIDENTITY AND ACCESS MANAGEMENT (IAM)\nINFRASTRUCTURE AS CODE (IAC) WITH TERRAFORM\nCONFIGURATION MANAGEMENT WITH ANSIBLE\nCI/CD PIPELELINES FOR INFRASTRUCTURE" },
@@ -366,11 +354,9 @@ const CurriculumTimelineSection = (): JSX.Element => {
             const firstPhaseRef = phaseRefs.current[0];
             if (timelineRef.current && firstPhaseRef && maxLineHeight > 0 && phases.length > 1) {
                 const windowHeight = window.innerHeight;
-                // The activation point is when the top of a phase element reaches the center of the viewport.
                 const activationPoint = windowHeight * 0.5;
 
                 let latestActiveId = 1;
-                // Find the latest phase that has scrolled past the activation point.
                 phaseRefs.current.forEach((phaseRef, index) => {
                     if (phaseRef && phaseRef.getBoundingClientRect().top <= activationPoint) {
                         latestActiveId = index + 1;
@@ -379,12 +365,9 @@ const CurriculumTimelineSection = (): JSX.Element => {
 
                 setActivePhaseId(latestActiveId);
                 
-                // Get the DOM element for the currently active phase.
                 const activePhaseRef = phaseRefs.current[latestActiveId - 1];
 
                 if (activePhaseRef) {
-                    // Calculate the precise height from the top of the first phase's container
-                    // to the top of the active phase's container.
                     const targetHeight = activePhaseRef.offsetTop - firstPhaseRef.offsetTop;
                     setLineHeight(targetHeight);
                 }
@@ -392,18 +375,17 @@ const CurriculumTimelineSection = (): JSX.Element => {
         };
 
         window.addEventListener('scroll', handleScroll);
-        // Run once on mount to set the initial state correctly
         handleScroll(); 
         
         return () => window.removeEventListener('scroll', handleScroll);
     }, [maxLineHeight, phases.length]);
-1
+
+    // REMOVED: The stray '1' that was here.
     
     return (
         <section className="flex flex-col w-full items-start gap-12 sm:gap-16 relative">
             <h2 className="font-semibold text-white text-3xl sm:text-5xl tracking-[0.96px] leading-tight">COURSE CURRICULUM</h2>
             <div ref={timelineRef} className="relative w-full">
-                {/* MODIFICATION: Adjusted positioning for smaller screens */}
                 <div
                     className="absolute left-2 sm:left-4 top-2 w-1 bg-white/10 rounded-full"
                     style={{ height: `${maxLineHeight}px` }}
@@ -426,11 +408,11 @@ const CurriculumTimelineSection = (): JSX.Element => {
                         </div>
                         <article className="flex flex-col items-start gap-6 sm:gap-7">
                         <Badge 
-    variant="outline" 
-    className="border-white/20 text-white bg-transparent hover:bg-transparent h-auto w-fit px-4 py-2 rounded-full text-xs sm:text-sm whitespace-nowrap"
->
-    {phase.badge}
-</Badge>
+                            variant="outline" 
+                            className="border-white/20 text-white bg-transparent hover:bg-transparent h-auto w-fit px-4 py-2 rounded-full text-xs sm:text-sm whitespace-nowrap"
+                        >
+                            {phase.badge}
+                        </Badge>
                             <h3 className="font-semibold text-white text-2xl sm:text-3xl">{phase.title}</h3>
                             <p className="opacity-60 font-medium text-white text-base tracking-wider leading-relaxed">{phase.description}</p>
                             <ul className="list-disc pl-5 opacity-60 font-medium text-white text-base tracking-wider leading-relaxed space-y-2">
@@ -446,9 +428,6 @@ const CurriculumTimelineSection = (): JSX.Element => {
     );
 };
 
-//==============================================================================
-//Mentors & Alumni Section
-//==============================================================================
 const AlumniSection = (): JSX.Element => {
     const mentors = [
         { name: "ZARA MEHTA", title: "SPECIALIST AT ZOOMTECH", testimonial: "As a technical specialist, I aspired to transition into AI/ML but felt overwhelmed. Aestr Alpha's structured curriculum and interactive workshops provided the clarity and skills I needed.", image: "/zara.svg", icon: "/google.svg" },
@@ -470,11 +449,11 @@ const AlumniSection = (): JSX.Element => {
             <div className="overflow-hidden w-full" ref={emblaRef}>
                 <div className="flex -ml-3">
                     {mentors.map((mentor, index) => (
-                         // MODIFICATION: Responsive slide width
                         <div key={index} className="flex-[0_0_100%] sm:flex-[0_0_50%] lg:flex-[0_0_33.33%] pl-3">
                             <Card className="relative w-full h-[580px] rounded-xl overflow-hidden bg-[#1a1a1a] border-[#484848]">
                                 <CardContent className="p-0 h-full">
-                                    <img className="absolute w-full h-3/5 top-0 left-0 object-cover pt-5 px-5 rounded-t-xl" alt={`Portrait of ${mentor.name}`} src={mentor.image} />
+                                    {/* FIXED: Replaced <img> with Image */}
+                                    <Image width={400} height={348} className="absolute w-full h-3/5 top-0 left-0 object-cover pt-5 px-5 rounded-t-xl" alt={`Portrait of ${mentor.name}`} src={mentor.image} />
                                     <div className="absolute bottom-0 left-0 p-6 w-full h-2/5 flex flex-col justify-end bg-gradient-to-t from-black via-black/70 to-transparent">
                                         <div className="flex flex-col items-start gap-2">
                                             <h3 className="text-xl font-semibold text-white">{mentor.name}</h3>
@@ -482,7 +461,8 @@ const AlumniSection = (): JSX.Element => {
                                         </div>
                                         <p className="mt-4 opacity-60 font-medium text-white text-base tracking-wider leading-relaxed line-clamp-3">{mentor.testimonial}</p>
                                     </div>
-                                    <img className="absolute w-16 h-16 sm:w-20 sm:h-20 top-1/2 right-4 sm:right-6" alt="Quote icon" src={mentor.icon} />
+                                    {/* FIXED: Replaced <img> with Image */}
+                                    <Image width={80} height={80} className="absolute w-16 h-16 sm:w-20 sm:h-20 top-1/2 right-4 sm:right-6" alt="Quote icon" src={mentor.icon} />
                                 </CardContent>
                             </Card>
                         </div>
@@ -493,9 +473,6 @@ const AlumniSection = (): JSX.Element => {
     );
 };
 
-//==============================================================================
-// Call to Action Section
-//==============================================================================
 const CallToActionSection = (): JSX.Element => {
     return (
         <section className="w-full">
@@ -524,9 +501,6 @@ const CallToActionSection = (): JSX.Element => {
     );
 };
 
-//==============================================================================
-// Survey Section
-//==============================================================================
 const SurveySection = (): JSX.Element => {
     return (
         <section className="w-full">
@@ -551,9 +525,6 @@ const SurveySection = (): JSX.Element => {
     );
 };
 
-//==============================================================================
-// Mentor Section
-//==============================================================================
 const MentorSection = (): JSX.Element => {
     const testimonials = [
         { image: "https://c.animaapp.com/meid0islaUbQOI/img/rectangle-2713.png", quote: "THE INNOVATIVE STRATEGIES THEY IMPLEMENTED INCREASED OUR ONLINE VISIBILITY AND SALES SIGNIFICANTLY.", name: "AISHA KHAN", title: "GREENTECH'S CEO" },
@@ -565,7 +536,7 @@ const MentorSection = (): JSX.Element => {
     const responsive = {
         desktop: { breakpoint: { max: 3000, min: 1024 }, items: 2, partialVisibilityGutter: 40 },
         tablet: { breakpoint: { max: 1024, min: 768 }, items: 1, partialVisibilityGutter: 30 },
-        mobile: { breakpoint: { max: 768, min: 0 }, items: 1, partialVisibilityGutter: 20 }, // MODIFICATION
+        mobile: { breakpoint: { max: 768, min: 0 }, items: 1, partialVisibilityGutter: 20 },
     };
 
     return (
@@ -589,18 +560,17 @@ const MentorSection = (): JSX.Element => {
                 >
                     {testimonials.map((testimonial, index) => (
                         <div key={index} className="px-2 h-full">
-                            {/* MODIFICATION: Card layout adjusted for mobile */}
                             <div
-    className={`flex flex-col sm:flex-row w-full h-auto sm:h-[248px] items-center p-4 rounded-[12px] gap-4 sm:gap-2.5
-    relative backdrop-blur-[50px]
-    bg-[#1a1a1a] border border-[#484848]`}
->
+                                className={`flex flex-col sm:flex-row w-full h-auto sm:h-[248px] items-center p-4 rounded-[12px] gap-4 sm:gap-2.5 relative backdrop-blur-[50px] bg-[#1a1a1a] border border-[#484848]`}
+                            >
                                 <div className="w-full sm:w-2/5 h-[200px] sm:h-full flex-shrink-0">
-                                    <img className="w-full h-full object-cover rounded-lg" alt={testimonial.name} src={testimonial.image} />
+                                    {/* FIXED: Replaced <img> with Image */}
+                                    <Image width={200} height={232} className="w-full h-full object-cover rounded-lg" alt={testimonial.name} src={testimonial.image} />
                                 </div>
                                 <div className="w-full sm:w-3/5 h-full flex flex-col justify-between py-1 gap-4">
+                                    {/* FIXED: Escaped quotes */}
                                     <p className="opacity-60 font-medium text-white text-sm sm:text-base leading-relaxed">
-                                        "{testimonial.quote}"
+                                        &ldquo;{testimonial.quote}&rdquo;
                                     </p>
                                     <div className="flex flex-col items-start gap-2">
                                         <h3 className="font-semibold text-white text-lg sm:text-xl leading-6">{testimonial.name}</h3>
@@ -616,10 +586,8 @@ const MentorSection = (): JSX.Element => {
     );
 };
 
-//==============================================================================
-// Why Section
-//==============================================================================
-export const WhySection = (): JSX.Element => {
+// REMOVED: export keyword
+const WhySection = (): JSX.Element => {
     const featuredItems = [
         { image: "https://c.animaapp.com/meid0islaUbQOI/img/rectangle-72.png", title: "SECURING YOUR BUSINESS AND\nEMPLOYEES IS ALWAYS OUR PRIORITY", description: "LOREM IPSUM DOLOR SIT AMET CONSECTETUR. MASSA DAPIBUS SED LACINIA ODIO AMET. NEQUE EGET COMMODO AMET ADIPISCING EGESTAS FAUCIBUS DIGNISSIM LOBORTIS VITAE." },
         { image: "https://c.animaapp.com/meid0islaUbQOI/img/rectangle-71.png", title: "HOW WE HELPED A\nBRAND FROM A POTENTIAL THEFT", description: "LOREM IPSUM DOLOR SIT AMET CONSECTETUR. MASSA DAPIBUS SED LACINIA ODIO AMET. NEQUE EGET COMMODO AMET ADIPISCING EGESTAS FAUCIBUS DIGNISSIM LOBORTIS VITAE." },
@@ -631,11 +599,11 @@ export const WhySection = (): JSX.Element => {
                 <h2 className="w-full font-semibold text-white text-3xl md:text-4xl lg:text-5xl tracking-wide leading-tight">
                     WHY AESTR ALPHA DATA SCIENCE PROGRAM?
                 </h2>
-                {/* MODIFICATION: Stacks on mobile */}
                 <div className="flex flex-col lg:flex-row w-full items-start justify-between gap-12 lg:gap-16">
                     {featuredItems.map((item, index) => (
                         <div key={index} className="flex flex-col items-start gap-8 flex-1 w-full">
-                            <img className="w-full h-auto max-h-[300px] sm:max-h-[600px] object-cover rounded-lg" alt="Featured item" src={item.image} />
+                            {/* FIXED: Replaced <img> with Image */}
+                            <Image width={600} height={600} className="w-full h-auto max-h-[300px] sm:max-h-[600px] object-cover rounded-lg" alt="Featured item" src={item.image} />
                             <h3 className="w-full [-webkit-text-stroke:1px_#ffffff33] font-semibold text-white text-xl md:text-2xl tracking-normal leading-snug whitespace-pre-line">
                                 {item.title}
                             </h3>
@@ -656,13 +624,12 @@ export const WhySection = (): JSX.Element => {
 export default function DeepCloudCoursePage(): JSX.Element {
     return (
         <div className="bg-black w-full min-h-screen font-sans overflow-x-hidden">
-            {/* Background decorative elements */}
             <div className="fixed inset-0 overflow-hidden pointer-events-none z-0 opacity-30 sm:opacity-50">
-                <img src="/Rightcircle.svg" alt="" className="absolute top-[-20%] right-[-35%] sm:right-[-15%] w-[80%] sm:w-1/2" />
-                <img src="/Bottomcircle.svg" alt="" className="absolute bottom-[-20%] left-[-35%] sm:left-[-15%] w-[80%] sm:w-1/2" />
+                {/* FIXED: Replaced <img> with Image */}
+                <Image width={800} height={800} src="/Rightcircle.svg" alt="" className="absolute top-[-20%] right-[-35%] sm:right-[-15%] w-[80%] sm:w-1/2" />
+                <Image width={800} height={800} src="/Bottomcircle.svg" alt="" className="absolute bottom-[-20%] left-[-35%] sm:left-[-15%] w-[80%] sm:w-1/2" />
             </div>
 
-            {/* Main content wrapper */}
             <div className="relative z-10">
                 <PageHeader />
                 <main className="py-16 sm:py-24">
