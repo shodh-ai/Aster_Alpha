@@ -14,8 +14,8 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: "Plus Jakarta Sans", sans-serif;
+  --font-mono: "Plus Jakarta Sans", sans-serif;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -28,7 +28,7 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Plus-jakarta-sans, sans-serif;
+  font-family: "Plus Jakarta Sans", sans-serif;
 }
 
 /* === ADDED FOR LIVEKIT PUSH-TO-TALK === */

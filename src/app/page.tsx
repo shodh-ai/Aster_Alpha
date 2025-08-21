@@ -45,12 +45,12 @@ const PageHeader = () => {
         <div className="hidden lg:flex items-center gap-9">
           <nav className="flex items-center gap-9">
             {navItems.map((item, index) => (
-              <button key={index} className="font-['Plus_Jakarta_Sans',Helvetica] font-medium text-white text-base whitespace-nowrap">{item}</button>
+              <button key={index} className="font-sans font-medium text-white text-base whitespace-nowrap">{item}</button>
             ))}
           </nav>
           <div className="flex items-center gap-3">
-            <Button variant="outline" className="w-[99px] h-[50px] rounded-[6px]"><span className="font-['Plus_Jakarta_Sans',Helvetica] font-bold text-white text-sm tracking-[1.40px]">LOGIN</span></Button>
-            <Button className="w-[161px] h-[50px] px-6 rounded-[6px] bg-[#3a8dff]"><span className="font-['Plus_Jakarta_Sans',Helvetica] font-bold text-white text-sm tracking-[1.40px]">GET IN TOUCH</span></Button>
+            <Button variant="outline" className="w-[99px] h-[50px] rounded-[6px]"><span className="font-sans font-bold text-white text-sm tracking-[1.40px]">LOGIN</span></Button>
+            <Button className="w-[161px] h-[50px] px-6 rounded-[6px] bg-[#3a8dff]"><span className="font-sans font-bold text-white text-sm tracking-[1.40px]">GET IN TOUCH</span></Button>
           </div>
         </div>
 
@@ -61,11 +61,11 @@ const PageHeader = () => {
         <div className="lg:hidden absolute top-full left-0 w-full bg-black/95 backdrop-blur-sm z-30 mt-4 shadow-lg">
           <div className="flex flex-col items-center gap-6 py-8">
             <nav className="flex flex-col items-center gap-6">
-              {navItems.map((item, index) => (<button key={index} className="font-['Plus_Jakarta_Sans',Helvetica] font-medium text-white text-lg">{item}</button>))}
+              {navItems.map((item, index) => (<button key={index} className="font-sans font-medium text-white text-lg">{item}</button>))}
             </nav>
             <div className="flex flex-col items-center gap-4 w-full px-8 mt-4">
-              <Button variant="outline" className="w-full h-[50px]"><span className="font-['Plus_Jakarta_Sans',Helvetica] font-bold text-white text-sm tracking-[1.40px]">LOGIN</span></Button>
-              <Button className="w-full h-[50px] bg-[#3a8dff]"><span className="font-['Plus_Jakarta_Sans',Helvetica] font-bold text-white text-sm tracking-[1.40px]">GET IN TOUCH</span></Button>
+              <Button variant="outline" className="w-full h-[50px]"><span className="font-sans font-bold text-white text-sm tracking-[1.40px]">LOGIN</span></Button>
+              <Button className="w-full h-[50px] bg-[#3a8dff]"><span className="font-sans font-bold text-white text-sm tracking-[1.40px]">GET IN TOUCH</span></Button>
             </div>
           </div>
         </div>
@@ -87,7 +87,7 @@ const HeroSection = () => (
           </div>
           <p className="font-medium text-white/80 text-base leading-6 uppercase tracking-wider">Aestr Alpha Turns Your Degree Into A 10–15 Lpa Career With 9–9 Hands-on Training, Real Industry Projects, And Monthly Placement Drives Into High-impact Companies.</p>
         </div>
-        <Button className="w-[200px] h-[50px] px-6 rounded-[6px] bg-[#3a8dff] flex items-center justify-center self-center lg:self-start"><span className="font-['Plus_Jakarta_Sans',Helvetica] font-bold text-white text-sm tracking-[1.40px]">GET IN TOUCH</span></Button>
+        <Button className="w-[200px] h-[50px] px-6 rounded-[6px] bg-[#3a8dff] flex items-center justify-center self-center lg:self-start"><span className="font-sans font-bold text-white text-sm tracking-[1.40px]">GET IN TOUCH</span></Button>
         <div className="flex flex-col sm:flex-row items-center sm:items-start gap-10 sm:gap-12 w-full justify-center lg:justify-start">
           {stats.map((stat, index) => (<Card key={index} className="bg-transparent border-none"><CardContent className="flex flex-col items-center sm:items-start gap-[16px] p-0"><span className="font-semibold text-[#3a8dff] text-4xl tracking-[0.72px] leading-[39.6px] whitespace-nowrap">{stat.value}</span><span className="opacity-60 font-medium text-white text-sm tracking-[1.40px] leading-5 whitespace-nowrap">{stat.label}</span></CardContent></Card>))}
         </div>
@@ -114,7 +114,7 @@ const VideoSection = () => (
 const PopularCoursesSection = () => (
   <section className="w-full mt-24 lg:mt-[200px]">
       <ContentContainer className="flex flex-col items-center gap-12 lg:gap-[60px]">
-          <h2 className="relative font-['Plus_Jakarta_Sans',Helvetica] font-semibold text-white text-4xl md:text-5xl text-center tracking-[0.96px] leading-tight">
+          <h2 className="relative font-sans font-semibold text-white text-4xl md:text-5xl text-center tracking-[0.96px] leading-tight">
               OUR POPULAR COURSES
           </h2>
           <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-[16px]">
@@ -127,17 +127,17 @@ const PopularCoursesSection = () => (
                           <div>
                               <div className="flex flex-wrap items-center gap-x-9 gap-y-4">
                                   {/* FIXED: Replaced <img> with Image */}
-                                  <div className="inline-flex items-center gap-2"><Image width={20} height={20} className="w-5 h-5" alt="Calendar" src="/calendar_today.svg" /><span className="font-['Plus_Jakarta_Sans',Helvetica] font-medium text-[#3a8dff] text-sm tracking-widest leading-5">6-MONTH INTENSIVE TRACK</span></div>
-                                  <div className="inline-flex items-center gap-2"><Image width={20} height={20} className="w-5 h-5 " alt="Project" src="/project.svg" /><span className="font-['Plus_Jakarta_Sans',Helvetica] font-medium text-[#3a8dff] text-sm tracking-widest leading-5">4+ LIVE PRODUCTION PROJECTS</span></div>
+                                  <div className="inline-flex items-center gap-2"><Image width={20} height={20} className="w-5 h-5" alt="Calendar" src="/calendar_today.svg" /><span className="font-sans font-medium text-[#3a8dff] text-sm tracking-widest leading-5">6-MONTH INTENSIVE TRACK</span></div>
+                                  <div className="inline-flex items-center gap-2"><Image width={20} height={20} className="w-5 h-5 " alt="Project" src="/project.svg" /><span className="font-sans font-medium text-[#3a8dff] text-sm tracking-widest leading-5">4+ LIVE PRODUCTION PROJECTS</span></div>
                               </div>
                               <div className="flex flex-col items-start gap-4 my-8">
-                                  <h3 className="font-['Plus_Jakarta_Sans'] font-semibold text-white text-2xl sm:text-[28px] tracking-[0] leading-tight text-left">DEEP CLOUD & MULTI-CLOUD ENGINEERING</h3>
-                                  <p className="opacity-60 font-['Plus_Jakarta_Sans',Helvetica] font-medium text-white text-sm tracking-widest leading-relaxed text-left">IN THIS PROGRAM, YOU WILL BUILD A SCALABLE, MULTI-REGION WEB APPLICATION WITH AUTOMATED FAILOVER, A CI/CD PIPELINE USING INFRASTRUCTURE AS CODE (IAC) TO MANAGE PRODUCTION ENVIRONMENTS, AND A SERVERLESS DATA PROCESSING WORKFLOW FOR REAL-TIME ANALYTICS.</p>
+                                  <h3 className="font-sans font-semibold text-white text-2xl sm:text-[28px] tracking-[0] leading-tight text-left">DEEP CLOUD & MULTI-CLOUD ENGINEERING</h3>
+                                  <p className="opacity-60 font-sans font-medium text-white text-sm tracking-widest leading-relaxed text-left">IN THIS PROGRAM, YOU WILL BUILD A SCALABLE, MULTI-REGION WEB APPLICATION WITH AUTOMATED FAILOVER, A CI/CD PIPELINE USING INFRASTRUCTURE AS CODE (IAC) TO MANAGE PRODUCTION ENVIRONMENTS, AND A SERVERLESS DATA PROCESSING WORKFLOW FOR REAL-TIME ANALYTICS.</p>
                               </div>
                           </div>
                           <div className="flex flex-col sm:flex-row items-center gap-6 mt-auto">
-                              <Button variant="outline" className="w-full h-14 sm:h-16 flex items-center justify-between pl-7 pr-6 py-2"><span className="font-['Plus_Jakarta_Sans',Helvetica] font-extrabold text-[#ffffffcc] text-sm tracking-[1.40px]">BROCHURE</span><Image width={18} height={18} className="w-[18px] h-[18px]" alt="Download" src="/download.svg" /></Button>
-                              <Button className="w-full h-14 sm:h-16 flex items-center justify-between pl-7 pr-5 py-2.5 bg-[#3a8dff]"><span className="font-['Plus_Jakarta_Sans',Helvetica] font-extrabold text-white text-sm tracking-[1.40px]">APPLY NOW</span><Image width={18} height={18} className="w-[18px] h-[18px]" alt="Apply" src="/arrow.svg" /></Button>
+                              <Button variant="outline" className="w-full h-14 sm:h-16 flex items-center justify-between pl-7 pr-6 py-2"><span className="font-sans font-extrabold text-[#ffffffcc] text-sm tracking-[1.40px]">BROCHURE</span><Image width={18} height={18} className="w-[18px] h-[18px]" alt="Download" src="/download.svg" /></Button>
+                              <Button className="w-full h-14 sm:h-16 flex items-center justify-between pl-7 pr-5 py-2.5 bg-[#3a8dff]"><span className="font-sans font-extrabold text-white text-sm tracking-[1.40px]">APPLY NOW</span><Image width={18} height={18} className="w-[18px] h-[18px]" alt="Apply" src="/arrow.svg" /></Button>
                           </div>
                       </div>
                   </CardContent>
@@ -254,7 +254,7 @@ const TimelineSection = () => {
           <ContentContainer>
               <Card className="relative mx-auto w-full rounded-xl border border-solid border-[#484848] bg-[#1a1a1a]">
                   <CardContent className="p-4 sm:p-8 md:p-12">
-                      <h2 className="text-center mb-8 font-['Plus_Jakarta_Sans',Helvetica] font-semibold text-white text-3xl md:text-5xl tracking-[0.96px] leading-tight">COURSE LEARNINGS TIMELINE</h2>
+                      <h2 className="text-center mb-8 font-sans font-semibold text-white text-3xl md:text-5xl tracking-[0.96px] leading-tight">COURSE LEARNINGS TIMELINE</h2>
                                             
                       <div className="relative w-full px-0 sm:px-4 md:px-12 py-8">
                           <div className="relative flex justify-between items-center">
@@ -266,8 +266,8 @@ const TimelineSection = () => {
                               {detailedTimelineData.map((phase, index) => (
                                   <div key={phase.phase} className="relative z-10 flex flex-col items-center text-center w-1/4">
                                       <div className="h-16 flex flex-col justify-end items-center gap-1 mb-2 sm:mb-3">
-                                          <div className="font-['Plus_Jakarta_Sans',Helvetica] font-extrabold text-white text-[9px] sm:text-xs md:text-sm tracking-normal sm:tracking-widest">{phase.phase}</div>
-                                          <div className="font-['Plus_Jakarta_Sans',Helvetica] font-extrabold text-white text-[9px] sm:text-xs md:text-sm tracking-normal sm:tracking-widest">{phase.duration}</div>
+                                          <div className="font-sans font-extrabold text-white text-[9px] sm:text-xs md:text-sm tracking-normal sm:tracking-widest">{phase.phase}</div>
+                                          <div className="font-sans font-extrabold text-white text-[9px] sm:text-xs md:text-sm tracking-normal sm:tracking-widest">{phase.duration}</div>
                                       </div>
                                       
                                       <button onClick={() => setActivePhaseIndex(index)} className={`relative w-6 h-6 sm:w-8 sm:h-8 rounded-2xl flex items-center justify-center transition-all duration-300 ${index === activePhaseIndex ? 'bg-[#3a8dff] scale-110' : 'bg-black border border-solid border-[#3a8dff]'}`}>
@@ -279,7 +279,7 @@ const TimelineSection = () => {
                                       </button>
                                       
                                       <div className="h-20 sm:h-16 mt-2 sm:mt-3 flex items-start justify-center">
-                                          <div className="font-['Plus_Jakarta_Sans',Helvetica] font-extrabold text-white text-[9px] sm:text-xs md:text-sm text-center tracking-normal sm:tracking-widest">{phase.title}</div>
+                                          <div className="font-sans font-extrabold text-white text-[9px] sm:text-xs md:text-sm text-center tracking-normal sm:tracking-widest">{phase.title}</div>
                                       </div>
                                   </div>
                               ))}
@@ -315,49 +315,71 @@ const TimelineSection = () => {
 
 
 const PageFooter = () => (
-    <footer style={{ background: '#4187F7' }} className="font-['Plus_Jakarta_Sans',Helvetica] text-white flex items-center justify-center p-4 sm:p-8">
-        <ContentContainer className="h-full flex flex-col justify-center">
-            <div className="flex flex-col lg:flex-row justify-between items-start py-8 border-b border-white/50 gap-8">
-                <div className="flex flex-col gap-8"><div className="font-semibold text-2xl">AESTR Alpha</div><div className="flex gap-16 text-sm font-normal"><div className="flex flex-col gap-3"><a href="#" className="hover:underline">HOME</a><a href="#" className="hover:underline">RESOURCES</a><a href="#" className="hover:underline">CONTACT US</a></div><div className="flex flex-col gap-3"><a href="#" className="hover:underline">PROGRAMS</a><a href="#" className="hover:underline">CONTACT US</a></div></div></div>
-                <div className="flex flex-col items-start gap-4 text-left max-w-xl"><p className="font-normal text-xs leading-5 tracking-wider">AESTR ALPHA TURNS YOUR DEGREE INTO A 10-15 LPA CAREER WITH HANDS-ON TRAINING, REAL PROJECTS, AND MONTHLY PLACEMENTS.</p><h2 className="text-xl sm:text-2xl font-bold leading-tight">CONFUSED ABOUT YOUR PATH? TALK TO AN OUR AI ENGINEER, NOT A COUNSELLOR.</h2><Button
-                  variant="secondary"
-                  className="bg-white text-black hover:bg-gray-200 px-6 py-2 rounded-md mt-2 h-16 w-full max-w-[213px] sm:w-[213px]"
-                >
-                  <div className="flex items-center justify-between w-full">
-                    <span
-                      style={{
-                        fontFamily: '"Plus Jakarta Sans", sans-serif',
-                        fontWeight: 800,
-                        fontSize: '14px',
-                        lineHeight: '20px',
-                        letterSpacing: '10%',
-                        textTransform: 'uppercase',
-                        color: '#3A8DFF',
-                      }}
-                    >
-                      TALK NOW
-                    </span>
-                    {/* FIXED: Replaced <img> with Image */}
-                    <Image
-                      width={20} height={20}
-                      src="/arrowright.svg"
-                      alt="Arrow"
-                      className="w-5 h-5"
-                    />
+  <footer style={{ background: '#4187F7' }} className="font-sans text-white flex items-center justify-center p-4 sm:p-8">
+      <ContentContainer className="h-full flex flex-col justify-center">
+          <div className="flex flex-col lg:flex-row justify-between items-start py-8 border-b border-white/50 gap-8">
+              <div className="flex flex-col gap-8">
+                  {/* Replace the text with your SVG logo */}
+                  <img src="/logo.svg" alt="AESTR Alpha Logo" className="h-8 w-auto" /> {/* Adjust height and width as needed */}
+                  <div className="flex gap-16 text-sm font-normal">
+                      <div className="flex flex-col gap-3">
+                          <a href="#" className="hover:underline">HOME</a>
+                          <a href="#" className="hover:underline">RESOURCES</a>
+                          <a href="#" className="hover:underline">CONTACT US</a>
+                      </div>
+                      <div className="flex flex-col gap-3">
+                          <a href="#" className="hover:underline">PROGRAMS</a>
+                          <a href="#" className="hover:underline">CONTACT US</a>
+                      </div>
                   </div>
-                </Button></div>
-            </div>
-            <div className="flex flex-col sm:flex-row justify-between items-center text-center sm:text-left pt-6 text-xs font-normal gap-4"><p>2025 AESTR ALPHA</p><div className="flex flex-col sm:flex-row gap-4 sm:gap-8"><a href="#" className="hover:underline">PRIVACY POLICY</a><a href="#" className="hover:underline">TERMS & CONDITIONS</a></div></div>
-        </ContentContainer>
-    </footer>
+              </div>
+              <div className="flex flex-col items-start gap-4 text-left max-w-xl">
+                  <p className="font-normal text-xs leading-5 tracking-wider">AESTR ALPHA TURNS YOUR DEGREE INTO A 10-15 LPA CAREER WITH HANDS-ON TRAINING, REAL PROJECTS, AND MONTHLY PLACEMENTS.</p>
+                  <h2 className="text-xl sm:text-2xl font-bold leading-tight">CONFUSED ABOUT YOUR PATH? TALK TO AN OUR AI ENGINEER, NOT A COUNSELLOR.</h2>
+                  <Button
+                      variant="secondary"
+                      className="bg-white text-black hover:bg-gray-200 px-6 py-2 rounded-md mt-2 h-16 w-full max-w-[213px] sm:w-[213px]"
+                  >
+                      <div className="flex items-center justify-between w-full">
+                          <span
+                              style={{
+                                  fontFamily: '"Plus Jakarta Sans", sans-serif',
+                                  fontWeight: 800,
+                                  fontSize: '14px',
+                                  lineHeight: '20px',
+                                  letterSpacing: '10%',
+                                  textTransform: 'uppercase',
+                                  color: '#3A8DFF',
+                              }}
+                          >
+                              TALK NOW
+                          </span>
+                          <Image
+                              width={20} height={20}
+                              src="/arrowright.svg"
+                              alt="Arrow"
+                              className="w-5 h-5"
+                          />
+                      </div>
+                  </Button>
+              </div>
+          </div>
+          <div className="flex flex-col sm:flex-row justify-between items-center text-center sm:text-left pt-6 text-xs font-normal gap-4">
+              <p>2025 AESTR ALPHA</p>
+              <div className="flex flex-col sm:flex-row gap-4 sm:gap-8">
+                  <a href="#" className="hover:underline">PRIVACY POLICY</a>
+                  <a href="#" className="hover:underline">TERMS & CONDITIONS</a>
+              </div>
+          </div>
+      </ContentContainer>
+  </footer>
 );
-
 // ===========================================
 // MAIN COMPONENT EXPORT
 // ===========================================
 const AestrAlpha = (): JSX.Element => {
   return (
-    <div className="bg-black w-full min-h-screen font-['Plus_Jakarta_Sans',Helvetica]">
+    <div className="bg-black w-full min-h-screen font-sans">
       <div className="bg-black overflow-x-hidden relative w-full min-h-screen">
         <PageHeader />
         <main>

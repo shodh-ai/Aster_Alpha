@@ -8,10 +8,7 @@ export async function GET(req: NextRequest) {
 
   const room = req.nextUrl.searchParams.get('room');
   const username = req.nextUrl.searchParams.get('username');
-  // REMOVED: Reading 'mode' from query params.
-  // const mode = req.nextUrl.searchParams.get('mode') || 'overall';
-  // ADDED: Hardcode the mode to 'overall'.
-  const mode = 'overall';
+  const mode = 'overall'; // Hardcoded as in your original code
 
   if (!room) {
     return NextResponse.json(
@@ -44,17 +41,22 @@ export async function GET(req: NextRequest) {
   }
 
   try {
-    // The agent_mode will now always be 'overall'
     const at = new AccessToken(apiKey, apiSecret, {
       identity: username,
       metadata: JSON.stringify({ agent_mode: mode }),
     });
 
-    at.addGrant({ room, roomJoin: true, canPublish: true, canSubscribe: true });
+    // Add video grant permissions
+    at.addGrant({
+      room,
+      roomJoin: true,
+      canPublish: true,
+      canSubscribe: true,
+      canPublishData: true, // For transcription and data publishing
+    });
 
     const token = await at.toJwt();
-    // The log will now consistently show 'overall'
-    console.log(`Token generated successfully for user: ${username} with mode: ${mode}`);
+    console.log(`Token generated successfully for user: ${username} with mode: ${mode} and transcription enabled.`);
     return NextResponse.json({ token });
 
   } catch (error) {

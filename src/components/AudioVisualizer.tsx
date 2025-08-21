@@ -112,17 +112,31 @@ export const AudioVisualizer: React.FC<AudioVisualizerProps> = ({
     listenerRef.current = audioListener;
 
     if (track?.mediaStream) {
-      const audio = new THREE.Audio(audioListener);
+      // Create Web Audio API context for analysis only (no playback)
+      const audioContext = audioListener.context;
+      const source = audioContext.createMediaStreamSource(track.mediaStream);
+      const analyserNode = audioContext.createAnalyser();
+      analyserNode.fftSize = 64; // 32 frequency bins
       
-      // ***** THIS IS THE FINAL, CORRECT FIX *****
-      // 1. Use the dedicated method to set the MediaStream as the source.
-      audio.setMediaStreamSource(track.mediaStream);
-
-      // 2. Create the analyser using the now-connected audio object.
-      const analyser = new THREE.AudioAnalyser(audio, 32);
+      // Connect source to analyser but NOT to destination (no audio output)
+      source.connect(analyserNode);
+      // DO NOT connect to audioContext.destination to prevent audio playback
       
-      // 3. Store the analyser in the ref for use in the animation loop.
-      analyserRef.current = analyser;
+      // Create a custom analyser object that mimics THREE.AudioAnalyser interface
+      const customAnalyser = {
+        analyser: analyserNode,
+        data: new Uint8Array(analyserNode.frequencyBinCount),
+        getAverageFrequency: function() {
+          this.analyser.getByteFrequencyData(this.data);
+          let sum = 0;
+          for (let i = 0; i < this.data.length; i++) {
+            sum += this.data[i];
+          }
+          return sum / this.data.length;
+        }
+      };
+      
+      analyserRef.current = customAnalyser as any;
     }
 
     // --- Animation Loop ---

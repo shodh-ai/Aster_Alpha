@@ -113,14 +113,14 @@ const PageHeader = () => {
     );
 };
 
-
 const PageFooter = () => (
     <footer style={{ background: '#4187F7' }} className="font-sans text-white flex items-center justify-center p-4 sm:p-8">
         <ContentContainer className="h-full flex flex-col justify-center">
             <div className="flex flex-col lg:flex-row justify-between items-start py-8 border-b border-white/50 gap-8">
                 <div className="flex flex-col gap-8">
-                    <div className="font-semibold text-2xl">AESTR Alpha</div>
-                    <div className="flex gap-12 sm:gap-16 text-sm font-normal">
+                    {/* Replace the text with your SVG logo */}
+                    <img src="/logo.svg" alt="AESTR Alpha Logo" className="h-8 w-auto" /> {/* Adjust height and width as needed */}
+                    <div className="flex gap-16 text-sm font-normal">
                         <div className="flex flex-col gap-3">
                             <a href="#" className="hover:underline">HOME</a>
                             <a href="#" className="hover:underline">RESOURCES</a>
@@ -132,13 +132,35 @@ const PageFooter = () => (
                         </div>
                     </div>
                 </div>
-                <div className="flex flex-col items-start gap-4 text-left w-full lg:max-w-xl">
-                    <p className="font-normal text-xs leading-5 tracking-wider">
-                        AESTR ALPHA TURNS YOUR DEGREE INTO A 10-15 LPA CAREER WITH HANDS-ON TRAINING, REAL PROJECTS, AND MONTHLY PLACEMENTS.
-                    </p>
-                    <h2 className="text-xl sm:text-2xl font-bold leading-tight">
-                        CONFUSED ABOUT YOUR PATH? TALK TO AN OUR AI ENGINEER, NOT A COUNSELLOR.
-                    </h2>
+                <div className="flex flex-col items-start gap-4 text-left max-w-xl">
+                    <p className="font-normal text-xs leading-5 tracking-wider">AESTR ALPHA TURNS YOUR DEGREE INTO A 10-15 LPA CAREER WITH HANDS-ON TRAINING, REAL PROJECTS, AND MONTHLY PLACEMENTS.</p>
+                    <h2 className="text-xl sm:text-2xl font-bold leading-tight">CONFUSED ABOUT YOUR PATH? TALK TO AN OUR AI ENGINEER, NOT A COUNSELLOR.</h2>
+                    <Button
+                        variant="secondary"
+                        className="bg-white text-black hover:bg-gray-200 px-6 py-2 rounded-md mt-2 h-16 w-full max-w-[213px] sm:w-[213px]"
+                    >
+                        <div className="flex items-center justify-between w-full">
+                            <span
+                                style={{
+                                    fontFamily: '"Plus Jakarta Sans", sans-serif',
+                                    fontWeight: 800,
+                                    fontSize: '14px',
+                                    lineHeight: '20px',
+                                    letterSpacing: '10%',
+                                    textTransform: 'uppercase',
+                                    color: '#3A8DFF',
+                                }}
+                            >
+                                TALK NOW
+                            </span>
+                            <Image
+                                width={20} height={20}
+                                src="/arrowright.svg"
+                                alt="Arrow"
+                                className="w-5 h-5"
+                            />
+                        </div>
+                    </Button>
                 </div>
             </div>
             <div className="flex flex-col sm:flex-row justify-between items-center text-center sm:text-left pt-6 text-xs font-normal gap-4">
@@ -296,7 +318,7 @@ const AlumniLeadSection = (): JSX.Element => {
             <Card className="h-auto rounded-xl border border-[#2a2a2a] bg-[#1a1a1a]/80 backdrop-blur-md">
                 <CardContent className="p-8 md:p-12">
                     <div className="flex flex-col items-center justify-center gap-10">
-                        <h3 className="font-plus-jakarta-sans font-semibold text-center text-lg sm:text-[20px] leading-[24px] tracking-normal text-white/80 uppercase">
+                        <h3 className="font-sans font-semibold text-center text-lg sm:text-[20px] leading-[24px] tracking-normal text-white/80 uppercase">
                             OUR ALUMNI LEAD IN GLOBAL TECH
                         </h3>
                         <div className="overflow-hidden w-full" ref={emblaRef}>
