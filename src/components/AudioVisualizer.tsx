@@ -5,23 +5,13 @@ import { LocalAudioTrack } from "livekit-client";
 import React, { useEffect, useMemo, useRef } from "react";
 import * as THREE from "three";
 
-// Define the type for AgentMode
-type AgentMode = 'overall' | 'counsellor' | 'administration';
+// REMOVED: AgentMode type is no longer needed.
+// type AgentMode = 'overall' | 'counsellor' | 'administration';
 
-// Create a configuration object for our visual styles
-const AGENT_VISUAL_STYLES = {
-  overall: {
-    glowColor: new THREE.Color(0x2a65b6), // Blue
-    breathingSpeed: 0.5,
-  },
-  counsellor: {
-    glowColor: new THREE.Color(0xEAEAEA), // White
-    breathingSpeed: 0.3,
-  },
-  administration: {
-    glowColor: new THREE.Color(0xFFD466), // Yellow
-    breathingSpeed: 0.7,
-  },
+// CHANGED: Simplified the styles to only include the default 'overall' style.
+const AGENT_VISUAL_STYLE = {
+  glowColor: new THREE.Color(0x2a65b6), // Blue
+  breathingSpeed: 0.5,
 };
 
 interface AudioVisualizerProps {
@@ -31,7 +21,7 @@ interface AudioVisualizerProps {
   className?: string;
   minScale?: number;
   maxScale?: number;
-  mode: AgentMode;
+  // REMOVED: The 'mode' prop.
 }
 
 export const AudioVisualizer: React.FC<AudioVisualizerProps> = ({
@@ -41,17 +31,17 @@ export const AudioVisualizer: React.FC<AudioVisualizerProps> = ({
   className,
   minScale = 1.0,
   maxScale = 1.5,
-  mode,
 }) => {
   const mountRef = useRef<HTMLDivElement>(null);
   const listenerRef = useRef<THREE.AudioListener | null>(null);
   const analyserRef = useRef<THREE.AudioAnalyser | null>(null);
-  // NEW: Add a ref to hold the scene object for access in the resize handler
   const sceneRef = useRef<THREE.Scene | null>(null);
 
-  const currentStyle = useMemo(() => {
-    return AGENT_VISUAL_STYLES[mode] || AGENT_VISUAL_STYLES.overall;
-  }, [mode]);
+  // REMOVED: The useMemo hook is no longer needed as the style is static.
+  // const currentStyle = useMemo(() => {
+  //   return AGENT_VISUAL_STYLES[mode] || AGENT_VISUAL_STYLES.overall;
+  // }, [mode]);
+  const currentStyle = AGENT_VISUAL_STYLE;
 
   useEffect(() => {
     const currentMount = mountRef.current;
@@ -59,7 +49,7 @@ export const AudioVisualizer: React.FC<AudioVisualizerProps> = ({
 
     // --- Scene Setup ---
     const scene = new THREE.Scene();
-    sceneRef.current = scene; // Store scene in the ref
+    sceneRef.current = scene;
     const camera = new THREE.PerspectiveCamera(
       75,
       currentMount.clientWidth / currentMount.clientHeight,
@@ -155,11 +145,8 @@ export const AudioVisualizer: React.FC<AudioVisualizerProps> = ({
       rings.forEach((ring, index) => {
         const material = ring.material as THREE.ShaderMaterial;
         material.uniforms.time.value = time;
-        material.uniforms.glowColor.value = currentStyle.glowColor;
-        material.uniforms.breathingSpeed.value = currentStyle.breathingSpeed;
-
-        // The scaling here is for audio reactivity, not for layout responsiveness.
-        // The overall scene scale will handle layout responsiveness.
+        // No need to update glowColor or breathingSpeed as they are now constant
+        
         if (isMicrophoneEnabled) {
             const breathingEffect = (Math.sin(time * currentStyle.breathingSpeed + index * Math.PI) * 0.5 + 0.5) * 0.25;
             const loudnessEffect = overallLoudness * (maxScale - minScale);
@@ -175,38 +162,29 @@ export const AudioVisualizer: React.FC<AudioVisualizerProps> = ({
     animate();
 
     // --- Event Listeners & Responsive Scaling ---
-    // Define a base width that the original design was intended for.
     const referenceWidth = 500; 
 
     const handleResize = () => {
       const currentMount = mountRef.current;
-      const currentScene = sceneRef.current; // Access scene via ref
+      const currentScene = sceneRef.current;
 
       if (currentMount && renderer && camera && currentScene) {
         const { clientWidth, clientHeight } = currentMount;
-
-        // 1. Update renderer and camera aspect ratio (prevents distortion)
         camera.aspect = clientWidth / clientHeight;
         camera.updateProjectionMatrix();
         renderer.setSize(clientWidth, clientHeight);
-
-        // 2. NEW: Scale the entire scene to make it responsive
-        // This makes the visualizer's elements larger or smaller depending on container size.
         const scale = clientWidth / referenceWidth;
         currentScene.scale.set(scale, scale, scale);
       }
     };
     
     window.addEventListener("resize", handleResize);
-
-    // Call handler once on setup to set initial size and scale correctly
     handleResize();
 
     // --- Cleanup Function ---
     return () => {
       window.removeEventListener("resize", handleResize);
       cancelAnimationFrame(animationFrameId);
-
       scene.traverse((object) => {
         if (object instanceof THREE.Mesh) {
           object.geometry.dispose();
@@ -217,17 +195,13 @@ export const AudioVisualizer: React.FC<AudioVisualizerProps> = ({
           }
         }
       });
-      
       renderer.dispose();
-      
-      if (currentMount && renderer.domElement) {
-        // Check if the domElement is still a child before removing
-        if (currentMount.contains(renderer.domElement)) {
+      if (currentMount && renderer.domElement && currentMount.contains(renderer.domElement)) {
           currentMount.removeChild(renderer.domElement);
-        }
       }
     };
-  }, [track, isMicrophoneEnabled, minScale, maxScale, currentStyle]);
+    // CHANGED: Removed currentStyle from dependency array as it's now a constant
+  }, [track, isMicrophoneEnabled, minScale, maxScale]);
 
   const handleVisualizerClick = () => {
     if (
@@ -245,7 +219,7 @@ export const AudioVisualizer: React.FC<AudioVisualizerProps> = ({
       ref={mountRef}
       onClick={handleVisualizerClick}
       className={className}
-      style={{ cursor: "pointer", width: "100%", height: "100%" }} // Ensure the container fills its parent
+      style={{ cursor: "pointer", width: "100%", height: "100%" }}
     />
   );
 };

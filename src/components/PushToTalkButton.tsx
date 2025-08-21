@@ -10,11 +10,11 @@ import {
 import React, { useEffect, useState } from "react";
 import { AudioVisualizer } from "./AudioVisualizer";
 
-// NEW: Define the type for the mode for better type safety
-type AgentMode = 'overall' | 'counsellor' | 'administration';
+// REMOVED: AgentMode type is no longer needed here
+// type AgentMode = 'overall' | 'counsellor' | 'administration';
 
-// UPDATED: PushToTalkControl now accepts the 'mode' prop
-const PushToTalkControl = ({ mode }: { mode: AgentMode }) => {
+// CHANGED: Removed the 'mode' prop
+const PushToTalkControl = () => {
   const { localParticipant } = useLocalParticipant();
   const [isMicrophoneEnabled, setIsMicrophoneEnabled] = useState(false);
 
@@ -38,8 +38,7 @@ const PushToTalkControl = ({ mode }: { mode: AgentMode }) => {
         onClick={handleToggleMicrophone}
         isMicrophoneEnabled={isMicrophoneEnabled}
         track={localParticipant.audioTrack}
-        // NEW: Pass the mode down to the visualizer
-        mode={mode}
+        // REMOVED: The 'mode' prop is no longer passed to the visualizer
         className={`
             w-full h-full rounded-full transition-all duration-300
             focus:outline-none focus:ring-4 focus:ring-blue-500/50
@@ -50,8 +49,8 @@ const PushToTalkControl = ({ mode }: { mode: AgentMode }) => {
   );
 };
 
-// UPDATED: Ensure the mode prop type matches our defined type
-export const PushToTalkButton = ({ mode }: { mode: string }) => {
+// CHANGED: Removed the 'mode' prop from the component signature
+export const PushToTalkButton = () => {
   const [token, setToken] = useState<string>("");
   const serverUrl = process.env.NEXT_PUBLIC_LIVEKIT_URL!;
 
@@ -61,8 +60,9 @@ export const PushToTalkButton = ({ mode }: { mode: string }) => {
 
     (async () => {
       try {
+        // CHANGED: Removed the 'mode' query parameter from the fetch request
         const resp = await fetch(
-          `/api/livekit?room=${roomName}&username=${participantName}&mode=${mode}`
+          `/api/livekit?room=${roomName}&username=${participantName}`
         );
         const data = await resp.json();
         setToken(data.token);
@@ -70,7 +70,8 @@ export const PushToTalkButton = ({ mode }: { mode: string }) => {
         console.error(e);
       }
     })();
-  }, [mode]);
+    // REMOVED: The 'mode' dependency from the useEffect hook
+  }, []);
 
   if (token === "") {
     return (
@@ -83,8 +84,8 @@ export const PushToTalkButton = ({ mode }: { mode: string }) => {
   return (
     <LiveKitRoom token={token} serverUrl={serverUrl} connect={true} audio={true}>
       <RoomAudioRenderer />
-      {/* UPDATED: Pass the mode to PushToTalkControl */}
-      <PushToTalkControl mode={mode as AgentMode} />
+      {/* CHANGED: Removed the 'mode' prop from PushToTalkControl */}
+      <PushToTalkControl />
     </LiveKitRoom>
   );
 };

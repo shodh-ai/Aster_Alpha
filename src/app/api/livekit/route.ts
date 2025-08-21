@@ -1,5 +1,5 @@
-
 // src/app/api/livekit/route.ts
+
 import { AccessToken } from 'livekit-server-sdk';
 import { NextRequest, NextResponse } from 'next/server';
 
@@ -8,8 +8,10 @@ export async function GET(req: NextRequest) {
 
   const room = req.nextUrl.searchParams.get('room');
   const username = req.nextUrl.searchParams.get('username');
-  // NEW: Get the 'mode' from query params, defaulting to 'overall' if not provided
-  const mode = req.nextUrl.searchParams.get('mode') || 'overall';
+  // REMOVED: Reading 'mode' from query params.
+  // const mode = req.nextUrl.searchParams.get('mode') || 'overall';
+  // ADDED: Hardcode the mode to 'overall'.
+  const mode = 'overall';
 
   if (!room) {
     return NextResponse.json(
@@ -42,17 +44,16 @@ export async function GET(req: NextRequest) {
   }
 
   try {
-    // NEW: Add metadata to the AccessToken containing the agent mode
+    // The agent_mode will now always be 'overall'
     const at = new AccessToken(apiKey, apiSecret, {
       identity: username,
-      // Metadata is a string, so we stringify a JSON object for flexibility
       metadata: JSON.stringify({ agent_mode: mode }),
     });
 
     at.addGrant({ room, roomJoin: true, canPublish: true, canSubscribe: true });
 
     const token = await at.toJwt();
-    // NEW: Log the mode along with the username for better debugging
+    // The log will now consistently show 'overall'
     console.log(`Token generated successfully for user: ${username} with mode: ${mode}`);
     return NextResponse.json({ token });
 

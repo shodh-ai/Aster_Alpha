@@ -21,7 +21,7 @@ const navItems = ["ALUMNI", "PROGRAMS", "RESOURCES", "FAQS"];
 
 const ContentContainer = ({ children, className = '' }: { children: React.ReactNode, className?: string }) => (
     // MODIFICATION: Adjusted max-width for better responsiveness on mobile.
-    <div className={`w-full max-w-[90%] md:max-w-[80%] lg:max-w-[70%] mx-auto px-4 ${className}`}>
+    <div className={`w-full max-w-[88%] sm:max-w-[88%] lg:max-w-[88%] mx-auto px-4 ${className}`}>
         {children}
     </div>
 );
@@ -136,12 +136,9 @@ const PageFooter = () => (
                     <h2 className="text-xl sm:text-2xl font-bold leading-tight">
                         CONFUSED ABOUT YOUR PATH? TALK TO AN OUR AI ENGINEER, NOT A COUNSELLOR.
                     </h2>
-                    <Button variant="secondary" className="bg-white text-black hover:bg-gray-200 px-6 py-2 rounded-md mt-2 w-full sm:w-auto">
-                        <div className="flex items-center justify-center sm:justify-start">
-                            <span className="font-bold text-sm">TALK NOW</span>
-                            <ArrowRightIcon className="w-5 h-5 ml-4" />
-                        </div>
-                    </Button>
+                    
+
+
                 </div>
             </div>
             <div className="flex flex-col sm:flex-row justify-between items-center text-center sm:text-left pt-6 text-xs font-normal gap-4">
@@ -205,7 +202,7 @@ const HeroSection = (): JSX.Element => {
                 THE TECH LANDSCAPE IS EVOLVING, AND THE DEMAND IS SHIFTING FROM MERE CERTIFICATIONS TO VISIONARY ARCHITECTS WHO CAN DESIGN THE FUTURE. OUR PROGRAM OFFERS A RIGOROUS, FULL-DAY IMMERSION FROM 9 AM TO 9 PM, WHERE YOU WILL DIVE DEEP INTO THE INTRICACIES OF DESIGNING, CONSTRUCTING, AND AUTOMATING ROBUST, SCALABLE INFRASTRUCTURE THAT SUPPORTS LEADING TECH ENTERPRISES. COLLABORATE WITH INDUSTRY EXPERTS AT OUR PARTNER ORGANIZATION, SHODH AI, AND GAIN HANDS-ON EXPERIENCE THROUGH REAL-WORLD PROJECTS. BY THE END OF THIS PROGRAM, YOU WILL HAVE A COMPREHENSIVE PORTFOLIO SHOWCASING YOUR PRODUCTION-READY WORK, READY TO IMPRESS POTENTIAL EMPLOYERS.
             </p>
             {/* MODIFICATION: Card height and internal layout adjusted for mobile */}
-            <Card className="w-full h-auto rounded-xl border border-[#484848] bg-[#1a1a1a] backdrop-blur-md flex items-center">
+            <Card className="w-full h-auto rounded-xl border border-[#484848] bg-[#1a1a1a80] backdrop-blur-100 flex items-center">
                 <CardContent className="p-6 sm:p-8 w-full">
                     <div className="flex flex-col md:flex-row items-center justify-between gap-8 w-full">
                         {programDetails.map((detail, index) => (
@@ -366,26 +363,42 @@ const CurriculumTimelineSection = (): JSX.Element => {
 
     useEffect(() => {
         const handleScroll = () => {
-            if (timelineRef.current && maxLineHeight > 0 && phases.length > 1) {
+            const firstPhaseRef = phaseRefs.current[0];
+            if (timelineRef.current && firstPhaseRef && maxLineHeight > 0 && phases.length > 1) {
                 const windowHeight = window.innerHeight;
+                // The activation point is when the top of a phase element reaches the center of the viewport.
                 const activationPoint = windowHeight * 0.5;
+
                 let latestActiveId = 1;
+                // Find the latest phase that has scrolled past the activation point.
                 phaseRefs.current.forEach((phaseRef, index) => {
                     if (phaseRef && phaseRef.getBoundingClientRect().top <= activationPoint) {
                         latestActiveId = index + 1;
                     }
                 });
+
                 setActivePhaseId(latestActiveId);
-                const segmentHeight = maxLineHeight / (phases.length - 1);
-                const targetHeight = (latestActiveId - 1) * segmentHeight;
-                setLineHeight(targetHeight);
+                
+                // Get the DOM element for the currently active phase.
+                const activePhaseRef = phaseRefs.current[latestActiveId - 1];
+
+                if (activePhaseRef) {
+                    // Calculate the precise height from the top of the first phase's container
+                    // to the top of the active phase's container.
+                    const targetHeight = activePhaseRef.offsetTop - firstPhaseRef.offsetTop;
+                    setLineHeight(targetHeight);
+                }
             }
         };
+
         window.addEventListener('scroll', handleScroll);
-        handleScroll();
+        // Run once on mount to set the initial state correctly
+        handleScroll(); 
+        
         return () => window.removeEventListener('scroll', handleScroll);
     }, [maxLineHeight, phases.length]);
-
+1
+    
     return (
         <section className="flex flex-col w-full items-start gap-12 sm:gap-16 relative">
             <h2 className="font-semibold text-white text-3xl sm:text-5xl tracking-[0.96px] leading-tight">COURSE CURRICULUM</h2>
@@ -401,7 +414,7 @@ const CurriculumTimelineSection = (): JSX.Element => {
                 />
 
                 {phases.map((phase, index) => (
-                    <div key={phase.id} ref={el => phaseRefs.current[index] = el} className="relative pl-8 sm:pl-12 pb-16 sm:pb-20">
+                    <div key={phase.id} ref={(el) => { phaseRefs.current[index] = el; }} className="relative pl-8 sm:pl-12 pb-16 sm:pb-20">
                         <div
                             className={`
                                 absolute left-2 sm:left-4 top-2 w-7 h-7 sm:w-9 sm:h-9 rounded-full flex items-center justify-center border-2
@@ -459,7 +472,7 @@ const AlumniSection = (): JSX.Element => {
                     {mentors.map((mentor, index) => (
                          // MODIFICATION: Responsive slide width
                         <div key={index} className="flex-[0_0_100%] sm:flex-[0_0_50%] lg:flex-[0_0_33.33%] pl-3">
-                            <Card className="relative w-full h-[580px] rounded-xl overflow-hidden bg-white/5 border-white/10">
+                            <Card className="relative w-full h-[580px] rounded-xl overflow-hidden bg-[#1a1a1a] border-[#484848]">
                                 <CardContent className="p-0 h-full">
                                     <img className="absolute w-full h-3/5 top-0 left-0 object-cover pt-5 px-5 rounded-t-xl" alt={`Portrait of ${mentor.name}`} src={mentor.image} />
                                     <div className="absolute bottom-0 left-0 p-6 w-full h-2/5 flex flex-col justify-end bg-gradient-to-t from-black via-black/70 to-transparent">
@@ -486,7 +499,7 @@ const AlumniSection = (): JSX.Element => {
 const CallToActionSection = (): JSX.Element => {
     return (
         <section className="w-full">
-            <Card className="h-auto rounded-xl border border-[#484848] bg-[#1a1a1a]/80 backdrop-blur-md">
+            <Card className="h-auto rounded-xl border border-[#484848] bg-[#1a1a1a80] backdrop-blur-md">
                 <CardContent className="p-8 md:p-12 lg:p-16">
                     <div className="flex flex-col lg:flex-row items-center justify-between gap-10">
                         <div className="flex-1 text-center lg:text-left">
@@ -543,10 +556,10 @@ const SurveySection = (): JSX.Element => {
 //==============================================================================
 const MentorSection = (): JSX.Element => {
     const testimonials = [
-        { image: "https://c.animaapp.com/meid0islaUbQOI/img/rectangle-2713.png", quote: "THE INNOVATIVE STRATEGIES THEY IMPLEMENTED INCREASED OUR ONLINE VISIBILITY AND SALES SIGNIFICANTLY.", name: "AISHA KHAN", title: "CEO OF GREENTECH SOLUTIONS" },
-        { image: "https://c.animaapp.com/meid0islaUbQOI/img/rectangle-3987.svg", quote: "THEIR TAILORED APPROACH TO SOCIAL MEDIA MANAGEMENT DROVE ENGAGEMENT AND BUILT A LOYAL COMMUNITY AROUND OUR BRAND.", name: "RAHUL GUPTA", title: "FOUNDER OF TRENDYWEAR" },
-        { image: "https://c.animaapp.com/meid0islaUbQOI/img/rectangle-2713.png", quote: "THE INNOVATIVE STRATEGIES THEY IMPLEMENTED INCREASED OUR ONLINE VISIBILITY AND SALES SIGNIFICANTLY.", name: "AISHA KHAN", title: "CEO OF GREENTECH SOLUTIONS" },
-        { image: "https://c.animaapp.com/meid0islaUbQOI/img/rectangle-3987.svg", quote: "THEIR TAILORED APPROACH TO SOCIAL MEDIA MANAGEMENT DROVE ENGAGEMENT AND BUILT A LOYAL COMMUNITY AROUND OUR BRAND.", name: "RAHUL GUPTA", title: "FOUNDER OF TRENDYWEAR" },
+        { image: "https://c.animaapp.com/meid0islaUbQOI/img/rectangle-2713.png", quote: "THE INNOVATIVE STRATEGIES THEY IMPLEMENTED INCREASED OUR ONLINE VISIBILITY AND SALES SIGNIFICANTLY.", name: "AISHA KHAN", title: "GREENTECH'S CEO" },
+        { image: "https://c.animaapp.com/meid0islaUbQOI/img/rectangle-3987.svg", quote: "THEIR TAILORED APPROACH TO SOCIAL MEDIA MANAGEMENT DROVE ENGAGEMENT AND BUILT A LOYAL COMMUNITY AROUND OUR BRAND.", name: "RAHUL GUPTA", title: "TRENDYWEAR'S FOUNDER" },
+        { image: "https://c.animaapp.com/meid0islaUbQOI/img/rectangle-2713.png", quote: "THE INNOVATIVE STRATEGIES THEY IMPLEMENTED INCREASED OUR ONLINE VISIBILITY AND SALES SIGNIFICANTLY.", name: "AISHA KHAN", title: "GREENTECH SOLUTIONS'S FOUNDER" },
+        { image: "https://c.animaapp.com/meid0islaUbQOI/img/rectangle-3987.svg", quote: "THEIR TAILORED APPROACH TO SOCIAL MEDIA MANAGEMENT DROVE ENGAGEMENT AND BUILT A LOYAL COMMUNITY AROUND OUR BRAND.", name: "RAHUL GUPTA", title: "TRENDYWEAR'S CEO" },
     ];
 
     const responsive = {
@@ -578,16 +591,10 @@ const MentorSection = (): JSX.Element => {
                         <div key={index} className="px-2 h-full">
                             {/* MODIFICATION: Card layout adjusted for mobile */}
                             <div
-                                className={`flex flex-col sm:flex-row w-full h-auto sm:h-[248px] items-center p-4 rounded-[12px] gap-4 sm:gap-2.5
-                                relative border-[none] backdrop-blur-[50px] backdrop-brightness-[100%]
-                                [-webkit-backdrop-filter:blur(50px)_brightness(100%)]
-                                bg-[linear-gradient(115deg,rgba(255,255,255,0.1)_0%,rgba(255,255,255,0)_100%)]
-                                before:content-[''] before:absolute before:inset-0 before:p-px before:rounded-[12px]
-                                before:[background:linear-gradient(91deg,rgba(255,255,255,0.2)_0%,rgba(255,255,255,0.13)_35%,rgba(255,255,255,0)_65%,rgba(255,255,255,0.2)_100%)]
-                                before:[-webkit-mask:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)]
-                                before:[-webkit-mask-composite:xor] before:[mask-composite:exclude]
-                                before:z-[1] before:pointer-events-none`}
-                            >
+    className={`flex flex-col sm:flex-row w-full h-auto sm:h-[248px] items-center p-4 rounded-[12px] gap-4 sm:gap-2.5
+    relative backdrop-blur-[50px]
+    bg-[#1a1a1a] border border-[#484848]`}
+>
                                 <div className="w-full sm:w-2/5 h-[200px] sm:h-full flex-shrink-0">
                                     <img className="w-full h-full object-cover rounded-lg" alt={testimonial.name} src={testimonial.image} />
                                 </div>
