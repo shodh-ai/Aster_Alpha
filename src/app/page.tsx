@@ -37,7 +37,7 @@ const selectOptions = [
 // ===========================================
 
 const ContentContainer = ({ children, className = '' }: { children: React.ReactNode, className?: string }) => (
-  <div className={`w-full max-w-[95%] sm:max-w-[85%] lg:max-w-[70%] mx-auto px-2 sm:px-4 ${className}`}>
+  <div className={`w-full max-w-[88%] sm:max-w-[88%] lg:max-w-[88%] mx-auto px-2 sm:px-4 ${className}`}>
     {children}
   </div>
 );
@@ -98,7 +98,7 @@ const HeroSection = ({ agentMode, setAgentMode }: { agentMode: string, setAgentM
         </div>
         <Button className="w-[200px] h-[50px] px-6 rounded-[6px] bg-[#3a8dff] flex items-center justify-center self-center lg:self-start"><span className="font-['Plus_Jakarta_Sans',Helvetica] font-bold text-white text-sm tracking-[1.40px]">GET IN TOUCH</span></Button>
         <div className="flex flex-col sm:flex-row items-center sm:items-start gap-10 sm:gap-12 w-full justify-center lg:justify-start">
-          {stats.map((stat, index) => (<Card key={index} className="bg-transparent border-none"><CardContent className="flex flex-col items-center sm:items-start gap-[18px] p-0"><span className="font-semibold text-[#3a8dff] text-4xl tracking-[0.72px] leading-[39.6px] whitespace-nowrap">{stat.value}</span><span className="opacity-60 font-medium text-white text-sm tracking-[1.40px] leading-5 whitespace-nowrap">{stat.label}</span></CardContent></Card>))}
+          {stats.map((stat, index) => (<Card key={index} className="bg-transparent border-none"><CardContent className="flex flex-col items-center sm:items-start gap-[16px] p-0"><span className="font-semibold text-[#3a8dff] text-4xl tracking-[0.72px] leading-[39.6px] whitespace-nowrap">{stat.value}</span><span className="opacity-60 font-medium text-white text-sm tracking-[1.40px] leading-5 whitespace-nowrap">{stat.label}</span></CardContent></Card>))}
         </div>
       </div>
       <div className="w-full max-w-[500px] flex-shrink-0 relative z-10 flex flex-col items-center gap-6 mt-12 lg:mt-0">
@@ -118,70 +118,104 @@ const VideoSection = () => (
     </ContentContainer>
   </section>
 );
-
 const PopularCoursesSection = () => (
-    <section className="w-full mt-24 lg:mt-[200px]">
-        <ContentContainer className="flex flex-col items-center gap-12 lg:gap-[60px]">
-            <h2 className="relative font-['Plus_Jakarta_Sans',Helvetica] font-semibold text-white text-4xl md:text-5xl text-center tracking-[0.96px] leading-tight">OUR POPULAR COURSES</h2>
-            <div className="w-full flex flex-col gap-4 lg:grid lg:grid-cols-3 lg:gap-[16px]">
-                <Card className="w-full lg:col-span-3 rounded-xl border border-solid border-[#484848] bg-[#1A1A1A] overflow-hidden">
-                    <CardContent className="p-3 flex flex-col md:flex-row h-full gap-3">
-                        <div className="relative w-full md:w-5/12 h-64 md:h-auto min-h-[300px] bg-[url(/demo1.svg)] bg-cover bg-center rounded-md"><Badge variant="custom" className="absolute top-5 left-5">MOST POPULAR</Badge></div>
-                        <div className="flex flex-col w-full md:w-7/12 justify-center gap-8 p-4 sm:p-8">
-                            <div className="flex flex-wrap items-center gap-x-9 gap-y-4">
-                                <div className="inline-flex items-center gap-2"><img className="w-5 h-5" alt="Calendar" src="/calendar_today.svg" /><span className="font-['Plus_Jakarta_Sans',Helvetica] font-medium text-[#3a8dff] text-sm tracking-widest leading-5">6-MONTH INTENSIVE TRACK</span></div>
-                                <div className="inline-flex items-center gap-2"><img className="w-5 h-5 " alt="Project" src="/project.svg" /><span className="font-['Plus_Jakarta_Sans',Helvetica] font-medium text-[#3a8dff] text-sm tracking-widest leading-5">4+ LIVE PRODUCTION PROJECTS</span></div>
-                            </div>
-                            <div className="flex flex-col items-start gap-4"><h3 className="font-['Plus_Jakarta_Sans',Helvetica] font-semibold text-white text-2xl sm:text-[28px] tracking-[0] leading-tight text-left">DEEP CLOUD & MULTI-CLOUD ENGINEERING</h3><p className="opacity-60 font-['Plus_Jakarta_Sans',Helvetica] font-medium text-white text-sm tracking-widest leading-5 text-left">IN THIS PROGRAM, YOU WILL BUILD A SCALABLE, MULTI-REGION WEB APPLICATION WITH AUTOMATED FAILOVER, A CI/CD PIPELINE USING INFRASTRUCTURE AS CODE (IAC) TO MANAGE PRODUCTION ENVIRONMENTS, AND A SERVERLESS DATA PROCESSING WORKFLOW FOR REAL-TIME ANALYTICS.</p></div>
-                            <div className="flex flex-col sm:flex-row items-center gap-4">
-                                <Button variant="outline" className="w-full h-14 sm:h-16 flex items-center justify-between pl-7 pr-6 py-2.5"><span className="font-['Plus_Jakarta_Sans',Helvetica] font-extrabold text-[#ffffffcc] text-sm tracking-[1.40px]">BROCHURE</span><img className="w-[18px] h-[18px]" alt="Download" src="/download.svg" /></Button>
-                                <Button className="w-full h-14 sm:h-16 flex items-center justify-between pl-7 pr-5 py-2.5 bg-[#3a8dff]"><span className="font-['Plus_Jakarta_Sans',Helvetica] font-extrabold text-white text-sm tracking-[1.40px]">APPLY NOW</span><img className="w-[18px] h-[18px]" alt="Apply" src="/arrow.svg" /></Button>
-                            </div>
-                        </div>
-                    </CardContent>
-                </Card>
-                <Card className="w-full lg:col-span-2 rounded-xl border border-solid border-[#484848] bg-[#1a1a1a] overflow-hidden">
-                    <CardContent className="p-3 flex flex-col md:flex-row h-full gap-3">
-                        <div className="relative w-full md:w-[280px] h-64 md:h-auto min-h-[300px] flex-shrink-0 bg-[url(/demo2.svg)] bg-cover bg-center rounded-md"><Badge variant="custom" className="absolute top-4 left-4 w-[90px]">LATEST</Badge></div>
-                        <div className="flex flex-col flex-grow justify-center gap-6 p-4 sm:p-8">
-                            <div className="flex flex-wrap items-center gap-x-9 gap-y-4">
-                                <div className="inline-flex items-center gap-2"><img className="w-5 h-5" alt="Calendar" src="/calendar_today.svg" /><span className="font-medium text-[#3a8dff] text-sm tracking-widest leading-5">4-MONTH</span></div>
-                                <div className="inline-flex items-center gap-2"><img className="w-5 h-5" alt="Project" src="/project.svg" /><span className="font-medium text-[#3a8dff] text-sm tracking-widest leading-5">3+ (SIMULATION + HARDWARE)</span></div>
-                            </div>
-                            <h3 className="font-semibold text-white text-2xl tracking-[0] leading-tight text-left">ROBOTIC & ROS ENGINEERING</h3>
-                            <p className="opacity-60 font-medium text-white text-sm tracking-widest leading-5 text-left">GIVE MACHINES INTELLIGENCE. DESIGN, SIMULATE, AND DEPLOY THE SOFTWARE THAT MAKES ROBOTS SEE, NAVIGATE, AND ACT IN THE REAL WORLD.</p>
-                            <div className="flex flex-col sm:flex-row items-center gap-4 mt-auto">
-                                <Button variant="outline" className="w-full h-14 sm:h-16 flex items-center justify-between pl-7 pr-6 py-2.5"><span className="font-extrabold text-[#ffffffcc] text-sm tracking-[1.40px]">BROCHURE</span><img className="w-[18px] h-[18px]" alt="Download" src="/download.svg" /></Button>
-                                <Button className="w-full h-14 sm:h-16 flex items-center justify-between pl-7 pr-5 py-2.5 bg-[#3a8dff]"><span className="font-extrabold text-white text-sm tracking-[1.40px]">APPLY NOW</span><img className="w-[18px] h-[18px]" alt="Apply" src="/arrow.svg" /></Button>
-                            </div>
-                        </div>
-                    </CardContent>
-                </Card>
-                <Card className="w-full lg:col-span-1 rounded-xl border border-solid border-[#484848] bg-[#1a1a1a]">
-                    <CardContent className="p-6 flex flex-col h-full text-left">
-                        <img className="w-[76px] h-[76px]" alt="Cpu" src="/Cpu.svg" />
-                        <div className="flex-grow flex flex-col justify-start gap-2 mt-8"><h3 className="font-semibold text-white text-2xl tracking-[0] leading-tight">FINTECH ENGINEERING</h3><p className="opacity-60 font-medium text-white text-sm tracking-widest leading-5">BUILD THE FUTURE OF MONEY.</p></div>
-                        <div className="flex flex-col sm:flex-row items-center gap-4 mt-auto pt-8">
-                            <Button variant="outline" className="w-full h-14 sm:h-16 flex items-center justify-between pl-7 pr-6 py-2.5"><span className="font-extrabold text-[#ffffffcc] text-sm tracking-[1.40px]">BROCHURE</span><img className="w-[18px] h-[18px]" alt="Download" src="/download.svg" /></Button>
-                            <Button className="w-full h-14 sm:h-16 flex items-center justify-between pl-7 pr-5 py-2.5 bg-[#3a8dff]"><span className="font-extrabold text-white text-sm tracking-[1.40px]">APPLY NOW</span><img className="w-[18px] h-[18px]" alt="Apply" src="/arrow.svg" /></Button>
-                        </div>
-                    </CardContent>
-                </Card>
-                <Card className="w-full lg:col-span-1 rounded-xl border border-solid border-[#484848] bg-[#1a1a1a]">
-                    <CardContent className="p-6 h-full flex items-center justify-between"><h3 className="font-semibold text-white text-lg sm:text-xl tracking-[0] leading-6 text-left">UI/UX WITH BLENDER</h3><div className="w-[30px] h-[30px] flex-shrink-0 bg-[#3a8dff] rounded-full flex items-center justify-center"><img className="w-[14px] h-[14px]" alt="Arrow" src="/arrow.svg" /></div></CardContent>
-                </Card>
-                <Card className="w-full lg:col-span-2 rounded-xl border border-solid border-[#484848] bg-[#1a1a1a]">
-                    <CardContent className="p-6 h-full flex items-center justify-between"><h3 className="font-semibold text-white text-lg sm:text-xl tracking-[0] leading-6 text-left">RISC-V CPU DESIGN & VERIFICATION</h3><div className="w-[30px] h-[30px] flex-shrink-0 bg-[#3a8dff] rounded-full flex items-center justify-center"><img className="w-[14px] h-[14px]" alt="Arrow" src="/arrow.svg" /></div></CardContent>
-                </Card>
-            </div>
-        </ContentContainer>
-    </section>
-);
+  <section className="w-full mt-24 lg:mt-[200px]">
+      <ContentContainer className="flex flex-col items-center gap-12 lg:gap-[60px]">
+          <h2 className="relative font-['Plus_Jakarta_Sans',Helvetica] font-semibold text-white text-4xl md:text-5xl text-center tracking-[0.96px] leading-tight">
+              OUR POPULAR COURSES
+          </h2>
+          <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-[16px]">
+              {/* Card 1: Unchanged */}
+              <Card className="w-full md:min-h-[431px] md:col-span-2 lg:col-span-3 rounded-xl border border-solid border-[#484848] bg-[#1A1A1A] overflow-hidden">
+                  <CardContent className="p-3 flex flex-col md:flex-row h-full gap-3">
+                      <div className="relative w-full md:w-5/12 h-64 md:h-full min-h-[200px] bg-[url(/demo1.svg)] bg-cover bg-center rounded-md">
+                          <Badge variant="custom" className="absolute top-5 left-5">MOST POPULAR</Badge>
+                      </div>
+                      <div className="flex flex-col w-full md:w-7/12 p-7">
+                          <div>
+                              <div className="flex flex-wrap items-center gap-x-9 gap-y-4">
+                                  <div className="inline-flex items-center gap-2"><img className="w-5 h-5" alt="Calendar" src="/calendar_today.svg" /><span className="font-['Plus_Jakarta_Sans',Helvetica] font-medium text-[#3a8dff] text-sm tracking-widest leading-5">6-MONTH INTENSIVE TRACK</span></div>
+                                  <div className="inline-flex items-center gap-2"><img className="w-5 h-5 " alt="Project" src="/project.svg" /><span className="font-['Plus_Jakarta_Sans',Helvetica] font-medium text-[#3a8dff] text-sm tracking-widest leading-5">4+ LIVE PRODUCTION PROJECTS</span></div>
+                              </div>
+                              <div className="flex flex-col items-start gap-4 my-8">
+                                  <h3 className="font-['Plus_Jakarta_Sans'] font-semibold text-white text-2xl sm:text-[28px] tracking-[0] leading-tight text-left">DEEP CLOUD & MULTI-CLOUD ENGINEERING</h3>
+                                  <p className="opacity-60 font-['Plus_Jakarta_Sans',Helvetica] font-medium text-white text-sm tracking-widest leading-relaxed text-left">IN THIS PROGRAM, YOU WILL BUILD A SCALABLE, MULTI-REGION WEB APPLICATION WITH AUTOMATED FAILOVER, A CI/CD PIPELINE USING INFRASTRUCTURE AS CODE (IAC) TO MANAGE PRODUCTION ENVIRONMENTS, AND A SERVERLESS DATA PROCESSING WORKFLOW FOR REAL-TIME ANALYTICS.</p>
+                              </div>
+                          </div>
+                          <div className="flex flex-col sm:flex-row items-center gap-6 mt-auto">
+                              <Button variant="outline" className="w-full h-14 sm:h-16 flex items-center justify-between pl-7 pr-6 py-2"><span className="font-['Plus_Jakarta_Sans',Helvetica] font-extrabold text-[#ffffffcc] text-sm tracking-[1.40px]">BROCHURE</span><img className="w-[18px] h-[18px]" alt="Download" src="/download.svg" /></Button>
+                              <Button className="w-full h-14 sm:h-16 flex items-center justify-between pl-7 pr-5 py-2.5 bg-[#3a8dff]"><span className="font-['Plus_Jakarta_Sans',Helvetica] font-extrabold text-white text-sm tracking-[1.40px]">APPLY NOW</span><img className="w-[18px] h-[18px]" alt="Apply" src="/arrow.svg" /></Button>
+                          </div>
+                      </div>
+                  </CardContent>
+              </Card>
 
-// ==========================================================
-// MODIFIED COMPONENT: TimelineSection
-// This is the only component you need to replace.
-// ==========================================================
+              {/* Card 2: Improved button responsiveness */}
+              <Card className="w-full md:col-span-2 lg:col-span-2 rounded-xl border border-solid border-[#484848] bg-[#1a1a1a] overflow-hidden">
+                  <CardContent className="p-3 flex flex-col md:flex-row h-full gap-3">
+                      <div className="relative w-full md:w-2/5 h-64 md:h-full min-h-[300px] flex-shrink-0 bg-[url(/demo2.svg)] bg-cover bg-center rounded-md">
+                          <Badge variant="custom" className="absolute top-4 left-4 w-[90px]">LATEST</Badge>
+                      </div>
+                      <div className="flex flex-col w-full flex-grow pt-7 px-7 pr-[20px] pb-5">
+                          <div>
+                              <div className="flex flex-wrap items-center gap-x-9 gap-y-4">
+                                  <div className="inline-flex items-center gap-2"><img className="w-5 h-5" alt="Calendar" src="/calendar_today.svg" /><span className="font-medium text-[#3a8dff] text-sm tracking-widest leading-5">4-MONTH</span></div>
+                                  <div className="inline-flex items-center gap-2"><img className="w-5 h-5" alt="Project" src="/project.svg" /><span className="font-medium text-[#3a8dff] text-sm tracking-widest leading-5">3+ (SIMULATION + HARDWARE)</span></div>
+                              </div>
+                              <div className="my-6">
+                                  <h3 className="font-semibold text-white text-2xl tracking-[0] leading-tight text-left">ROBOTIC & ROS ENGINEERING</h3>
+                                  <p className="opacity-60 font-medium text-white text-sm tracking-widest leading-relaxed text-left mt-4">GIVE MACHINES INTELLIGENCE. DESIGN, SIMULATE, AND DEPLOY THE SOFTWARE THAT MAKES ROBOTS SEE, NAVIGATE, AND ACT IN THE REAL WORLD.</p>
+                              </div>
+                          </div>
+                          {/* THE FIX: `mt-auto` pushes this div to the bottom of the flex container, with responsive gap */}
+                          <div className="flex flex-col sm:flex-row items-center gap-4 mt-auto">
+                              <Button variant="outline" className="w-full h-14 sm:h-16 flex items-center justify-between px-6 sm:pl-7 sm:pr-6 py-2.5"><span className="font-extrabold text-[#ffffffcc] text-xs sm:text-sm tracking-[1.40px]">BROCHURE</span><img className="w-4 h-4 sm:w-[18px] sm:h-[18px]" alt="Download" src="/download.svg" /></Button>
+                              <Button className="w-full h-14 sm:h-16 flex items-center justify-between px-6 sm:pl-7 sm:pr-5 py-2.5 bg-[#3a8dff]"><span className="font-extrabold text-white text-xs sm:text-sm tracking-[1.40px]">APPLY NOW</span><img className="w-4 h-4 sm:w-[18px] sm:h-[18px]" alt="Apply" src="/arrow.svg" /></Button>
+                          </div>
+                      </div>
+                  </CardContent>
+              </Card>
+
+              {/* Card 3: Improved button responsiveness */}
+              <Card className="w-full lg:col-span-1 rounded-xl border border-solid border-[#484848] bg-[#1a1a1a]">
+                  <CardContent className="pt-7 px-7 pb-5 flex flex-col h-full text-left">
+                      <div>
+                          <img className="w-[76px] h-[76px]" alt="Cpu" src="/Cpu.svg" />
+                          <div className="my-8">
+                              <h3 className="font-semibold text-white text-2xl tracking-[0] leading-tight">FINTECH ENGINEERING</h3>
+                              <p className="opacity-60 font-medium text-white text-sm tracking-widest leading-relaxed">BUILD THE FUTURE OF MONEY.</p>
+                          </div>
+                      </div>
+                      {/* THE FIX: `mt-auto` pushes this div to the bottom, with responsive gap and padding */}
+                      <div className="flex flex-col sm:flex-row items-center gap-4 pb-3 mt-auto">
+                          <Button variant="outline" className="w-full h-14 sm:h-16 flex items-center justify-between px-6 sm:pl-7 sm:pr-6 py-2.5"><span className="font-extrabold text-[#ffffffcc] text-xs sm:text-sm tracking-[1.40px]">BROCHURE</span><img className="w-4 h-4 sm:w-[18px] sm:h-[18px]" alt="Download" src="/download.svg" /></Button>
+                          <Button className="w-full h-14 sm:h-16 flex items-center justify-between px-6 sm:pl-7 sm:pr-5 py-2.5 bg-[#3a8dff]"><span className="font-extrabold text-white text-xs sm:text-sm tracking-[1.40px]">APPLY NOW</span><img className="w-4 h-4 sm:w-[18px] sm:h-[18px]" alt="Apply" src="/arrow.svg" /></Button>
+                      </div>
+                  </CardContent>
+              </Card>
+
+              {/* Card 4 & 5: Unchanged */}
+              <Card className="w-full lg:col-span-1 rounded-xl border border-solid border-[#484848] bg-[#1a1a1a]">
+                  <CardContent className="p-7 h-full flex items-center justify-between">
+                      <h3 className="font-semibold text-white text-lg sm:text-xl tracking-[0] leading-6 text-left">UI/UX WITH BLENDER</h3>
+                      <div className="w-[30px] h-[30px] flex-shrink-0 bg-[#3a8dff] rounded-full flex items-center justify-center">
+                          <img className="w-[14px] h-[14px]" alt="Arrow" src="/arrow.svg" />
+                      </div>
+                  </CardContent>
+              </Card>
+
+              <Card className="w-full md:col-span-2 lg:col-span-2 rounded-xl border border-solid border-[#484848] bg-[#1a1a1a]">
+                  <CardContent className="p-7 h-full flex items-center justify-between">
+                      <h3 className="font-semibold text-white text-lg sm:text-xl tracking-[0] leading-6 text-left">RISC-V CPU DESIGN & VERIFICATION</h3>
+                      <div className="w-[30px] h-[30px] flex-shrink-0 bg-[#3a8dff] rounded-full flex items-center justify-center">
+                          <img className="w-[14px] h-[14px]" alt="Arrow" src="/arrow.svg" />
+                      </div>
+                  </CardContent>
+              </Card>
+          </div>
+      </ContentContainer>
+  </section>
+);
 const TimelineSection = () => {
   const detailedTimelineData = [
       {
