@@ -4,8 +4,8 @@
 
 import { ArrowRightIcon, DownloadIcon, MenuIcon, XIcon } from "lucide-react";
 import React, { JSX, useEffect, useLayoutEffect, useRef, useState } from "react";
-import Link from "next/link"; // ADDED: Import Link
-import Image from "next/image"; // ADDED: Import Image
+import Link from "next/link";
+import Image from "next/image";
 import { Badge } from "../../../components/badge";
 import { Button } from "../../../components/button";
 import { Card, CardContent } from "../../../components/card";
@@ -16,14 +16,14 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 
 
-//==============================================================================
-// IDENTICAL HEADER & FOOTER
-//==============================================================================
+// ==============================================================================
+// SHARED LAYOUT COMPONENTS (Header, Footer, Container)
+// ==============================================================================
 
 const navItems = ["ALUMNI", "PROGRAMS", "RESOURCES", "FAQS"];
 
 const ContentContainer = ({ children, className = '' }: { children: React.ReactNode, className?: string }) => (
-    <div className={`w-full max-w-[88%] sm:max-w-[88%] lg:max-w-[88%] mx-auto px-4 ${className}`}>
+    <div className={`w-full max-w-[91%] sm:max-w-[88%] mx-auto px-4 ${className}`}>
         {children}
     </div>
 );
@@ -34,76 +34,44 @@ const PageHeader = () => {
     return (
         <header className="relative z-20 pt-9 w-full">
             <ContentContainer className="flex items-center justify-between gap-8">
-                {/* FIXED: Replaced <a> with <Link> */}
                 <Link href="/" aria-label="Go to homepage">
-                    {/* FIXED: Replaced <img> with Image */}
                     <Image width={219} height={40} className="w-[180px] sm:w-[219px] h-auto" alt="Aestr Alpha Logo" src="/logo.svg" />
                 </Link>
-
-                {/* Desktop Navigation */}
                 <div className="hidden lg:flex flex-col lg:flex-row items-center gap-9">
                     <nav className="flex items-center gap-9">
                         {navItems.map((item, index) => (
-                            <button
-                                key={index}
-                                className="font-sans font-medium text-white text-base whitespace-nowrap"
-                            >
-                                {item}
-                            </button>
+                            <button key={index} className="font-sans font-medium text-white text-base whitespace-nowrap">{item}</button>
                         ))}
                     </nav>
                     <div className="flex items-center gap-3">
-                        <Button
-                            variant="outline"
-                            className="w-[99px] h-[50px] rounded-[6px] border border-solid border-white bg-transparent flex items-center justify-center"
-                        >
-                            <span className="font-sans font-bold text-white text-sm tracking-[1.40px]">
-                                LOGIN
-                            </span>
+                        <Button variant="outline" className="w-[99px] h-[50px] rounded-[6px] border border-solid border-white bg-transparent flex items-center justify-center">
+                            <span className="font-sans font-bold text-white text-sm tracking-[1.40px]">LOGIN</span>
                         </Button>
                         <Button className="w-[161px] h-[50px] px-6 rounded-[6px] bg-[#3a8dff] flex items-center justify-center">
-                            <span className="font-sans font-bold text-white text-sm tracking-[1.40px]">
-                                GET IN TOUCH
-                            </span>
+                            <span className="font-sans font-bold text-white text-sm tracking-[1.40px]">GET IN TOUCH</span>
                         </Button>
                     </div>
                 </div>
-
-                {/* Mobile Menu Button */}
                 <div className="lg:hidden">
                     <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-white">
                         {isMenuOpen ? <XIcon className="w-8 h-8" /> : <MenuIcon className="w-8 h-8" />}
                     </button>
                 </div>
             </ContentContainer>
-
-            {/* Mobile Menu Dropdown */}
             {isMenuOpen && (
                 <div className="lg:hidden absolute top-full left-0 w-full bg-black/90 backdrop-blur-md z-30 mt-4">
                     <ContentContainer className="flex flex-col items-center gap-6 py-8">
                         <nav className="flex flex-col items-center gap-6">
                             {navItems.map((item, index) => (
-                                <button
-                                    key={index}
-                                    className="font-sans font-medium text-white text-lg"
-                                >
-                                    {item}
-                                </button>
+                                <button key={index} className="font-sans font-medium text-white text-lg">{item}</button>
                             ))}
                         </nav>
                         <div className="flex flex-col items-center gap-4 w-full">
-                            <Button
-                                variant="outline"
-                                className="w-full h-[50px] rounded-[6px] border border-solid border-white bg-transparent"
-                            >
-                                <span className="font-sans font-bold text-white text-sm tracking-[1.40px]">
-                                    LOGIN
-                                </span>
+                            <Button variant="outline" className="w-full h-[50px] rounded-[6px] border border-solid border-white bg-transparent">
+                                <span className="font-sans font-bold text-white text-sm tracking-[1.40px]">LOGIN</span>
                             </Button>
                             <Button className="w-full h-[50px] px-6 rounded-[6px] bg-[#3a8dff]">
-                                <span className="font-sans font-bold text-white text-sm tracking-[1.40px]">
-                                    GET IN TOUCH
-                                </span>
+                                <span className="font-sans font-bold text-white text-sm tracking-[1.40px]">GET IN TOUCH</span>
                             </Button>
                         </div>
                     </ContentContainer>
@@ -118,47 +86,28 @@ const PageFooter = () => (
         <ContentContainer className="h-full flex flex-col justify-center">
             <div className="flex flex-col lg:flex-row justify-between items-start py-8 border-b border-white/50 gap-8">
                 <div className="flex flex-col gap-8">
-                    {/* Replace the text with your SVG logo */}
-                    <img src="/logo.svg" alt="AESTR Alpha Logo" className="h-8 w-auto" /> {/* Adjust height and width as needed */}
+                    <Image src="/logo.svg" alt="AESTR Alpha Logo" width={150} height={28} className="h-8 w-auto" />
                     <div className="flex gap-16 text-sm font-normal">
                         <div className="flex flex-col gap-3">
-                            <a href="#" className="hover:underline">HOME</a>
-                            <a href="#" className="hover:underline">RESOURCES</a>
-                            <a href="#" className="hover:underline">CONTACT US</a>
+                            <Link href="/" className="hover:underline">HOME</Link>
+                            <Link href="/resources" className="hover:underline">RESOURCES</Link>
+                            <Link href="/contact" className="hover:underline">CONTACT US</Link>
                         </div>
                         <div className="flex flex-col gap-3">
-                            <a href="#" className="hover:underline">PROGRAMS</a>
-                            <a href="#" className="hover:underline">CONTACT US</a>
+                            <Link href="/programs" className="hover:underline">PROGRAMS</Link>
+                            <Link href="/contact" className="hover:underline">CONTACT US</Link>
                         </div>
                     </div>
                 </div>
                 <div className="flex flex-col items-start gap-4 text-left max-w-xl">
                     <p className="font-normal text-xs leading-5 tracking-wider">AESTR ALPHA TURNS YOUR DEGREE INTO A 10-15 LPA CAREER WITH HANDS-ON TRAINING, REAL PROJECTS, AND MONTHLY PLACEMENTS.</p>
-                    <h2 className="text-xl sm:text-2xl font-bold leading-tight">CONFUSED ABOUT YOUR PATH? TALK TO AN OUR AI ENGINEER, NOT A COUNSELLOR.</h2>
-                    <Button
-                        variant="secondary"
-                        className="bg-white text-black hover:bg-gray-200 px-6 py-2 rounded-md mt-2 h-16 w-full max-w-[213px] sm:w-[213px]"
-                    >
+                    <h2 className="text-xl sm:text-2xl font-bold leading-tight">CONFUSED ABOUT YOUR PATH? TALK TO OUR AI ENGINEER, NOT A COUNSELLOR.</h2>
+                    <Button variant="secondary" className="bg-white text-black hover:bg-gray-200 px-6 py-2 rounded-md mt-2 h-16 w-full max-w-[213px] sm:w-[213px]">
                         <div className="flex items-center justify-between w-full">
-                            <span
-                                style={{
-                                    fontFamily: '"Plus Jakarta Sans", sans-serif',
-                                    fontWeight: 800,
-                                    fontSize: '14px',
-                                    lineHeight: '20px',
-                                    letterSpacing: '10%',
-                                    textTransform: 'uppercase',
-                                    color: '#3A8DFF',
-                                }}
-                            >
+                            <span style={{ fontFamily: '"Plus Jakarta Sans", sans-serif', fontWeight: 800, fontSize: '14px', lineHeight: '20px', letterSpacing: '10%', textTransform: 'uppercase', color: '#3A8DFF' }}>
                                 TALK NOW
                             </span>
-                            <Image
-                                width={20} height={20}
-                                src="/arrowright.svg"
-                                alt="Arrow"
-                                className="w-5 h-5"
-                            />
+                            <Image width={20} height={20} src="/arrowright.svg" alt="Arrow" className="w-5 h-5" />
                         </div>
                     </Button>
                 </div>
@@ -166,8 +115,8 @@ const PageFooter = () => (
             <div className="flex flex-col sm:flex-row justify-between items-center text-center sm:text-left pt-6 text-xs font-normal gap-4">
                 <p>2025 AESTR ALPHA</p>
                 <div className="flex flex-col sm:flex-row gap-4 sm:gap-8">
-                    <a href="#" className="hover:underline">PRIVACY POLICY</a>
-                    <a href="#" className="hover:underline">TERMS & CONDITIONS</a>
+                    <Link href="/privacy" className="hover:underline">PRIVACY POLICY</Link>
+                    <Link href="/terms" className="hover:underline">TERMS & CONDITIONS</Link>
                 </div>
             </div>
         </ContentContainer>
@@ -175,21 +124,11 @@ const PageFooter = () => (
 );
 
 
-//==============================================================================
-// Hero & Course Details Section
-//==============================================================================
-const HeroSection = (): JSX.Element => {
-    const heroBadges = [
-        {
-            text: "BUILD PRODUCTION-GRADE CLOUD INFRASTRUCTURE.",
-            className: "bg-[#0C1C33]/90 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-white"
-        },
-        {
-            text: "NEXT BATCH STARTS IN SEPTEMBER",
-            className: "bg-white text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-blue-500"
-        },
-    ];
+// ==============================================================================
+// PAGE-SPECIFIC SECTION COMPONENTS
+// ==============================================================================
 
+const HeroSection = (): JSX.Element => {
     const programDetails = [
         { label: "PROGRAM DURATION", value: "12 MONTHS" },
         { label: "APPLICATION PROCESS", value: "HIGHLY SELECTIVE" },
@@ -201,20 +140,21 @@ const HeroSection = (): JSX.Element => {
         <section className="flex flex-col items-start gap-12 w-full">
             <div className="flex flex-col items-start gap-8">
                 <div className="flex flex-wrap items-start gap-4">
-                    {heroBadges.map((badge, index) => (
-                        <Badge
-                            key={index}
-                            className={`inline-flex items-center justify-center gap-2.5 px-4 py-3 rounded-full font-bold text-xs sm:text-sm tracking-wider leading-5 whitespace-nowrap ${badge.className}`}
-                        >
-                            {badge.text}
-                        </Badge>
-                    ))}
+                    <div className="inline-flex items-center justify-center gap-2.5 px-4 py-3 bg-[#0c1c33] rounded-[100px]">
+                        <span className="bg-[linear-gradient(90deg,rgba(153,196,255,1)_0%,rgba(255,255,255,1)_100%)] [-webkit-background-clip:text] bg-clip-text [-webkit-text-fill-color:transparent] [text-fill-color:transparent] font-bold text-transparent text-sm tracking-[1.40px] leading-5 text-center md:whitespace-nowrap">
+                            BUILD PRODUCTION-GRADE CLOUD INFRASTRUCTURE.
+                        </span>
+                    </div>
+                    <div className="inline-flex items-center justify-center gap-2.5 px-4 py-3 bg-[#0c1c33] rounded-[100px]">
+                        <span className="bg-[linear-gradient(90deg,rgba(153,196,255,1)_0%,rgba(255,255,255,1)_100%)] [-webkit-background-clip:text] bg-clip-text [-webkit-text-fill-color:transparent] [text-fill-color:transparent] font-bold text-transparent text-sm tracking-[1.40px] leading-5 text-center md:whitespace-nowrap">
+                            NEXT BATCH STARTS IN SEPTEMBER
+                        </span>
+                    </div>
                 </div>
                 <h1 className="font-semibold text-white text-4xl sm:text-5xl tracking-wide leading-tight">
                     DEEP CLOUD &amp; MULTI-CLOUD ENGINEERING
                 </h1>
             </div>
-            {/* FIXED: Replaced <img> with Image */}
             <Image
                 width={1200}
                 height={420}
@@ -253,7 +193,6 @@ const HeroSection = (): JSX.Element => {
     );
 };
 
-
 const WhyChooseProgramSection = (): JSX.Element => {
     const features = [
         { icon: "/project1.svg", title: "REAL-WORLD PROJECTS", description: "GAIN HANDS-ON EXPERIENCE DESIGNING AND AUTOMATING PRODUCTION-GRADE INFRASTRUCTURE WITH INDUSTRY PARTNERS." },
@@ -270,7 +209,6 @@ const WhyChooseProgramSection = (): JSX.Element => {
                         {features.map((feature, index) => (
                             <React.Fragment key={index}>
                                 <div className="flex flex-col items-center justify-start text-center p-8 sm:p-12 gap-10">
-                                    {/* FIXED: Replaced <img> with Image */}
                                     <Image width={96} height={96} className="w-20 h-20 sm:w-24 sm:h-24" alt="" src={feature.icon} />
                                     <div className="flex flex-col items-center gap-6">
                                         <h3 className="text-xl sm:text-2xl font-semibold text-white tracking-[0] leading-6">{feature.title}</h3>
@@ -292,26 +230,15 @@ const WhyChooseProgramSection = (): JSX.Element => {
     );
 };
 
-
 const AlumniLeadSection = (): JSX.Element => {
     const logos = [
-        { src: "/citoh.svg", alt: "C.ITOH Logo" },
-        { src: "/medium.svg", alt: "Medium Logo" },
-        { src: "/business.svg", alt: "Business Insider Logo" },
-        { src: "/forbes.svg", alt: "Forbes Logo" },
-        { src: "/quatrz.svg", alt: "Quartz Logo" },
-        { src: "/citoh.svg", alt: "C.ITOH Logo" },
-        { src: "/medium.svg", alt: "Medium Logo" },
-        { src: "/business.svg", alt: "Business Insider Logo" },
-        { src: "/forbes.svg", alt: "Forbes Logo" },
+        { src: "/citoh.svg", alt: "C.ITOH Logo" }, { src: "/medium.svg", alt: "Medium Logo" }, { src: "/business.svg", alt: "Business Insider Logo" },
+        { src: "/forbes.svg", alt: "Forbes Logo" }, { src: "/quatrz.svg", alt: "Quartz Logo" }, { src: "/citoh.svg", alt: "C.ITOH Logo" },
+        { src: "/medium.svg", alt: "Medium Logo" }, { src: "/business.svg", alt: "Business Insider Logo" }, { src: "/forbes.svg", alt: "Forbes Logo" },
         { src: "/quatrz.svg", alt: "Quartz Logo" },
     ];
 
-    const [emblaRef] = useEmblaCarousel({
-        loop: true,
-        align: 'start',
-        slidesToScroll: 1,
-    }, [Autoplay({ delay: 2000, stopOnInteraction: false, stopOnMouseEnter: true })]);
+    const [emblaRef] = useEmblaCarousel({ loop: true, align: 'start', slidesToScroll: 1, }, [Autoplay({ delay: 2000, stopOnInteraction: false, stopOnMouseEnter: true })]);
 
     return (
         <section className="w-full">
@@ -325,7 +252,6 @@ const AlumniLeadSection = (): JSX.Element => {
                             <div className="flex">
                                 {logos.map((logo, index) => (
                                     <div key={index} className="flex-[0_0_50%] sm:flex-[0_0_33.33%] md:flex-[0_0_20%] min-w-0 px-4 flex items-center justify-center">
-                                        {/* FIXED: Replaced <img> with Image */}
                                         <Image width={100} height={32} className="h-5 sm:h-6 md:h-8 w-auto" alt={logo.alt} src={logo.src} />
                                     </div>
                                 ))}
@@ -338,7 +264,6 @@ const AlumniLeadSection = (): JSX.Element => {
     );
 };
 
-
 const CurriculumTimelineSection = (): JSX.Element => {
     const phases = [
         { id: 1, badge: "PHASE 1 (WEEKS 1-8)", title: "THE EVOLUTIONARY INVENTION", description: "This foundational phase is a hands-on immersion into building and automating secure, scalable cloud infrastructure. You will move beyond the console and learn to command the cloud through code.", details: "ADVANCED VPC & NETWORK DESIGN\nIDENTITY AND ACCESS MANAGEMENT (IAM)\nINFRASTRUCTURE AS CODE (IAC) WITH TERRAFORM\nCONFIGURATION MANAGEMENT WITH ANSIBLE\nCI/CD PIPELELINES FOR INFRASTRUCTURE" },
@@ -349,7 +274,6 @@ const CurriculumTimelineSection = (): JSX.Element => {
 
     const timelineRef = useRef<HTMLDivElement>(null);
     const phaseRefs = useRef<(HTMLDivElement | null)[]>([]);
-
     const [lineHeight, setLineHeight] = useState(0);
     const [maxLineHeight, setMaxLineHeight] = useState(0);
     const [activePhaseId, setActivePhaseId] = useState(1);
@@ -360,81 +284,61 @@ const CurriculumTimelineSection = (): JSX.Element => {
                 const firstPhase = phaseRefs.current[0];
                 const lastPhase = phaseRefs.current[phaseRefs.current.length - 1];
                 if (firstPhase && lastPhase) {
-                    const height = lastPhase.offsetTop - firstPhase.offsetTop;
+                    const firstPhaseTop = firstPhase.getBoundingClientRect().top + window.scrollY;
+                    const lastPhaseTop = lastPhase.getBoundingClientRect().top + window.scrollY;
+                    const height = lastPhaseTop - firstPhaseTop;
                     setMaxLineHeight(height);
                 }
             }
         };
-
-        calculateMaxHeight();
+        const timeoutId = setTimeout(calculateMaxHeight, 150);
         window.addEventListener('resize', calculateMaxHeight);
-        return () => window.removeEventListener('resize', calculateMaxHeight);
+        return () => { window.removeEventListener('resize', calculateMaxHeight); clearTimeout(timeoutId); };
     }, [phases.length]);
 
     useEffect(() => {
         const handleScroll = () => {
             const firstPhaseRef = phaseRefs.current[0];
-            if (timelineRef.current && firstPhaseRef && maxLineHeight > 0 && phases.length > 1) {
+            if (timelineRef.current && firstPhaseRef && maxLineHeight > 0) {
                 const windowHeight = window.innerHeight;
                 const activationPoint = windowHeight * 0.5;
-
                 let latestActiveId = 1;
                 phaseRefs.current.forEach((phaseRef, index) => {
-                    if (phaseRef && phaseRef.getBoundingClientRect().top <= activationPoint) {
+                    if (phaseRef && phaseRef.getBoundingClientRect().top < activationPoint) {
                         latestActiveId = index + 1;
                     }
                 });
-
                 setActivePhaseId(latestActiveId);
-                
                 const activePhaseRef = phaseRefs.current[latestActiveId - 1];
-
                 if (activePhaseRef) {
-                    const targetHeight = activePhaseRef.offsetTop - firstPhaseRef.offsetTop;
-                    setLineHeight(targetHeight);
+                    const firstPhaseTop = firstPhaseRef.getBoundingClientRect().top + window.scrollY;
+                    const activePhaseTop = activePhaseRef.getBoundingClientRect().top + window.scrollY;
+                    setLineHeight(activePhaseTop - firstPhaseTop);
                 }
             }
         };
-
-        window.addEventListener('scroll', handleScroll);
-        handleScroll(); 
-        
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        handleScroll();
         return () => window.removeEventListener('scroll', handleScroll);
-    }, [maxLineHeight, phases.length]);
-
-    // REMOVED: The stray '1' that was here.
+    }, [maxLineHeight]);
     
     return (
         <section className="flex flex-col w-full items-start gap-12 sm:gap-16 relative">
             <h2 className="font-semibold text-white text-3xl sm:text-5xl tracking-[0.96px] leading-tight">COURSE CURRICULUM</h2>
             <div ref={timelineRef} className="relative w-full">
-                <div
-                    className="absolute left-2 sm:left-4 top-2 w-1 bg-white/10 rounded-full"
-                    style={{ height: `${maxLineHeight}px` }}
-                />
-                <div
-                    className="absolute left-2 sm:left-4 top-2 w-1 bg-[#3a8dff] rounded-full transition-height duration-1000 ease-in-out"
-                    style={{ height: `${lineHeight}px` }}
-                />
-
+                <div className="absolute left-[14px] sm:left-[18px] top-2 w-1 bg-white/10 -translate-x-1/2 z-0" style={{ height: `${maxLineHeight}px` }} />
+                <div className="absolute left-[14px] sm:left-[18px] top-2 w-1 bg-[#3a8dff] -translate-x-1/2 transition-all duration-500 ease-in-out z-0" style={{ height: `${lineHeight}px` }} />
                 {phases.map((phase, index) => (
-                    <div key={phase.id} ref={(el) => { phaseRefs.current[index] = el; }} className="relative pl-8 sm:pl-12 pb-16 sm:pb-20">
-                        <div
-                            className={`
-                                absolute left-2 sm:left-4 top-2 w-7 h-7 sm:w-9 sm:h-9 rounded-full flex items-center justify-center border-2
-                                -translate-x-1/2 transition-colors duration-500
-                                ${phase.id <= activePhaseId ? 'bg-[#3a8dff] border-[#3a8dff]' : 'border-gray-500 bg-black'}
-                            `}
-                        >
-                            <div className="w-2 h-2 sm:w-3 sm:h-3 bg-white rounded-full" />
+                    <div key={phase.id} ref={(el) => { phaseRefs.current[index] = el; }} className="relative flex items-start gap-4 sm:gap-6 pb-16 sm:pb-20">
+                        <div className="relative w-7 h-7 sm:w-9 sm:h-9 flex-shrink-0 mt-2 z-10">
+                             <div className={`w-full h-full rounded-full flex items-center justify-center border-2 transition-colors duration-500 ${phase.id <= activePhaseId ? 'bg-[#3a8dff] border-[#3a8dff]' : 'border-gray-500 bg-black'}`}>
+                                <div className="w-2 h-2 sm:w-3 sm:h-3 bg-white rounded-full" />
+                            </div>
                         </div>
-                        <article className="flex flex-col items-start gap-6 sm:gap-7">
-                        <Badge 
-                            variant="outline" 
-                            className="border-white/20 text-white bg-transparent hover:bg-transparent h-auto w-fit px-4 py-2 rounded-full text-xs sm:text-sm whitespace-nowrap"
-                        >
-                            {phase.badge}
-                        </Badge>
+                        <article className="flex-1 flex flex-col items-start gap-6 sm:gap-7">
+                            <Badge variant="outline" className="border-white/20 text-white bg-transparent hover:bg-transparent h-auto w-fit px-4 py-2 rounded-full text-xs sm:text-sm whitespace-nowrap">
+                                {phase.badge}
+                            </Badge>
                             <h3 className="font-semibold text-white text-2xl sm:text-3xl">{phase.title}</h3>
                             <p className="opacity-60 font-medium text-white text-base tracking-wider leading-relaxed">{phase.description}</p>
                             <ul className="list-disc pl-5 opacity-60 font-medium text-white text-base tracking-wider leading-relaxed space-y-2">
@@ -450,46 +354,59 @@ const CurriculumTimelineSection = (): JSX.Element => {
     );
 };
 
-const AlumniSection = (): JSX.Element => {
-    const mentors = [
-        { name: "ZARA MEHTA", title: "SPECIALIST AT ZOOMTECH", testimonial: "As a technical specialist, I aspired to transition into AI/ML but felt overwhelmed. Aestr Alpha's structured curriculum and interactive workshops provided the clarity and skills I needed.", image: "/zara.svg", icon: "/google.svg" },
-        { name: "AARAV MEHTA", title: "TECHNICAL AT ZOOMTECH", testimonial: "The hands-on projects were the best part. They weren't toy examples; we built real, production-grade infrastructure that I could confidently showcase to employers.", image: "/aarav.svg", icon: "/google.svg" },
-        { name: "SANKET SHARMA", title: "SPECIALIST AT GOOGLE", testimonial: "The monthly placement drives are a game-changer. I had multiple offers before I even officially completed the program. It truly bridges the gap between education and career.", image: "/sanket.svg", icon: "/google.svg" },
-        { name: "ANNA IVANOVA", title: "LEAD ENGINEER AT TECHCORP", testimonial: "The mentorship I received was invaluable. My mentor guided me through complex topics and helped me build a strong portfolio.", image: "/zara.svg", icon: "/google.svg" },
-        { name: "MIKE PETERSON", title: "DATA SCIENTIST AT DATANET", testimonial: "The curriculum is very well-structured and up-to-date with the latest industry trends. I felt well-prepared for my job interviews.", image: "/aarav.svg", icon: "/google.svg" },
+const MentorSection = (): JSX.Element => {
+    const testimonials = [
+        { image: "/aarav.svg", quote: "THE INNOVATIVE STRATEGIES THEY IMPLEMENTED INCREASED OUR ONLINE VISIBILITY AND SALES SIGNIFICANTLY.", name: "AISHA KHAN", title: "GREENTECH'S CEO" },
+        { image: "/sanket.svg", quote: "THEIR TAILORED APPROACH TO SOCIAL MEDIA MANAGEMENT DROVE ENGAGEMENT AND BUILT A LOYAL COMMUNITY AROUND OUR BRAND.", name: "RAHUL GUPTA", title: "TRENDYWEAR'S FOUNDER" },
+        { image: "/aarav.svg", quote: "THE INNOVATIVE STRATEGIES THEY IMPLEMENTED INCREASED OUR ONLINE VISIBILITY AND SALES SIGNIFICANTLY.", name: "AISHA KHAN", title: "GREENTECH'S CEO" },
+        { image: "/sanket.svg", quote: "THEIR TAILORED APPROACH TO SOCIAL MEDIA MANAGEMENT DROVE ENGAGEMENT AND BUILT A LOYAL COMMUNITY AROUND OUR BRAND.", name: "RAHUL GUPTA", title: "TRENDYWEAR'S FOUNDER" },
+        { image: "/sanket.svg", quote: "THEIR TAILORED APPROACH TO SOCIAL MEDIA MANAGEMENT DROVE ENGAGEMENT AND BUILT A LOYAL COMMUNITY AROUND OUR BRAND.", name: "RAHUL GUPTA", title: "TRENDYWEAR'S CEO" },
     ];
 
-    const [emblaRef] = useEmblaCarousel({
-        loop: true,
-        slidesToScroll: 1,
-        align: 'start',
-    }, [Autoplay({ delay: 3500, stopOnInteraction: false })]);
+    const responsive = {
+        desktop: { breakpoint: { max: 3000, min: 1024 }, items: 2, partialVisibilityGutter: 40 },
+        tablet: { breakpoint: { max: 1024, min: 768 }, items: 1, partialVisibilityGutter: 30 },
+        mobile: { breakpoint: { max: 768, min: 0 }, items: 1, partialVisibilityGutter: 20 },
+    };
 
     return (
-        <section className="flex flex-col w-full items-start gap-12 sm:gap-16 relative">
-            <h2 className="font-semibold text-white text-3xl sm:text-5xl tracking-[0.96px] leading-tight">HEAR FROM YOUR ALUMNI</h2>
-            <div className="overflow-hidden w-full" ref={emblaRef}>
-                <div className="flex -ml-3">
-                    {mentors.map((mentor, index) => (
-                        <div key={index} className="flex-[0_0_100%] sm:flex-[0_0_50%] lg:flex-[0_0_33.33%] pl-3">
-                            <Card className="relative w-full h-[580px] rounded-xl overflow-hidden bg-[#1a1a1a] border-[#484848]">
-                                <CardContent className="p-0 h-full">
-                                    {/* FIXED: Replaced <img> with Image */}
-                                    <Image width={400} height={348} className="absolute w-full h-3/5 top-0 left-0 object-cover pt-5 px-5 rounded-t-xl" alt={`Portrait of ${mentor.name}`} src={mentor.image} />
-                                    <div className="absolute bottom-0 left-0 p-6 w-full h-2/5 flex flex-col justify-end bg-gradient-to-t from-black via-black/70 to-transparent">
-                                        <div className="flex flex-col items-start gap-2">
-                                            <h3 className="text-xl font-semibold text-white">{mentor.name}</h3>
-                                            <p className="font-medium text-white/80 text-base tracking-wider">{mentor.title}</p>
-                                        </div>
-                                        <p className="mt-4 opacity-60 font-medium text-white text-base tracking-wider leading-relaxed line-clamp-3">{mentor.testimonial}</p>
+        <section className="flex flex-col w-full items-start gap-12 sm:gap-[60px] relative">
+            <h2 className="relative self-stretch font-semibold text-white text-3xl sm:text-5xl tracking-[0.96px] leading-tight">
+                MEET YOUR MENTORS
+            </h2>
+            <div className="w-full">
+                <Carousel
+                    responsive={responsive}
+                    infinite={true}
+                    autoPlay={true}
+                    autoPlaySpeed={3000}
+                    keyBoardControl={true}
+                    customTransition="transform 500ms ease-in-out"
+                    transitionDuration={500}
+                    containerClass="carousel-container"
+                    removeArrowOnDeviceType={["tablet", "mobile", "desktop"]}
+                    dotListClass="custom-dot-list-style"
+                    partialVisible
+                >
+                    {testimonials.map((testimonial, index) => (
+                        <div key={index} className="px-2 h-full">
+                            <div className={`grid grid-rows-[200px_1fr] sm:flex sm:flex-row w-full h-[450px] sm:h-[248px] items-center p-4 rounded-[12px] gap-4 sm:gap-2.5 relative backdrop-blur-[50px] bg-[#1a1a1a] border border-[#484848]`}>
+                                <div className="w-full sm:w-2/5 h-full flex-shrink-0">
+                                    <Image width={200} height={232} className="w-full h-full object-cover rounded-lg" alt={testimonial.name} src={testimonial.image} />
+                                </div>
+                                <div className="w-full sm:w-3/5 h-full flex flex-col justify-between py-1 gap-4">
+                                    <p className="opacity-60 font-medium text-white text-sm sm:text-base leading-relaxed">
+                                        &ldquo;{testimonial.quote}&rdquo;
+                                    </p>
+                                    <div className="flex flex-col items-start gap-2">
+                                        <h3 className="font-semibold text-white text-lg sm:text-xl leading-6">{testimonial.name}</h3>
+                                        <p className="font-medium text-white text-base leading-5 whitespace-nowrap">{testimonial.title}</p>
                                     </div>
-                                    {/* FIXED: Replaced <img> with Image */}
-                                    <Image width={80} height={80} className="absolute w-16 h-16 sm:w-20 sm:h-20 top-1/2 right-4 sm:right-6" alt="Quote icon" src={mentor.icon} />
-                                </CardContent>
-                            </Card>
+                                </div>
+                            </div>
                         </div>
                     ))}
-                </div>
+                </Carousel>
             </div>
         </section>
     );
@@ -512,8 +429,8 @@ const CallToActionSection = (): JSX.Element => {
                                 <ArrowRightIcon className="w-6 h-6 text-white" />
                             </Button>
                             <Button size="lg" variant="outline" className="w-full max-w-sm lg:w-[400px] h-[64px] justify-between px-7 py-6 border-white text-white bg-transparent hover:bg-white/10 rounded-md">
-                                <span className="font-extrabold text-white text-sm tracking-[1.40px]">DOWNLOAD BROCHURE</span>
-                                <DownloadIcon className="w-5 h-5 text-white" />
+                                <span className="font-extrabold text-white text-sm tracking-[1.40px] flex-1 min-w-0 whitespace-normal text-left">DOWNLOAD BROCHURE</span>
+                                <DownloadIcon className="w-5 h-5 text-white flex-shrink-0" />
                             </Button>
                         </div>
                     </div>
@@ -547,68 +464,6 @@ const SurveySection = (): JSX.Element => {
     );
 };
 
-const MentorSection = (): JSX.Element => {
-    const testimonials = [
-        { image: "/aarav.svg", quote: "THE INNOVATIVE STRATEGIES THEY IMPLEMENTED INCREASED OUR ONLINE VISIBILITY AND SALES SIGNIFICANTLY.", name: "AISHA KHAN", title: "GREENTECH'S CEO" },
-        { image: "/sanket.svg", quote: "THEIR TAILORED APPROACH TO SOCIAL MEDIA MANAGEMENT DROVE ENGAGEMENT AND BUILT A LOYAL COMMUNITY AROUND OUR BRAND.", name: "RAHUL GUPTA", title: "TRENDYWEAR'S FOUNDER" },
-        { image: "/aarav.svg", quote: "THE INNOVATIVE STRATEGIES THEY IMPLEMENTED INCREASED OUR ONLINE VISIBILITY AND SALES SIGNIFICANTLY.", name: "AISHA KHAN", title: "GREENTECH SOLUTIONS'S FOUNDER" },
-        { image: "/sanket.svg", quote: "THEIR TAILORED APPROACH TO SOCIAL MEDIA MANAGEMENT DROVE ENGAGEMENT AND BUILT A LOYAL COMMUNITY AROUND OUR BRAND.", name: "RAHUL GUPTA", title: "TRENDYWEAR'S CEO" },
-    ];
-
-    const responsive = {
-        desktop: { breakpoint: { max: 3000, min: 1024 }, items: 2, partialVisibilityGutter: 40 },
-        tablet: { breakpoint: { max: 1024, min: 768 }, items: 1, partialVisibilityGutter: 30 },
-        mobile: { breakpoint: { max: 768, min: 0 }, items: 1, partialVisibilityGutter: 20 },
-    };
-
-    return (
-        <section className="flex flex-col w-full items-start gap-12 sm:gap-[60px] relative">
-            <h2 className="relative self-stretch font-semibold text-white text-3xl sm:text-5xl tracking-[0.96px] leading-tight">
-                MEET YOUR MENTORS
-            </h2>
-            <div className="w-full">
-                <Carousel
-                    responsive={responsive}
-                    infinite={true}
-                    autoPlay={true}
-                    autoPlaySpeed={3000}
-                    keyBoardControl={true}
-                    customTransition="transform 500ms ease-in-out"
-                    transitionDuration={500}
-                    containerClass="carousel-container"
-                    removeArrowOnDeviceType={["tablet", "mobile", "desktop"]}
-                    dotListClass="custom-dot-list-style"
-                    partialVisible
-                >
-                    {testimonials.map((testimonial, index) => (
-                        <div key={index} className="px-2 h-full">
-                            <div
-                                className={`flex flex-col sm:flex-row w-full h-auto sm:h-[248px] items-center p-4 rounded-[12px] gap-4 sm:gap-2.5 relative backdrop-blur-[50px] bg-[#1a1a1a] border border-[#484848]`}
-                            >
-                                <div className="w-full sm:w-2/5 h-[200px] sm:h-full flex-shrink-0">
-                                    {/* FIXED: Replaced <img> with Image */}
-                                    <Image width={200} height={232} className="w-full h-full object-cover rounded-lg" alt={testimonial.name} src={testimonial.image} />
-                                </div>
-                                <div className="w-full sm:w-3/5 h-full flex flex-col justify-between py-1 gap-4">
-                                    {/* FIXED: Escaped quotes */}
-                                    <p className="opacity-60 font-medium text-white text-sm sm:text-base leading-relaxed">
-                                        &ldquo;{testimonial.quote}&rdquo;
-                                    </p>
-                                    <div className="flex flex-col items-start gap-2">
-                                        <h3 className="font-semibold text-white text-lg sm:text-xl leading-6">{testimonial.name}</h3>
-                                        <p className="font-medium text-white text-base leading-5 whitespace-nowrap">{testimonial.title}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    ))}
-                </Carousel>
-            </div>
-        </section>
-    );
-};
-
-// REMOVED: export keyword
 const WhySection = (): JSX.Element => {
     const featuredItems = [
         { image: "/program.svg", title: "SECURING YOUR BUSINESS AND\nEMPLOYEES IS ALWAYS OUR PRIORITY", description: "LOREM IPSUM DOLOR SIT AMET CONSECTETUR. MASSA DAPIBUS SED LACINIA ODIO AMET. NEQUE EGET COMMODO AMET ADIPISCING EGESTAS FAUCIBUS DIGNISSIM LOBORTIS VITAE." },
@@ -624,7 +479,6 @@ const WhySection = (): JSX.Element => {
                 <div className="flex flex-col lg:flex-row w-full items-start justify-between gap-12 lg:gap-16">
                     {featuredItems.map((item, index) => (
                         <div key={index} className="flex flex-col items-start gap-8 flex-1 w-full">
-                            {/* FIXED: Replaced <img> with Image */}
                             <Image width={600} height={600} className="w-full h-auto max-h-[300px] sm:max-h-[600px] object-cover rounded-lg" alt="Featured item" src={item.image} />
                             <h3 className="w-full [-webkit-text-stroke:1px_#ffffff33] font-semibold text-white text-xl md:text-2xl tracking-normal leading-snug whitespace-pre-line">
                                 {item.title}
@@ -640,15 +494,14 @@ const WhySection = (): JSX.Element => {
     );
 };
 
-//==============================================================================
+
+// ==============================================================================
 // MAIN PAGE COMPONENT
-//==============================================================================
+// ==============================================================================
 export default function DeepCloudCoursePage(): JSX.Element {
     return (
         <div className="bg-black w-full min-h-screen font-sans overflow-x-hidden">
             <div className="fixed inset-0 overflow-hidden pointer-events-none z-0 opacity-30 sm:opacity-50">
-                {/* FIXED: Replaced <img> with Image */}
-                {/* <Image width={800} height={800} src="/Rightcircle.svg" alt="" className="absolute top-[-20%] right-[-35%] sm:right-[-15%] w-[80%] sm:w-1/2" /> */}
                 <Image width={800} height={800} src="/Bottomcircle.svg" alt="" className="absolute bottom-[-20%] left-[-35%] sm:left-[-15%] w-[80%] sm:w-1/2" />
             </div>
 
@@ -657,13 +510,12 @@ export default function DeepCloudCoursePage(): JSX.Element {
                 <main className="py-16 sm:py-24">
                     <ContentContainer className="space-y-24 sm:space-y-32">
                         <HeroSection />
-                        
                         <CallToActionSection />
                         <CurriculumTimelineSection />
                         <MentorSection />
                         <AlumniLeadSection />
                         <WhyChooseProgramSection />
-                        <AlumniSection />
+                        <AlumniLeadSection />
                         <SurveySection />
                         <WhySection />
                     </ContentContainer>

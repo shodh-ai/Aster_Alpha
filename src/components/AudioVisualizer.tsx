@@ -30,7 +30,6 @@ export const AudioVisualizer: React.FC<AudioVisualizerProps> = ({
   const mountRef = useRef<HTMLDivElement>(null);
   const listenerRef = useRef<THREE.AudioListener | null>(null);
   const analyserRef = useRef<THREE.AudioAnalyser | null>(null);
-  const sceneRef = useRef<THREE.Scene | null>(null);
 
   const currentStyle = AGENT_VISUAL_STYLE;
 
@@ -40,31 +39,27 @@ export const AudioVisualizer: React.FC<AudioVisualizerProps> = ({
 
     // --- Scene Setup ---
     const scene = new THREE.Scene();
-    sceneRef.current = scene;
-    const camera = new THREE.PerspectiveCamera(
-      75,
-      currentMount.clientWidth / currentMount.clientHeight,
-      0.1,
-      1000
-    );
-    camera.position.z = 5;
+    const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0.1, 10);
+    camera.position.z = 1;
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setSize(currentMount.clientWidth, currentMount.clientHeight);
     renderer.setPixelRatio(window.devicePixelRatio);
     currentMount.appendChild(renderer.domElement);
 
-    // --- Rings Creation ---
+    // --- Rings Creation (Fixed Geometry) ---
+    // MODIFIED: The rings are now created once with a fixed, normalized size.
+    // The camera will be adjusted to make them fit the screen.
     const rings: THREE.Mesh[] = [];
-    const ringThickness = 0.55;
-    const outerRingCenterRadius = 2.4;
-    const innerRingCenterRadius = outerRingCenterRadius / 2;
-    const ringRadii = [innerRingCenterRadius, outerRingCenterRadius];
+    const outerRingRadius = 1.0;
+    const ringThickness = outerRingRadius * 0.25;
+    const innerRingRadius = outerRingRadius * 0.5;
 
-    for (const centerRadius of ringRadii) {
-      const innerRadius = centerRadius - ringThickness / 2;
-      const outerRadius = centerRadius + ringThickness / 2;
-      const geometry = new THREE.RingGeometry(innerRadius, outerRadius, 128);
+    const radiiToCreate = [innerRingRadius, outerRingRadius];
+
+    for (const outerR of radiiToCreate) {
+      const innerR = Math.max(0, outerR - ringThickness);
+      const geometry = new THREE.RingGeometry(innerR, outerR, 128);
       const material = new THREE.ShaderMaterial({
         uniforms: {
           time: { value: 0 },
@@ -72,31 +67,31 @@ export const AudioVisualizer: React.FC<AudioVisualizerProps> = ({
           breathingSpeed: { value: currentStyle.breathingSpeed },
         },
         vertexShader: `
-          varying vec2 vUv;
-          void main() {
-              vUv = uv;
-              gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-          }`,
+            varying vec2 vUv;
+            void main() {
+                vUv = uv;
+                gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+            }`,
         fragmentShader: `
-          uniform float time;
-          uniform vec3 glowColor;
-          uniform float breathingSpeed;
-          varying vec2 vUv;
+            uniform float time;
+            uniform vec3 glowColor;
+            uniform float breathingSpeed;
+            varying vec2 vUv;
 
-          void main() {
-              vec2 center = vec2(0.5, 0.5);
-              float dist = distance(vUv, center);
-              
-              float inner_edge = 0.35;
-              float outer_edge = 0.5;
-              float blur = 0.1;
-              
-              float alpha = smoothstep(inner_edge - blur, inner_edge + blur, dist) - smoothstep(outer_edge - blur, outer_edge + blur, dist);
+            void main() {
+                vec2 center = vec2(0.5, 0.5);
+                float dist = distance(vUv, center);
+                
+                float inner_edge = 0.35;
+                float outer_edge = 0.5;
+                float blur = 0.1;
+                
+                float alpha = smoothstep(inner_edge - blur, inner_edge + blur, dist) - smoothstep(outer_edge - blur, outer_edge + blur, dist);
 
-              float breathing = sin(time * breathingSpeed) * 0.5 + 0.5;
-              
-              gl_FragColor = vec4(glowColor, alpha * (breathing * 0.5 + 0.5));
-          }`,
+                float breathing = sin(time * breathingSpeed) * 0.5 + 0.5;
+                
+                gl_FragColor = vec4(glowColor, alpha * (breathing * 0.5 + 0.5));
+            }`,
         transparent: true,
         side: THREE.DoubleSide,
         blending: THREE.AdditiveBlending,
@@ -112,17 +107,13 @@ export const AudioVisualizer: React.FC<AudioVisualizerProps> = ({
     listenerRef.current = audioListener;
 
     if (track?.mediaStream) {
-      // Create Web Audio API context for analysis only (no playback)
       const audioContext = audioListener.context;
       const source = audioContext.createMediaStreamSource(track.mediaStream);
       const analyserNode = audioContext.createAnalyser();
-      analyserNode.fftSize = 64; // 32 frequency bins
+      analyserNode.fftSize = 64;
       
-      // Connect source to analyser but NOT to destination (no audio output)
       source.connect(analyserNode);
-      // DO NOT connect to audioContext.destination to prevent audio playback
       
-      // Create a custom analyser object that mimics THREE.AudioAnalyser interface
       const customAnalyser = {
         analyser: analyserNode,
         data: new Uint8Array(analyserNode.frequencyBinCount),
@@ -154,14 +145,12 @@ export const AudioVisualizer: React.FC<AudioVisualizerProps> = ({
       rings.forEach((ring, index) => {
         const material = ring.material as THREE.ShaderMaterial;
         material.uniforms.time.value = time;
-        material.uniforms.glowColor.value = currentStyle.glowColor;
-        material.uniforms.breathingSpeed.value = currentStyle.breathingSpeed;
         
         if (isMicrophoneEnabled) {
             const breathingEffect = (Math.sin(time * currentStyle.breathingSpeed + index * Math.PI) * 0.5 + 0.5) * 0.25;
             const loudnessEffect = overallLoudness * (maxScale - minScale);
             const scale = minScale + breathingEffect + loudnessEffect;
-            ring.scale.setScalar(Math.max(minScale, scale));
+            ring.scale.setScalar(Math.min(maxScale, Math.max(minScale, scale)));
         } else {
             ring.scale.setScalar(minScale);
         }
@@ -172,24 +161,29 @@ export const AudioVisualizer: React.FC<AudioVisualizerProps> = ({
     animate();
 
     // --- Event Listeners & Responsive Scaling ---
-    const referenceWidth = 500; 
-
     const handleResize = () => {
-      const currentMount = mountRef.current;
-      const currentScene = sceneRef.current;
-
-      if (currentMount && renderer && camera && currentScene) {
+      if (currentMount && renderer && camera) {
         const { clientWidth, clientHeight } = currentMount;
-        camera.aspect = clientWidth / clientHeight;
+        const aspect = clientWidth / clientHeight;
+
+        // MODIFIED: This is the core of the fix.
+        // We calculate the camera's visible area to be just big enough to contain
+        // our geometry (which has a radius of 1.0) when it's at its largest animated scale.
+        const padding = 1.05; // 5% padding to avoid clipping at the very edge.
+        const maxAnimatedRadius = 1.0 * maxScale;
+        
+        camera.top = maxAnimatedRadius * padding;
+        camera.bottom = -maxAnimatedRadius * padding;
+        camera.left = -maxAnimatedRadius * aspect * padding;
+        camera.right = maxAnimatedRadius * aspect * padding;
+        
         camera.updateProjectionMatrix();
         renderer.setSize(clientWidth, clientHeight);
-        const scale = clientWidth / referenceWidth;
-        currentScene.scale.set(scale, scale, scale);
       }
     };
     
     window.addEventListener("resize", handleResize);
-    handleResize();
+    handleResize(); // Initial call to set size correctly
 
     // --- Cleanup Function ---
     return () => {
@@ -210,7 +204,6 @@ export const AudioVisualizer: React.FC<AudioVisualizerProps> = ({
           currentMount.removeChild(renderer.domElement);
       }
     };
-    // FIXED: Added dependencies to satisfy the ESLint rule.
   }, [track, isMicrophoneEnabled, minScale, maxScale, currentStyle.breathingSpeed, currentStyle.glowColor]);
 
   const handleVisualizerClick = () => {
