@@ -83,46 +83,69 @@ const PageHeader = () => {
 
 const PageFooter = () => (
     <footer style={{ background: '#4187F7' }} className="font-sans text-white flex items-center justify-center p-4 sm:p-8">
-        <ContentContainer className="h-full flex flex-col justify-center">
-            <div className="flex flex-col lg:flex-row justify-between items-start py-8 border-b border-white/50 gap-8">
-                <div className="flex flex-col gap-8">
-                    <Image src="/logo.svg" alt="AESTR Alpha Logo" width={150} height={28} className="h-8 w-auto" />
-                    <div className="flex gap-16 text-sm font-normal">
-                        <div className="flex flex-col gap-3">
-                            <Link href="/" className="hover:underline">HOME</Link>
-                            <Link href="/resources" className="hover:underline">RESOURCES</Link>
-                            <Link href="/contact" className="hover:underline">CONTACT US</Link>
-                        </div>
-                        <div className="flex flex-col gap-3">
-                            <Link href="/programs" className="hover:underline">PROGRAMS</Link>
-                            <Link href="/contact" className="hover:underline">CONTACT US</Link>
-                        </div>
-                    </div>
-                </div>
-                <div className="flex flex-col items-start gap-4 text-left max-w-xl">
-                    <p className="font-normal text-xs leading-5 tracking-wider">AESTR ALPHA TURNS YOUR DEGREE INTO A 10-15 LPA CAREER WITH HANDS-ON TRAINING, REAL PROJECTS, AND MONTHLY PLACEMENTS.</p>
-                    <h2 className="text-xl sm:text-2xl font-bold leading-tight">CONFUSED ABOUT YOUR PATH? TALK TO OUR AI ENGINEER, NOT A COUNSELLOR.</h2>
-                    <Button variant="secondary" className="bg-white text-black hover:bg-gray-200 px-6 py-2 rounded-md mt-2 h-16 w-full max-w-[213px] sm:w-[213px]">
-                        <div className="flex items-center justify-between w-full">
-                            <span style={{ fontFamily: '"Plus Jakarta Sans", sans-serif', fontWeight: 800, fontSize: '14px', lineHeight: '20px', letterSpacing: '10%', textTransform: 'uppercase', color: '#3A8DFF' }}>
-                                TALK NOW
-                            </span>
-                            <Image width={20} height={20} src="/arrowright.svg" alt="Arrow" className="w-5 h-5" />
-                        </div>
-                    </Button>
-                </div>
+      <ContentContainer className="h-full flex flex-col justify-center">
+        <div className="flex flex-col lg:flex-row justify-between items-start py-8 border-b border-white/50 gap-8">
+          <div className="flex flex-col gap-8">
+            {/* ==================================================================== */}
+            {/* START OF THE FIX: Replaced <img> with next/image <Image> */}
+            {/* ==================================================================== */}
+            <Image src="/logo.svg" alt="AESTR Alpha Logo" width={150} height={28} className="h-8 w-auto" />
+            {/* ==================================================================== */}
+            {/* END OF THE FIX */}
+            {/* ==================================================================== */}
+            <div className="flex gap-16 text-sm font-normal">
+              <div className="flex flex-col gap-3">
+                <a href="#" className="hover:underline">HOME</a>
+                <a href="#" className="hover:underline">RESOURCES</a>
+                <a href="#" className="hover:underline">CONTACT US</a>
+              </div>
+              <div className="flex flex-col gap-3">
+                <a href="#" className="hover:underline">PROGRAMS</a>
+                <a href="#" className="hover:underline">CONTACT US</a>
+              </div>
             </div>
-            <div className="flex flex-col sm:flex-row justify-between items-center text-center sm:text-left pt-6 text-xs font-normal gap-4">
-                <p>2025 AESTR ALPHA</p>
-                <div className="flex flex-col sm:flex-row gap-4 sm:gap-8">
-                    <Link href="/privacy" className="hover:underline">PRIVACY POLICY</Link>
-                    <Link href="/terms" className="hover:underline">TERMS & CONDITIONS</Link>
-                </div>
-            </div>
-        </ContentContainer>
+          </div>
+          <div className="flex flex-col items-start gap-4 text-left max-w-xl">
+            <p className="font-normal text-xs leading-5 tracking-wider">AESTR ALPHA TURNS YOUR DEGREE INTO A 10-15 LPA CAREER WITH HANDS-ON TRAINING, REAL PROJECTS, AND MONTHLY PLACEMENTS.</p>
+            <h2 className="text-xl sm:text-2xl font-bold leading-tight">CONFUSED ABOUT YOUR PATH? TALK TO OUR AI ENGINEER, NOT A COUNSELLOR.</h2>
+            <Button
+              variant="secondary"
+              className="bg-white text-black hover:bg-gray-200 px-6 py-2 rounded-md mt-2 h-16 w-full max-w-[213px] sm:w-[213px]"
+            >
+              <div className="flex items-center justify-between w-full">
+                <span
+                  style={{
+                    fontFamily: '"Plus Jakarta Sans", sans-serif',
+                    fontWeight: 800,
+                    fontSize: '14px',
+                    lineHeight: '20px',
+                    letterSpacing: '10%',
+                    textTransform: 'uppercase',
+                    color: '#3A8DFF',
+                  }}
+                >
+                  TALK NOW
+                </span>
+                <Image
+                  width={20} height={20}
+                  src="/arrowright.svg"
+                  alt="Arrow"
+                  className="w-5 h-5"
+                />
+              </div>
+            </Button>
+          </div>
+        </div>
+        <div className="flex flex-col sm:flex-row justify-between items-center text-center sm:text-left pt-6 text-xs font-normal gap-4">
+          <p>2025 AESTR ALPHA</p>
+          <div className="flex flex-col sm:flex-row gap-4 sm:gap-8">
+            <a href="#" className="hover:underline">PRIVACY POLICY</a>
+            <a href="#" className="hover:underline">TERMS & CONDITIONS</a>
+          </div>
+        </div>
+      </ContentContainer>
     </footer>
-);
-
+  );
 
 // ==============================================================================
 // PAGE-SPECIFIC SECTION COMPONENTS

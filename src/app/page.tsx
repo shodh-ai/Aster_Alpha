@@ -371,8 +371,13 @@ const PageFooter = () => (
     <ContentContainer className="h-full flex flex-col justify-center">
       <div className="flex flex-col lg:flex-row justify-between items-start py-8 border-b border-white/50 gap-8">
         <div className="flex flex-col gap-8">
-          {/* Replace the text with your SVG logo */}
-          <img src="/logo.svg" alt="AESTR Alpha Logo" className="h-8 w-auto" /> {/* Adjust height and width as needed */}
+          {/* ==================================================================== */}
+          {/* START OF THE FIX: Replaced <img> with next/image <Image> */}
+          {/* ==================================================================== */}
+          <Image src="/logo.svg" alt="AESTR Alpha Logo" width={150} height={28} className="h-8 w-auto" />
+          {/* ==================================================================== */}
+          {/* END OF THE FIX */}
+          {/* ==================================================================== */}
           <div className="flex gap-16 text-sm font-normal">
             <div className="flex flex-col gap-3">
               <a href="#" className="hover:underline">HOME</a>
@@ -387,7 +392,7 @@ const PageFooter = () => (
         </div>
         <div className="flex flex-col items-start gap-4 text-left max-w-xl">
           <p className="font-normal text-xs leading-5 tracking-wider">AESTR ALPHA TURNS YOUR DEGREE INTO A 10-15 LPA CAREER WITH HANDS-ON TRAINING, REAL PROJECTS, AND MONTHLY PLACEMENTS.</p>
-          <h2 className="text-xl sm:text-2xl font-bold leading-tight">CONFUSED ABOUT YOUR PATH? TALK TO AN OUR AI ENGINEER, NOT A COUNSELLOR.</h2>
+          <h2 className="text-xl sm:text-2xl font-bold leading-tight">CONFUSED ABOUT YOUR PATH? TALK TO OUR AI ENGINEER, NOT A COUNSELLOR.</h2>
           <Button
             variant="secondary"
             className="bg-white text-black hover:bg-gray-200 px-6 py-2 rounded-md mt-2 h-16 w-full max-w-[213px] sm:w-[213px]"

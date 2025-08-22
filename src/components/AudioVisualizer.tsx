@@ -10,6 +10,12 @@ const AGENT_VISUAL_STYLE = {
   breathingSpeed: 0.5,
 };
 
+interface CustomAnalyser {
+  analyser: AnalyserNode;
+  data: Uint8Array;
+  getAverageFrequency: () => number;
+}
+
 interface AudioVisualizerProps {
   track?: LocalAudioTrack;
   isMicrophoneEnabled: boolean;
@@ -29,7 +35,8 @@ export const AudioVisualizer: React.FC<AudioVisualizerProps> = ({
 }) => {
   const mountRef = useRef<HTMLDivElement>(null);
   const listenerRef = useRef<THREE.AudioListener | null>(null);
-  const analyserRef = useRef<THREE.AudioAnalyser | null>(null);
+  const analyserRef = useRef<CustomAnalyser | null>(null);
+  const ringsRef = useRef<THREE.Mesh[]>([]);
 
   const currentStyle = AGENT_VISUAL_STYLE;
 
@@ -46,60 +53,6 @@ export const AudioVisualizer: React.FC<AudioVisualizerProps> = ({
     renderer.setSize(currentMount.clientWidth, currentMount.clientHeight);
     renderer.setPixelRatio(window.devicePixelRatio);
     currentMount.appendChild(renderer.domElement);
-
-    // --- Rings Creation (Fixed Geometry) ---
-    // MODIFIED: The rings are now created once with a fixed, normalized size.
-    // The camera will be adjusted to make them fit the screen.
-    const rings: THREE.Mesh[] = [];
-    const outerRingRadius = 1.0;
-    const ringThickness = outerRingRadius * 0.25;
-    const innerRingRadius = outerRingRadius * 0.5;
-
-    const radiiToCreate = [innerRingRadius, outerRingRadius];
-
-    for (const outerR of radiiToCreate) {
-      const innerR = Math.max(0, outerR - ringThickness);
-      const geometry = new THREE.RingGeometry(innerR, outerR, 128);
-      const material = new THREE.ShaderMaterial({
-        uniforms: {
-          time: { value: 0 },
-          glowColor: { value: currentStyle.glowColor },
-          breathingSpeed: { value: currentStyle.breathingSpeed },
-        },
-        vertexShader: `
-            varying vec2 vUv;
-            void main() {
-                vUv = uv;
-                gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-            }`,
-        fragmentShader: `
-            uniform float time;
-            uniform vec3 glowColor;
-            uniform float breathingSpeed;
-            varying vec2 vUv;
-
-            void main() {
-                vec2 center = vec2(0.5, 0.5);
-                float dist = distance(vUv, center);
-                
-                float inner_edge = 0.35;
-                float outer_edge = 0.5;
-                float blur = 0.1;
-                
-                float alpha = smoothstep(inner_edge - blur, inner_edge + blur, dist) - smoothstep(outer_edge - blur, outer_edge + blur, dist);
-
-                float breathing = sin(time * breathingSpeed) * 0.5 + 0.5;
-                
-                gl_FragColor = vec4(glowColor, alpha * (breathing * 0.5 + 0.5));
-            }`,
-        transparent: true,
-        side: THREE.DoubleSide,
-        blending: THREE.AdditiveBlending,
-      });
-      const ring = new THREE.Mesh(geometry, material);
-      scene.add(ring);
-      rings.push(ring);
-    }
     
     // --- Audio Analysis Setup ---
     const audioListener = new THREE.AudioListener();
@@ -114,11 +67,14 @@ export const AudioVisualizer: React.FC<AudioVisualizerProps> = ({
       
       source.connect(analyserNode);
       
-      const customAnalyser = {
+      const customAnalyser: CustomAnalyser = {
         analyser: analyserNode,
         data: new Uint8Array(analyserNode.frequencyBinCount),
         getAverageFrequency: function() {
-          this.analyser.getByteFrequencyData(this.data);
+          // Create a new Uint8Array from this.data to ensure it's not ArrayBufferLike
+          const frequencyData = new Uint8Array(this.data);
+          this.analyser.getByteFrequencyData(frequencyData);
+
           let sum = 0;
           for (let i = 0; i < this.data.length; i++) {
             sum += this.data[i];
@@ -127,7 +83,7 @@ export const AudioVisualizer: React.FC<AudioVisualizerProps> = ({
         }
       };
       
-      analyserRef.current = customAnalyser as any;
+      analyserRef.current = customAnalyser;
     }
 
     // --- Animation Loop ---
@@ -142,7 +98,7 @@ export const AudioVisualizer: React.FC<AudioVisualizerProps> = ({
         overallLoudness = data / 128;
       }
 
-      rings.forEach((ring, index) => {
+      ringsRef.current.forEach((ring, index) => {
         const material = ring.material as THREE.ShaderMaterial;
         material.uniforms.time.value = time;
         
@@ -162,14 +118,11 @@ export const AudioVisualizer: React.FC<AudioVisualizerProps> = ({
 
     // --- Event Listeners & Responsive Scaling ---
     const handleResize = () => {
-      if (currentMount && renderer && camera) {
+      if (currentMount && renderer && camera && scene) {
         const { clientWidth, clientHeight } = currentMount;
         const aspect = clientWidth / clientHeight;
 
-        // MODIFIED: This is the core of the fix.
-        // We calculate the camera's visible area to be just big enough to contain
-        // our geometry (which has a radius of 1.0) when it's at its largest animated scale.
-        const padding = 1.05; // 5% padding to avoid clipping at the very edge.
+        const padding = 1.05; 
         const maxAnimatedRadius = 1.0 * maxScale;
         
         camera.top = maxAnimatedRadius * padding;
@@ -179,11 +132,68 @@ export const AudioVisualizer: React.FC<AudioVisualizerProps> = ({
         
         camera.updateProjectionMatrix();
         renderer.setSize(clientWidth, clientHeight);
+
+        ringsRef.current.forEach(ring => {
+            scene.remove(ring);
+            ring.geometry.dispose();
+            (ring.material as THREE.ShaderMaterial).dispose();
+        });
+        ringsRef.current = [];
+
+        const baseOuterRingRadius = 1.0;
+        const ringThickness = baseOuterRingRadius * 0.25; 
+        const baseInnerRingRadius = baseOuterRingRadius * 0.5;
+
+        const radiiToCreate = [baseInnerRingRadius, baseOuterRingRadius];
+        
+        for (const outerR of radiiToCreate) {
+          const innerR = Math.max(0, outerR - ringThickness);
+          const geometry = new THREE.RingGeometry(innerR, outerR, 128);
+          const material = new THREE.ShaderMaterial({
+            uniforms: {
+              time: { value: 0 },
+              glowColor: { value: currentStyle.glowColor },
+              breathingSpeed: { value: currentStyle.breathingSpeed },
+            },
+            vertexShader: `
+              varying vec2 vUv;
+              void main() {
+                  vUv = uv;
+                  gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+              }`,
+            fragmentShader: `
+              uniform float time;
+              uniform vec3 glowColor;
+              uniform float breathingSpeed;
+              varying vec2 vUv;
+
+              void main() {
+                  vec2 center = vec2(0.5, 0.5);
+                  float dist = distance(vUv, center);
+                  
+                  float inner_edge = 0.35;
+                  float outer_edge = 0.5;
+                  float blur = 0.1;
+                  
+                  float alpha = smoothstep(inner_edge - blur, inner_edge + blur, dist) - smoothstep(outer_edge - blur, outer_edge + blur, dist);
+
+                  float breathing = sin(time * breathingSpeed) * 0.5 + 0.5;
+                  
+                  gl_FragColor = vec4(glowColor, alpha * (breathing * 0.5 + 0.5));
+              }`,
+            transparent: true,
+            side: THREE.DoubleSide,
+            blending: THREE.AdditiveBlending,
+          });
+          const ring = new THREE.Mesh(geometry, material);
+          scene.add(ring);
+          ringsRef.current.push(ring);
+        }
       }
     };
     
     window.addEventListener("resize", handleResize);
-    handleResize(); // Initial call to set size correctly
+    handleResize();
 
     // --- Cleanup Function ---
     return () => {
